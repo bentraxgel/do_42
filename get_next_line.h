@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 17:45:51 by seok              #+#    #+#             */
-/*   Updated: 2023/01/15 16:35:44 by seok             ###   ########.fr       */
+/*   Updated: 2023/01/16 22:50:10 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #  define BUFFER_SIZE 0
 # endif
 # include <stdlib.h>
+#include <unistd.h>
 
 typedef struct s_list
 {
@@ -32,5 +33,5 @@ char	*get_next_line(int fd);
 size_t	ft_strlen(const char *s);
 void	*ft_memset(void *str, int value, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
-
+void	*ft_memcpy(void *dest, const void *src, size_t len);
 #endif
