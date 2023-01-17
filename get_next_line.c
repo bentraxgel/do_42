@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 23:02:51 by seok              #+#    #+#             */
-/*   Updated: 2023/01/16 23:25:43 by seok             ###   ########.fr       */
+/*   Updated: 2023/01/17 02:58:55 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*get_next_line(int fd)
 	char	*save;
 	int		check;
 
+	while ()
 	if (fd || BUFFER_SIZE < 0)
 		return (NULL);
 	ft_memset(buf, 0, BUFFER_SIZE);

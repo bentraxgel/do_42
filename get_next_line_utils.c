@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 16:18:18 by seok              #+#    #+#             */
-/*   Updated: 2023/01/16 22:52:03 by seok             ###   ########.fr       */
+/*   Updated: 2023/01/18 02:03:10 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,33 @@ void	*ft_memcpy(void *dest, const void *src, size_t len)
 	dest = adr;
 	return (dest);
 }
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*str;
+	size_t	sstart;
+	size_t	i;
+	size_t	s_len;
 
+	i = 0;
+	sstart = (size_t)start;
+	s_len = ft_strlen(s);
+	// if (s_len <= sstart)
+	// 	return (ft_strdup(""));
+	if (s_len - start <= len)
+		str = (char *)malloc(sizeof(char) * (s_len - start + 1));
+	if (s_len - start > len)
+		str = (char *)malloc(sizeof(char) * (len + 1));
+	
+	if (!str)
+		return (0);
+	while (s[sstart + i] && i < len)
+	{
+		str[i] = s[sstart + i];
+		i++;
+	}
+	str[i] = 0;
+	return (str);
+}
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		s1_len;
@@ -58,5 +84,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_memcpy(ret, s1, s1_len);
 	ft_memcpy(ret + s1_len, s2, s2_len);
 	ret[s1_len + s2_len] = 0;
+	//printf("strjoin : %s\n", ret);
 	return (ret);
 }

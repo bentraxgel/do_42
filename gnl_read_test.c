@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 18:01:08 by seok              #+#    #+#             */
-/*   Updated: 2023/01/16 23:26:44 by seok             ###   ########.fr       */
+/*   Updated: 2023/01/18 02:03:57 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,34 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (ret);
 }
 */
+char	*my_find_char(char *save, int check)
+{
+	int	idx;
+	int			find;
+	char		*ret;
+	idx = 0;
+	find = idx;
+	ret = 0;
+//	printf("save : %s\n", save);
+//	printf("==find in==\nsave : %s\n", save);
+	//printf("save[idx] : %c\n", save[idx + 1]);
+	while (save[find])
+	{
+	//	printf("\tsave[%d] : %c\n", find, save[find]);
+	//	printf("save[%d] : %c\n", find, save[find]);
+		if (save[find] == '\n')
+		{
+			ret = ft_substr(save, idx, find - idx + 1);
+			//printf("[%d] ret : %s\n", find, ret);
+			//idx = find + 1;
+			return (ret);
+		}
+		find++;
+	}
+	if (check == 0)
+		ret = ft_substr(save, idx, find - idx);
+	return (ret);
+}
 
 char	*get_next_line(int fd)
 {
@@ -73,6 +101,7 @@ char	*get_next_line(int fd)
 	char	*save;
 	int		check;
 	int		i;
+	char	*ret;
 
 	i = 0;
 	ft_memset(buf, 0, BUFFER_SIZE);
@@ -81,25 +110,29 @@ char	*get_next_line(int fd)
 	while (check >= 0)
 	{
 		check = read(fd, buf, BUFFER_SIZE);
-		if (check > 0)
-		{
-			save = ft_strjoin(save, buf);
-			ft_memset(buf, 0, BUFFER_SIZE);
-		}
-		else if (check == 0)
-		{
-			printf("EOF\n");
+		save = ft_strjoin(save, buf);
+		ret = my_find_char(save, check);
+		if (ret)
 			break ;
-		}
-		printf("[%d] : %s\n", i++, save);
+		ft_memset(buf, 0, BUFFER_SIZE);
 	}
-	return (0);
+	return (ret);
 }
 
 int	main()
 {
 	int	fd;
+	char *ret;
 
+	//ret = 0;
 	fd = open("text.txt", O_RDONLY);
-	get_next_line(fd);
+	
+	ret = get_next_line(fd);
+	printf("1 ret : %s\n", ret);
+	ret = get_next_line(fd);
+	printf("2 ret : %s\n", ret);
+	ret = get_next_line(fd);
+	printf("3 ret : %s\n", ret);
+	ret = get_next_line(fd);
+	printf("4 ret : %s\n", ret);
 }
