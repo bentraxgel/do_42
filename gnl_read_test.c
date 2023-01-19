@@ -6,11 +6,12 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 18:01:08 by seok              #+#    #+#             */
-/*   Updated: 2023/01/18 02:03:57 by seok             ###   ########.fr       */
+/*   Updated: 2023/01/19 10:48:44 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//gcc -D BUFFER_SIZE=3 gnl_read_test.c get_next_line_utils.c get_next_line.h
+//gcc -D BUFFER_SIZE=3 gnl_read_test.c gnl_utils.c get_next_line.h
+
 #include "get_next_line.h"
 
 /*
@@ -66,30 +67,30 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (ret);
 }
 */
-char	*my_find_char(char *save, int check)
+char	*my_find_char(static char *save, int check)
 {
+	printf("saveADR : %p\n", save);
 	int	idx;
 	int			find;
 	char		*ret;
 	idx = 0;
 	find = idx;
 	ret = 0;
-//	printf("save : %s\n", save);
-//	printf("==find in==\nsave : %s\n", save);
-	//printf("save[idx] : %c\n", save[idx + 1]);
-	while (save[find])
-	{
-	//	printf("\tsave[%d] : %c\n", find, save[find]);
-	//	printf("save[%d] : %c\n", find, save[find]);
-		if (save[find] == '\n')
-		{
-			ret = ft_substr(save, idx, find - idx + 1);
-			//printf("[%d] ret : %s\n", find, ret);
-			//idx = find + 1;
-			return (ret);
-		}
-		find++;
-	}
+	//printf("save : %s\n", save);
+	// printf("==find in==\nsave : %s\n", save);
+	// printf("save[idx] : %c\n", save[idx + 1]);
+	// while (save[find])
+	// {
+	// printf("\tsave[%d] : %c\n", find, save[find]);
+	// 	if (save[find] == '\n')
+	// 	{
+	// 		ret = ft_substr(save, idx, find - idx + 1);
+	// 		printf("@@@find(\\n)[%d] ret : %s\n", find, ret);
+	// 		idx = find + 1;
+	// 		return (ret);
+	// 	}
+	// 	find++;
+	// }
 	if (check == 0)
 		ret = ft_substr(save, idx, find - idx);
 	return (ret);
@@ -98,20 +99,26 @@ char	*my_find_char(char *save, int check)
 char	*get_next_line(int fd)
 {
 	char	buf[BUFFER_SIZE];
-	char	*save;
+	static char	*save;
 	int		check;
 	int		i;
 	char	*ret;
 
 	i = 0;
 	ft_memset(buf, 0, BUFFER_SIZE);
-	save = malloc(BUFFER_SIZE);
+	//save = malloc(BUFFER_SIZE);
+	printf("\tfir_ARD(save) : %p\n", save);
 	check = 0;
+	int	o = 1;
 	while (check >= 0)
 	{
+		printf("=======while_check %d=====\n", o++);
 		check = read(fd, buf, BUFFER_SIZE);
 		save = ft_strjoin(save, buf);
+		printf("\tARD : %p\n", save);
+		printf("\t&ARD : %p\n", &save);
 		ret = my_find_char(save, check);
+		free(save); printf("!!free!!\n");
 		if (ret)
 			break ;
 		ft_memset(buf, 0, BUFFER_SIZE);
@@ -126,13 +133,16 @@ int	main()
 
 	//ret = 0;
 	fd = open("text.txt", O_RDONLY);
-	
+	printf("===main_print===\n");
 	ret = get_next_line(fd);
 	printf("1 ret : %s\n", ret);
+	printf("---------------------------------------\n");
 	ret = get_next_line(fd);
 	printf("2 ret : %s\n", ret);
+	printf("---------------------------------------\n");
 	ret = get_next_line(fd);
 	printf("3 ret : %s\n", ret);
+	printf("---------------------------------------\n");
 	ret = get_next_line(fd);
 	printf("4 ret : %s\n", ret);
 }

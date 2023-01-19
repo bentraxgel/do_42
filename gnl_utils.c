@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   gnl_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 16:18:18 by seok              #+#    #+#             */
-/*   Updated: 2023/01/19 19:53:01 by seok             ###   ########.fr       */
+/*   Updated: 2023/01/19 10:18:59 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,20 @@ size_t	ft_strlen(const char *s)
 	return ((size_t) idx);
 }
 
+void	*ft_memcpy(void *dest, const void *src, size_t len)
+{
+	char	*adr;
+
+	adr = dest;
+	if (dest == src)
+		return (dest);
+	while (len--)
+	{
+		*(char *)dest++ = *(char *)src++;
+	}
+	dest = adr;
+	return (dest);
+}
 void	*ft_memset(void *str, int value, size_t len)
 {
 	while (len--)
@@ -68,6 +82,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		str = (char *)malloc(sizeof(char) * (s_len - start + 1));
 	if (s_len - start > len)
 		str = (char *)malloc(sizeof(char) * (len + 1));
+	
 	if (!str)
 		return (0);
 	while (s[sstart + i] && i < len)
@@ -77,21 +92,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	str[i] = 0;
 	return (str);
-}
-
-void	*ft_memcpy(void *dest, const void *src, size_t len)
-{
-	char	*adr;
-
-	adr = dest;
-	if (dest == src)
-		return (dest);
-	while (len--)
-	{
-		*(char *)dest++ = *(char *)src++;
-	}
-	dest = adr;
-	return (dest);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)

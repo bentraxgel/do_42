@@ -1,3 +1,2 @@
-helloabc
-world
-a
+seok
+myko

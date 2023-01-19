@@ -5,41 +5,37 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/19 20:31:52 by seok              #+#    #+#             */
-/*   Updated: 2023/01/20 02:20:59 by seok             ###   ########.fr       */
+/*   Created: 2023/01/16 23:02:51 by seok              #+#    #+#             */
+/*   Updated: 2023/01/17 02:58:55 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	*my_save_buf(char *buf, int check)
-{
-	static char	*save;
-	int			find;
-	char		*ret;
-
-	ret = save;
-	save = ft_strjoin(save, buf);
-	free(ret);
-	while (save[find])
-	{
-		if (save[find] == '\n')
-		{
-			ret = malloc(find + 2);
-		}
-	}
-}
-
 char	*get_next_line(int fd)
 {
 	char	buf[BUFFER_SIZE];
+	char	*save;
 	int		check;
 
-	check = 0;
-	while (check >= 0)
+	while ()
+	if (fd || BUFFER_SIZE < 0)
+		return (NULL);
+	ft_memset(buf, 0, BUFFER_SIZE);
+	save = malloc(BUFFER_SIZE);
+	while (check >= 0) //read할게 있는경우
 	{
-		ft_memset(buf, 0, BUFFER_SIZE);
 		check = read(fd, buf, BUFFER_SIZE);
-		my_save_buf(buf, check);
+		if (check > 0)
+		{
+			save = ft_strjoin(save, buf);
+			ft_memset(buf, 0, BUFFER_SIZE);
+		}
+		else if (check == 0) //EOF
+		{
+			printf("EOF\n");
+			break ;
+		}
 	}
+	return (0);
 }
