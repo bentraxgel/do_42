@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 16:18:18 by seok              #+#    #+#             */
-/*   Updated: 2023/01/19 19:53:01 by seok             ###   ########.fr       */
+/*   Updated: 2023/01/26 16:11:45 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+
+t_list	*ft_lstnew(void *current)
+{
+	t_list	*newnode;
+
+	newnode = malloc(sizeof(t_list));
+	if (!newnode)
+		return (0);
+	newnode->current = current;
+	newnode->next = NULL;
+	return (newnode);
+}
 
 size_t	ft_strlen(const char *s)
 {

@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:31:52 by seok              #+#    #+#             */
-/*   Updated: 2023/01/20 05:14:12 by seok             ###   ########.fr       */
+/*   Updated: 2023/01/23 03:30:23 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*my_new_save(char *save, int find) //save = new((save - ret))
+char	*my_new_save(char *save, int find) //save = new((save - ret)) -> check!
 {
 	int	count;
 
 	count = 0;
 	while (save[find + count])
-		count++; //횟수세는거 정확하게 확인.
-	if(count)
+		count++;
+	if (count)
 		return (ft_substr(save, find, count));
 	return (save);
 }
@@ -43,9 +43,11 @@ char	*my_save_buf(char *buf, int check) //ret반환
 	{
 		if (save[find] == '\n')
 		{
-			ret = malloc(find + 2); //동적할당할 크기 확실히 알기
+			ret = malloc(sizeof(char) * (find + 2));
+			ret = malloc(find + 2);
+			//동적할당할 크기 확실히 알기
 			if (!ret)
-				return(my_free(ret), 0);
+				return (my_free(ret), 0);
 			save = my_new_save(save, find);
 		}
 	}
