@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 18:01:08 by seok              #+#    #+#             */
-/*   Updated: 2023/01/19 10:48:44 by seok             ###   ########.fr       */
+/*   Updated: 2023/01/28 19:05:13 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (ret);
 }
 */
-char	*my_find_char(static char *save, int check)
+char	*my_find_char(char *save, int check)
 {
 	printf("saveADR : %p\n", save);
 	int	idx;

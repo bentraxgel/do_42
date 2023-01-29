@@ -1,16 +1,17 @@
 	#include <stdio.h>
 	#include <stdlib.h>
+	#include <string.h>
 
 struct s_type
 {
 	int	i;
-	char	str[80];
+	char	*str;
 }s, *p;
 
 typedef struct s_pe
 {
 	int	j;
-	char	bar[80];
+	char	*bar;
 }ty;
 
 struct test
@@ -25,6 +26,11 @@ struct test
 	struct s_type	num;
 	num.i = 1;
 	printf("num : %d\n", num.i);
+	num.str = malloc(100);
+	strcpy(num.str, "홍길동");
+	printf("strcpy : %s\n", num.str);
+	// num.str = "gildong";
+	// printf("strcpy : %s\n", num.str);
 	ty	to;
 	to.j = 6;
 	printf("to : %d\n", to.j);
@@ -34,6 +40,7 @@ struct test
 	printf("ptr : %d\n", ptr->j);
 	(*ptr).j = 10;
 	printf("ptr : %d\n", ptr->j);
+	ptr->bar = "a";
 
 	// printf("num.i : %d\n", num.i);
 	// printf("*p : %d", p->i);

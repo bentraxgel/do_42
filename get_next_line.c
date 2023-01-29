@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:31:52 by seok              #+#    #+#             */
-/*   Updated: 2023/01/23 03:30:23 by seok             ###   ########.fr       */
+/*   Updated: 2023/01/29 04:28:56 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*my_new_save(char *save, int find) //save = new((save - ret)) -> check!
+char	*my_new_save(char *save, int idx)
 {
 	int	count;
 
 	count = 0;
-	while (save[find + count])
+	while (save[idx + count])
 		count++;
 	if (count)
-		return (ft_substr(save, find, count));
-	return (save);
+		return (ft_substr(save, idx, count));
+	return (0);
 }
 
 char	*my_save_buf(char *buf, int check) //ret반환
@@ -43,16 +43,16 @@ char	*my_save_buf(char *buf, int check) //ret반환
 	{
 		if (save[find] == '\n')
 		{
-			ret = malloc(sizeof(char) * (find + 2));
+			//ret = malloc(sizeof(char) * (find + 2));
 			ret = malloc(find + 2);
-			//동적할당할 크기 확실히 알기
+			ft_memcpy(ret, save, find + 1);
 			if (!ret)
 				return (my_free(ret), 0);
-			save = my_new_save(save, find);
+			//save = my_new_save(save, find + 1);
 		}
 	}
-	free(ret); //어찌될진 모르지만 leak잊지말자 - 이부분에서 필요한지 생각해보기
-	return (0);
+	//free(ret); //어찌될진 모르지만 leak잊지말자 - 이부분에서 필요한지 생각해보기
+	return (ret);
 }
 
 char	*get_next_line(int fd)

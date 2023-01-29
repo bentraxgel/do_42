@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 17:45:51 by seok              #+#    #+#             */
-/*   Updated: 2023/01/26 17:16:25 by seok             ###   ########.fr       */
+/*   Updated: 2023/01/29 09:08:39 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@
 
 typedef struct s_list
 {
-	void			*content;
-	struct s_list	*current;
+	int				fd;
+	static char		*save;//아놔 왜  안돼
+	struct s_list	*pre; //free할거 아아니니면  없없애애기
 	struct s_list	*next;
 }t_list;
 
