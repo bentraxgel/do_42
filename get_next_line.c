@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:31:52 by seok              #+#    #+#             */
-/*   Updated: 2023/01/29 04:28:56 by seok             ###   ########.fr       */
+/*   Updated: 2023/01/31 02:50:20 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,15 @@ char	*my_new_save(char *save, int idx)
 	return (0);
 }
 
-char	*my_save_buf(char *buf, int check) //ret반환
+char	*my_save_buf(char *buf, int check)
+//ret반환 : free(ret)할 필요없는 이유 : 반환할 문자열에 대해서는 메모리신경을 쓰지 않아도 된다??
 {
 	static char	*save;
 	int			find;
 	char		*ret;
 
 	ret = save;
-	save = ft_strjoin(save, buf); //memset대신 strlcpy할겨?
-	//strlcpy()를 사용한다면, 널보장되기때문에 ret = strlcpy();return(ret);
-	//>strlcpy(save, buf, len); 에서 buf = null이라면??0이돼야하지않을까
-	//>buf에 아무것도 안들어간다면 read()가 EOF라는거 아닌가? ->확인필요
-	//
-	//memset()을 사용한다면, 널보장은 안되지만 함수를 살짝 바꿔서 마지막에 널을 넣는다면
-	//>return(memset()); 으로 반환 가능. ->단점 :join도 수정해야함.
+	save = ft_strjoin(save, buf);
 	free(ret);
 	while (save[find])
 	{
@@ -51,7 +46,6 @@ char	*my_save_buf(char *buf, int check) //ret반환
 			//save = my_new_save(save, find + 1);
 		}
 	}
-	//free(ret); //어찌될진 모르지만 leak잊지말자 - 이부분에서 필요한지 생각해보기
 	return (ret);
 }
 
