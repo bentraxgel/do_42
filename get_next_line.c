@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:31:52 by seok              #+#    #+#             */
-/*   Updated: 2023/01/31 02:50:20 by seok             ###   ########.fr       */
+/*   Updated: 2023/02/02 01:22:50 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ char	*my_new_save(char *save, int idx)
 }
 
 char	*my_save_buf(char *buf, int check)
-//ret반환 : free(ret)할 필요없는 이유 : 반환할 문자열에 대해서는 메모리신경을 쓰지 않아도 된다??
 {
 	static char	*save;
 	int			find;
@@ -38,9 +37,7 @@ char	*my_save_buf(char *buf, int check)
 	{
 		if (save[find] == '\n')
 		{
-			//ret = malloc(sizeof(char) * (find + 2));
-			ret = malloc(find + 2);
-			ft_memcpy(ret, save, find + 1);
+			ret = ft_substr(save, 0, find + 1)
 			if (!ret)
 				return (my_free(ret), 0);
 			//save = my_new_save(save, find + 1);
