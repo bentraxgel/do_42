@@ -3,25 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:31:52 by seok              #+#    #+#             */
-/*   Updated: 2023/02/02 14:32:01 by seok             ###   ########.fr       */
+/*   Updated: 2023/02/02 21:35:08 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*my_new_save(char *save, int idx)
+t_list	*my_lst_find(t_list *lst, int f_fd)
 {
-	int	count;
+	t_list	*temp;
 
-	count = 0;
-	while (save[idx + count])
-		count++;
-	if (count)
-		return (ft_substr(save, idx, count));
-	return (0);
+	temp = lst;
+	while (temp)
+	{
+		if (temp->fd == f_fd)
+			return (temp);
+		temp = temp->pre;
+	}
+	temp = lst;
+	while (temp)
+	{
+		if (temp->fd == f_fd)
+			return (temp);
+		temp = temp->next;
+	}
+	while (lst->next)
+		lst = lst->next;
+	temp = malloc(sizeof(t_list));
+	lst->next = temp;
+	temp->pre = lst;
+	temp->next = NULL;
+	temp->fd = f_fd;
+	return (temp);
 }
 
 char	*my_save_buf(char *buf, int check)
@@ -30,20 +46,47 @@ char	*my_save_buf(char *buf, int check)
 	int			find;
 	char		*ret;
 
-	ret = save;
+	find = 0;
+	ret = 0;
+	if (check == 0 && check != 0)
+		return (save);
 	save = ft_strjoin(save, buf);
-	free(ret);
 	while (save[find])
 	{
 		if (save[find] == '\n')
 		{
-			//substr은 할당실패시 0으로 반환되기때문에 free노필요
 			ret = ft_substr(save, 0, find + 1);
-			//save = my_new_save(save, find + 1);
-			//my_new_save도 이 함수에 같이 사용하면 될듯?
-			save = ft_substr(save, find + 1, ft_strlen(save) - find);
-			se\ok
-			5 - 2 = 3
+			save = ft_substr(save, find + 1, ft_strlen(save) - (find + 1));
+			break ;
+		}
+		find++;
+	}
+	return (ret);
+}
+
+char	*test_ret(t_list *lst, int fd, char *save)
+{
+	char		buf[BUFFER_SIZE];
+	char		*ret;
+	int			check;
+	int			find;
+
+	ret = 0;
+	find = -1;
+	while (ret == 0)
+	{
+		check = read(fd, buf, 3);
+		if (check == 0 && save != 0)
+			return (save);
+		save = ft_strjoin(save, buf);
+		while (save[++find])
+		{
+			if (save[find] == '\n')
+			{
+				ret = ft_substr(save, 0, find + 1);
+				save = ft_substr(save, find + 1, ft_strlen(save) - (find + 1));
+				return (ret);
+			}
 		}
 	}
 	return (ret);
@@ -51,10 +94,15 @@ char	*my_save_buf(char *buf, int check)
 
 char	*get_next_line(int fd)
 {
-	char	buf[BUFFER_SIZE];
-	int		check;
+	static t_list	*lst;
+	char			buf[BUFFER_SIZE];
+	int				check;
 
 	check = 0;
+	if (BUFFER_SIZE <= 0 || fd < 0)
+		return (0);
+	lst = my_lst_find(&lst, fd);
+	return (test_ret(&lst, lst->fd));
 	while (check >= 0)
 	{
 		ft_memset(buf, 0, BUFFER_SIZE);
