@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:31:52 by seok              #+#    #+#             */
-/*   Updated: 2023/02/02 01:22:50 by seok             ###   ########.fr       */
+/*   Updated: 2023/02/02 14:32:01 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,13 @@ char	*my_save_buf(char *buf, int check)
 	{
 		if (save[find] == '\n')
 		{
-			ret = ft_substr(save, 0, find + 1)
-			if (!ret)
-				return (my_free(ret), 0);
+			//substr은 할당실패시 0으로 반환되기때문에 free노필요
+			ret = ft_substr(save, 0, find + 1);
 			//save = my_new_save(save, find + 1);
+			//my_new_save도 이 함수에 같이 사용하면 될듯?
+			save = ft_substr(save, find + 1, ft_strlen(save) - find);
+			se\ok
+			5 - 2 = 3
 		}
 	}
 	return (ret);
