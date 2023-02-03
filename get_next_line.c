@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:31:52 by seok              #+#    #+#             */
-/*   Updated: 2023/02/02 21:35:08 by seok             ###   ########.fr       */
+/*   Updated: 2023/02/03 22:29:23 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,33 +40,8 @@ t_list	*my_lst_find(t_list *lst, int f_fd)
 	return (temp);
 }
 
-char	*my_save_buf(char *buf, int check)
+char	*my_save_buf(t_list *lst)
 {
-	static char	*save;
-	int			find;
-	char		*ret;
-
-	find = 0;
-	ret = 0;
-	if (check == 0 && check != 0)
-		return (save);
-	save = ft_strjoin(save, buf);
-	while (save[find])
-	{
-		if (save[find] == '\n')
-		{
-			ret = ft_substr(save, 0, find + 1);
-			save = ft_substr(save, find + 1, ft_strlen(save) - (find + 1));
-			break ;
-		}
-		find++;
-	}
-	return (ret);
-}
-
-char	*test_ret(t_list *lst, int fd, char *save)
-{
-	char		buf[BUFFER_SIZE];
 	char		*ret;
 	int			check;
 	int			find;
@@ -75,16 +50,18 @@ char	*test_ret(t_list *lst, int fd, char *save)
 	find = -1;
 	while (ret == 0)
 	{
-		check = read(fd, buf, 3);
-		if (check == 0 && save != 0)
-			return (save);
-		save = ft_strjoin(save, buf);
-		while (save[++find])
+		ft_memset(lst->buf, 0, BUFFER_SIZE + 1);
+		check = read(lst->fd, lst->buf, BUFFER_SIZE);
+		if (check == 0 && lst->save != 0)
+			return (lst->save);
+		lst->save = ft_strjoin(lst->save, lst->buf);
+		while (lst->save[++find])
 		{
-			if (save[find] == '\n')
+			if (lst->save[find] == '\n') 
 			{
-				ret = ft_substr(save, 0, find + 1);
-				save = ft_substr(save, find + 1, ft_strlen(save) - (find + 1));
+				ret = ft_substr(lst->save, 0, find + 1);
+				lst->save = ft_substr(lst->save, find + 1,\
+							ft_strlen(lst->save) - (find + 1));
 				return (ret);
 			}
 		}
@@ -95,18 +72,17 @@ char	*test_ret(t_list *lst, int fd, char *save)
 char	*get_next_line(int fd)
 {
 	static t_list	*lst;
+	t_list	*find;
 	char			buf[BUFFER_SIZE];
 	int				check;
 
 	check = 0;
 	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (0);
-	lst = my_lst_find(&lst, fd);
-	return (test_ret(&lst, lst->fd));
-	while (check >= 0)
-	{
-		ft_memset(buf, 0, BUFFER_SIZE);
-		check = read(fd, buf, BUFFER_SIZE);
-		my_save_buf(buf, check);
-	}
+	find = my_lst_find(&lst, fd);
+
+	//pre : 굳이 없어도 괜춘. 왜냐면 *lst 자체는 그냥 head개념으로 두고, lst->fd == f_fd;인 주소는
+	//t_list find;에 저장해서 다른 함수에 사용하면 되니깐!
+	//낼 해보고 바로 평가 고고
+	return (my_save_buf(&lst));
 }

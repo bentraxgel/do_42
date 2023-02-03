@@ -7,12 +7,12 @@
 #include <stdlib.h>
 
 #ifndef BUFFER_SISE
-# define BUFFER_SIZE 0
+# define BUFFER_SIZE 3
 #endif
 
 typedef struct s_list
 {
-	char			*buf;
+	char			buf[BUFFER_SIZE];
 	int				fd;
 	char			*save;
 	struct s_list	*next;

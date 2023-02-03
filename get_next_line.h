@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 17:45:51 by seok              #+#    #+#             */
-/*   Updated: 2023/02/02 21:32:26 by seok             ###   ########.fr       */
+/*   Updated: 2023/02/03 21:44:40 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@
 typedef struct s_list
 {
 	int				fd;
+	char			buf[BUFFER_SIZE + 1];
 	char			*save;
-	struct s_list	*pre; //free할거 아아니니면  없없애애기
+	struct s_list	*pre;
 	struct s_list	*next;
 }t_list;
 

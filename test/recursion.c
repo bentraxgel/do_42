@@ -108,22 +108,31 @@ char	*my_save_buf(int fd)
 	return (ret);
 }
 
-char	*test_ret(int fd, char *save)
+void	*ft_memset(void *str, int value, size_t len)
 {
-	char		buf[3];
+	while (len--)
+		*(unsigned char *)(str + len) = (unsigned char)value;
+	return (str);
+}
+
+char	*test_ret(int fd)
+{
+	static char *save;
+	char		buf[BUFFER_SIZE + 1];
 	char		*ret;
 	int			check;
 	int			find;
 
 	ret = 0;
-	find = -1;
+	find = 0;
 	while (ret == 0)
 	{
-		check = read(fd, buf, 3);
+		ft_memset(buf, 0, BUFFER_SIZE + 1);
+		check = read(fd, buf, BUFFER_SIZE);
 		if (check == 0 && save != 0)
 			return (save);
-		save = ft_strjoin(save, buf);
-		while (save[++find])
+ 		save = ft_strjoin(save, buf);
+		while (save[find])
 		{
 			if (save[find] == '\n')
 			{
@@ -131,17 +140,16 @@ char	*test_ret(int fd, char *save)
 				save = ft_substr(save, find + 1, ft_strlen(save) - (find + 1));
 				return (ret);
 			}
+			find++;
 		}
 	}
 	return (ret);
 }
 
-void	*ft_memset(void *str, int value, size_t len)
-{
-	while (len--)
-		*(unsigned char *)(str + len) = (unsigned char)value;
-	return (str);
-}
+#include <errno.h>
+extern int errno;
+		if (errno != 0)
+			printf("errno: %s\n", strerror(errno));
 
 char	*test_ret1(t_list *lst)
 {
@@ -153,18 +161,18 @@ char	*test_ret1(t_list *lst)
 	find = -1;
 	while (ret == 0)
 	{
-		// ft_memset(lst->buf, 0, BUFFER_SIZE);
-		lst->buf = 0;
-		check = read(lst->fd, lst->buf, 3);
+		ft_memset(lst->buf, 0, BUFFER_SIZE + 1);
+		check = read(lst->fd, lst->buf, BUFFER_SIZE);
 		if (check == 0 && lst->save != 0)
 			return (lst->save);
 		lst->save = ft_strjoin(lst->save, lst->buf);
 		while (lst->save[++find])
 		{
-			if (lst->save[find] == '\n')
+			if (lst->save[find] == '\n') 
 			{
 				ret = ft_substr(lst->save, 0, find + 1);
-				lst->save = ft_substr(lst->save, find + 1, ft_strlen(lst->save) - (find + 1));
+				lst->save = ft_substr(lst->save, find + 1,\
+							ft_strlen(lst->save) - (find + 1));
 				return (ret);
 			}
 		}
@@ -174,14 +182,18 @@ char	*test_ret1(t_list *lst)
 
 int	main()
 {
-	t_list	*lst;
+	static t_list	*lst;
 	lst = malloc(sizeof(t_list));
 	lst->next = 0;
 
 	lst->fd = open("text.txt", O_RDONLY);
+
+	//char	*save = 0;
+	// int	fd = open("text.txt", O_RDONLY);
 	for (int i = 0; i < 7; i++)
 	{
 		// printf("%d번째 : %s\n", i, my_save_buf(fd));
+		// printf("%d번째 : %s\n", i, test_ret(fd));
 		// printf("%d번째 : %s\n", i, test_ret(lst->fd, lst->save));
 		printf("%d번째 : %s\n", i, test_ret1(lst));
 	}
