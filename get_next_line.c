@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:31:52 by seok              #+#    #+#             */
-/*   Updated: 2023/02/03 22:29:23 by seok             ###   ########.fr       */
+/*   Updated: 2023/02/06 16:13:44 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ t_list	*my_lst_find(t_list *lst, int f_fd)
 	return (temp);
 }
 
+void	my_lst_free(t_list *lst)
+{
+	
+}
+
 char	*my_save_buf(t_list *lst)
 {
 	char		*ret;
@@ -53,7 +58,13 @@ char	*my_save_buf(t_list *lst)
 		ft_memset(lst->buf, 0, BUFFER_SIZE + 1);
 		check = read(lst->fd, lst->buf, BUFFER_SIZE);
 		if (check == 0 && lst->save != 0)
+		{
+			ret = ft_substr(lst->save, 0, ft_strlen(lst->save));
+			my_lst_free(lst);
+		}
 			return (lst->save);
+		if (check == 0 && lst->save == 0)
+
 		lst->save = ft_strjoin(lst->save, lst->buf);
 		while (lst->save[++find])
 		{
@@ -72,7 +83,7 @@ char	*my_save_buf(t_list *lst)
 char	*get_next_line(int fd)
 {
 	static t_list	*lst;
-	t_list	*find;
+	t_list			*find;
 	char			buf[BUFFER_SIZE];
 	int				check;
 
@@ -80,9 +91,10 @@ char	*get_next_line(int fd)
 	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (0);
 	find = my_lst_find(&lst, fd);
+	
 
 	//pre : 굳이 없어도 괜춘. 왜냐면 *lst 자체는 그냥 head개념으로 두고, lst->fd == f_fd;인 주소는
 	//t_list find;에 저장해서 다른 함수에 사용하면 되니깐!
 	//낼 해보고 바로 평가 고고
-	return (my_save_buf(&lst));
+	return (my_save_buf(find));
 }
