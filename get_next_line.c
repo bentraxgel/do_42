@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:31:52 by seok              #+#    #+#             */
-/*   Updated: 2023/02/07 22:04:51 by seok             ###   ########.fr       */
+/*   Updated: 2023/02/08 05:28:12 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_list	*my_lst_find(t_list **lst, int f_fd)
 {
 	t_list	*temp;
 
-	temp = lst;
+	temp = (*lst);
 	while (temp)
 	{
 		if (temp->fd == f_fd)
@@ -24,7 +24,7 @@ t_list	*my_lst_find(t_list **lst, int f_fd)
 		temp = temp->next;
 	}
 	while ((*lst)->next)
-		lst = (*lst)->next;
+		*lst = (*lst)->next;
 	temp = malloc(sizeof(t_list));
 	(*lst)->next = temp;
 	temp->next = NULL;
@@ -32,12 +32,12 @@ t_list	*my_lst_find(t_list **lst, int f_fd)
 	return (temp);
 }
 
-void	my_lst_free(t_list *find, t_list *lst)
+void	my_lst_free(t_list *find, t_list **lst)
 {
-	while(lst->next == find)
-		lst = lst->next;
+	while((*lst)->next == find)
+		*lst = (*lst)->next;
 	find->fd = 0;
-	lst->next = find->next;
+	(*lst)->next = find->next;
 	find->next = NULL;
 	free(find);
 }
@@ -84,9 +84,8 @@ char	*get_next_line(int fd)
 	static t_list	*lst;
 	t_list			*find;
 
-	check = 0;
 	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (0);
 	find = my_lst_find(&lst, fd);
-	return (my_save_buf(find, &lst));
+	return (my_save_buf(find, lst));
 }
