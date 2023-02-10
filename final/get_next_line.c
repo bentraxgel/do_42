@@ -6,7 +6,7 @@ size_t	ft_strlen(const char *s)
 	int	idx;
 
 	idx = 0;
-	if (s == 0)
+	if (s == NULL)
 		return (0);
 	while (s[idx])
 		idx++;
@@ -103,17 +103,16 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (ret);
 }
 
-t_list	*my_lst_find(t_list **lst, int f_fd)
+t_list	*my_lst_find(t_list *lst, int f_fd)
 {
 	t_list	*temp;
 
 	if (lst == 0)
 	{
-		temp = malloc(sizeof(t_list));
-		temp->fd = f_fd;
-		temp->next = NULL;
-		*lst = temp;
-		return (temp);
+		lst = malloc(sizeof(t_list));
+		lst->fd = f_fd;
+		lst->next = NULL;
+		return (lst);
 	}
 	temp = lst;
 	while (temp)
@@ -122,10 +121,10 @@ t_list	*my_lst_find(t_list **lst, int f_fd)
 			return (temp);
 		temp = temp->next;
 	}
-	while ((*lst)->next)
-		(*lst) = (*lst)->next;
+	while (lst->next)
+		lst = lst->next;
 	temp = malloc(sizeof(t_list));
-	(*lst)->next = temp;
+	lst->next = temp;
 	temp->next = NULL;
 	temp->fd = f_fd;
 	return (temp);
@@ -133,7 +132,9 @@ t_list	*my_lst_find(t_list **lst, int f_fd)
 
 void	my_lst_free(t_list *find, t_list *lst)
 {
-	while(lst->next == find)
+	//TODO : check while(!=)
+	//need lst leak check
+	while(lst->next != find)
 		lst = lst->next;
 	find->fd = 0;
 	lst->next = find->next;
@@ -198,7 +199,8 @@ char	*get_next_line(int fd)
 
 	if (BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (0);
-	find = my_lst_find(&lst, fd);
+	find = my_lst_find(lst, fd);
+	printf("save : %s\n", find->save);
 	return (my_save_buf(find, lst));
 }
 
@@ -219,7 +221,7 @@ int	main(void)
 	while (1)
 	{
 		str = get_next_line(fd);
-		printf("%d: <%s>\n", idx, str);
+		printf("%d: <%s\n", idx, str);
 		idx++;
 		if (!str)
 		{
