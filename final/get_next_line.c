@@ -107,12 +107,20 @@ t_list	*my_lst_find(t_list *lst, int f_fd)
 {
 	t_list	*temp;
 
+	// if (lst == 0)
+	// {
+	// 	lst = malloc(sizeof(t_list));
+	// 	lst->fd = f_fd;
+	// 	lst->next = NULL;
+	// 	return (lst);
+	// }
 	if (lst == 0)
 	{
-		lst = malloc(sizeof(t_list));
-		lst->fd = f_fd;
-		lst->next = NULL;
-		return (lst);
+		temp = malloc(sizeof(t_list));
+		temp->fd = f_fd;
+		temp->next = NULL;
+		lst = temp;
+		return (temp);
 	}
 	temp = lst;
 	while (temp)
@@ -199,8 +207,10 @@ char	*get_next_line(int fd)
 
 	if (BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (0);
+	//printf("before : %s, %p",lst->save, lst);
 	find = my_lst_find(lst, fd);
-	printf("save : %s\n", find->save);
+	// printf("save : %s\n", find->save);
+	printf("before : %d, %p",lst->fd, lst);
 	return (my_save_buf(find, lst));
 }
 
