@@ -109,12 +109,13 @@ t_list	*my_lst_find(t_list **lst, int f_fd)
 
 	if (lst == 0)
 	{
-		lst = malloc(sizeof(t_list));
-		(*lst)->fd = f_fd;
-		(*lst)->next = NULL;
-		return (*lst);
+		temp = malloc(sizeof(t_list));
+		temp->fd = f_fd;
+		temp->next = NULL;
+		*lst = temp;
+		return (temp);
 	}
-	temp = *lst;
+	temp = lst;
 	while (temp)
 	{
 		if (temp->fd == f_fd)
