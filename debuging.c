@@ -182,7 +182,7 @@ char	*get_next_line(int fd)
 	static t_list	*lst;
 	t_list			*find;
 
-	if (BUFFER_SIZE <= 0 || fd < 0)
+	if (BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (0);
 	find = my_lst_find(&lst, fd);
 	return (my_save_buf(find, lst));

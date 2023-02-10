@@ -131,12 +131,12 @@ t_list	*my_lst_find(t_list *lst, int f_fd)
 	return (temp);
 }
 
-void	my_lst_free(t_list *find, t_list **lst)
+void	my_lst_free(t_list *find, t_list *lst)
 {
-	while((*lst)->next == find)
-		*lst = (*lst)->next;
+	while(lst->next == find)
+		lst = lst->next;
 	find->fd = 0;
-	(*lst)->next = find->next;
+	lst->next = find->next;
 	find->next = NULL;
 	free(find);
 }
@@ -155,18 +155,18 @@ char	*my_save_buf(t_list *find, t_list *lst)
 		check = read(find->fd, find->buf, BUFFER_SIZE);
 		if (check < 0)
 		{
-			my_lst_free(find, &lst);
+			my_lst_free(find, lst);
 			return (0);
 		}
 		if (check == 0 && find->save != 0)
 		{
 			ret = ft_substr(find->save, 0, ft_strlen(find->save));
-			my_lst_free(find, &lst);
+			my_lst_free(find, lst);
 			return (NULL);
 		}
 		else if (check == 0 && find->save == 0)
 		{
-			my_lst_free(find, &lst);
+			my_lst_free(find, lst);
 			return (NULL);
 		}
 		else
@@ -198,7 +198,7 @@ char	*get_next_line(int fd)
 
 	if (BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (0);
-	find = my_lst_find(&lst, fd);
+	find = my_lst_find(lst, fd);
 	return (my_save_buf(find, lst));
 }
 
@@ -207,30 +207,30 @@ void	leak_check()
 	system("leaks a.out");
 }
 
-int	main(void)
-{
-	int		idx;
-	int		fd;
-	char	*str;
+// int	main(void)
+// {
+// 	int		idx;
+// 	int		fd;
+// 	char	*str;
 
-	atexit(leak_check);
-	idx = 1;
-	fd = open("text.txt", O_RDWR);
-	while (1)
-	{
-		str = get_next_line(fd + 1);
-		printf("%d: <%s>\n", idx, str);
-		idx++;
-		if (!str)
-		{
-			free(str);
-			break ;
-		}
-		free(str);
-	}
-	close(fd);
-	return (0);
-}
+// 	atexit(leak_check);
+// 	idx = 1;
+// 	fd = open("text.txt", O_RDWR);
+// 	while (1)
+// 	{
+// 		str = get_next_line(fd + 1);
+// 		printf("%d: <%s>\n", idx, str);
+// 		idx++;
+// 		if (!str)
+// 		{
+// 			free(str);
+// 			break ;
+// 		}
+// 		free(str);
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
 
 // int	main()
 // {
