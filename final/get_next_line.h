@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 17:45:51 by seok              #+#    #+#             */
-/*   Updated: 2023/02/08 20:12:30 by seok             ###   ########.fr       */
+/*   Updated: 2023/02/10 17:17:11 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*get_next_line(int fd);
 // void	*ft_memset(void *str, int value, size_t len);
 // size_t	ft_strlen(const char *s);
 // void	*ft_memcpy(void *dest, const void *src, size_t len);
-// char	*ft_strdup(const char *s1);
+char	*ft_strdup(const char *s1);
 // char	*ft_substr(char const *s, unsigned int start, size_t len);
 // char	*ft_strjoin(char const *s1, char const *s2);
 #endif
