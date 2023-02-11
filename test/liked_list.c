@@ -14,10 +14,7 @@ int main() {
    head.next->data = 2;
    head.next->next = NULL;
 
-	while (head != 0)
-	{
 
-	}
 //    // linked list
 //    struct node *temp = &head;
 //    while (temp != NULL) {
