@@ -103,7 +103,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (ret);
 }
 
-t_list	*my_lst_find(t_list *lst, int f_fd)
+t_list	*my_lst_find(t_list **lst, int f_fd)
 {
 	t_list	*temp;
 
