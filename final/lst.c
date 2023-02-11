@@ -1,16 +1,24 @@
 #include "lst.h"
 
-t_list	*my_lst_find1(t_list *lst, int f_fd)
+t_list	*my_lst_find1(t_list *lst, int f_fd, int check)
 {
 	t_list	*temp;
 	
-	printf("**lst : %p", lst);
-	if (lst == 0)
+	printf("lst : %p\n", lst);
+	printf("&lst : %p\n", &lst);
+	if (check != 0)
 	{
 		lst = malloc(sizeof(t_list));
 		lst->fd = f_fd;
 		lst->next = NULL;
 		lst->save = "first meet";
+		return (lst);
+	}
+	else if (check == 0)
+	{
+		// temp = malloc(sizeof(t_list));
+		// lst = temp;
+		lst->save = "test";
 		return (lst);
 	}
 	// if (*lst == 0)
@@ -23,7 +31,7 @@ t_list	*my_lst_find1(t_list *lst, int f_fd)
 	// 	return (temp);
 	// }
 	temp = lst;
-	while (temp)
+	while (temp->next)
 	{
 		if (temp->fd == f_fd)
 		{
@@ -119,12 +127,15 @@ int	main()
 	static t_list	*lst;
 	t_list			*find;
 	int				fd;
-	static t_list	*list;
+	static t_list	list;
 
-	printf("main_lst : %p\n", list);
-	list = malloc(sizeof(t_list));
+	printf("main_liste : %p\n", &list);
+	// list = malloc(sizeof(t_list));
+	list.save = "list save first value";
+	printf("list->save : %s\n", list.save);
+
 	// printf("main_*lst : %p\n", *lst);
-	printf("main_lst : %p\n", list);
+	printf("main_list malloc: %p\n", &list);
 
 	fd = open("text.txt", O_RDONLY);
 	if (BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
@@ -133,7 +144,19 @@ int	main()
 	printf("\n\nfd : %d\n", fd);
 	for (int i = 0; i < 3; i++)
 	{
-		find = my_lst_find1(list, fd);
+		printf("before list : %s\n", list.save);
+		find = my_lst_find1(&list, fd, 1);
+		printf("====test====\n");
+		printf("list : %p\n", &list);
+		printf("find : %p\n", find);
+		printf("after list : %s\n", list.save);
+		printf("after find : %s\n", find->save);
+		// find = my_lst_find1(&list, fd, 8);
+		printf("====test2====\n");
+		printf("list : %p\n", &list);
+		printf("find : %p\n", find);
+		printf("after list : %s\n", list.save);
+		printf("after find : %s\n", find->save);
 		// find = my_lst_find(&lst, fd);
 		// printf("save : %s\n", find->save);
 		printf("fd, lst_ADR : %d, %p\n",lst->fd, lst);
@@ -143,7 +166,7 @@ int	main()
 	}
 	fd = open("text.txt", O_RDWR);
 	printf("\n\nfd : %d\n", fd);
-	find = my_lst_find1(list, fd);
+	find = my_lst_find1(&list, fd, 0);
 	// find = my_lst_find(&lst, fd);
 	// printf("save : %s\n", find->save);
 	printf("fd, lst_ADR : %d, %p\n",lst->fd, lst);
