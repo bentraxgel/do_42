@@ -6,21 +6,23 @@ t_list	*my_lst_find1(t_list *lst, int f_fd, int check)
 	
 	printf("lst : %p\n", lst);
 	printf("&lst : %p\n", &lst);
-	if (check != 0)
-	{
-		lst = malloc(sizeof(t_list));
-		lst->fd = f_fd;
-		lst->next = NULL;
-		lst->save = "first meet";
-		return (lst);
-	}
-	else if (check == 0)
-	{
-		// temp = malloc(sizeof(t_list));
-		// lst = temp;
-		lst->save = "test";
-		return (lst);
-	}
+	lst->save = "change";
+	printf("%d : \n",  check);
+	// if (check != 0)
+	// {
+	// 	lst = malloc(sizeof(t_list));
+	// 	lst->fd = f_fd;
+	// 	lst->next = NULL;
+	// 	lst->save = "first meet";
+	// 	return (lst);
+	// }
+	// else if (check == 0)
+	// {
+	// 	// temp = malloc(sizeof(t_list));
+	// 	// lst = temp;
+	// 	lst->save = "test";
+	// 	return (lst);
+	// }
 	// if (*lst == 0)
 	// {
 	// 	temp = malloc(sizeof(t_list));

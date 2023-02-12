@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 17:45:51 by seok              #+#    #+#             */
-/*   Updated: 2023/02/13 05:42:45 by seok             ###   ########.fr       */
+/*   Updated: 2023/02/12 18:53:33 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_list
 	struct s_list	*next;
 }t_list;
 
-char	*get_next_line(int fd);
+// char	*get_next_line(int fd);
 // char	*my_find_char(char *save, int check);
 // void	*ft_memset(void *str, int value, size_t len);
 // size_t	ft_strlen(const char *s);

@@ -5,38 +5,36 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/04 17:45:51 by seok              #+#    #+#             */
-/*   Updated: 2023/02/13 05:42:45 by seok             ###   ########.fr       */
+/*   Created: 2022/07/28 09:58:22 by junlee2           #+#    #+#             */
+/*   Updated: 2023/02/13 02:47:06 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-/*	test	*/
-#include <fcntl.h>
-#include <stdio.h>
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 3
-# endif
 # include <stdlib.h>
 # include <unistd.h>
+# define BUFFER_SIZE 10
 
-typedef struct s_list
+typedef struct s_fdlist
 {
 	int				fd;
-	char			buf[BUFFER_SIZE + 1];
-	char			*save;
-	struct s_list	*next;
-}t_list;
+	char			buffer[BUFFER_SIZE];
+	ssize_t			totallen;
+	ssize_t			stack;
+	ssize_t			s_idx;
+	ssize_t			c_idx;
+	ssize_t			status;
+	ssize_t			indent;
+	struct s_fdlist	*next;
+	struct s_fdlist	*prev;
+}	t_fdlist;
 
-char	*get_next_line(int fd);
-// char	*my_find_char(char *save, int check);
-// void	*ft_memset(void *str, int value, size_t len);
-// size_t	ft_strlen(const char *s);
-// void	*ft_memcpy(void *dest, const void *src, size_t len);
-char	*ft_strdup(const char *s1);
-// char	*ft_substr(char const *s, unsigned int start, size_t len);
-// char	*ft_strjoin(char const *s1, char const *s2);
+char		*get_next_line(int fd);
+t_fdlist	*find_fd(int fd, t_fdlist *fdlist);
+char		*get_line_re(t_fdlist	*fdlist);
+char		*free_fdlist(t_fdlist *fdlist);
+void		*ft_memcpy(void *dst, const void *src, size_t n);
+
 #endif

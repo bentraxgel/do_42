@@ -43,7 +43,7 @@ char	*ft_strdup(const char *s1)
 	return (ret);
 }
 
-char	*ft_substr(char *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*str;
 	size_t	sstart;
@@ -103,72 +103,56 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (ret);
 }
 
-t_list	*my_lst_find(t_list **head, int f_fd)
+t_list	*my_lst_find(t_list *lst, int f_fd)
 {
 	t_list	*temp;
 
-	// if (*head == 0)
+	// if (lst == 0)
 	// {
-	// 	*head = malloc(sizeof(t_list));
-	// 	(*head)->fd = -1;
-	// 	(*head)->next = NULL;
-	// 	// return (*head);
+	// 	lst = malloc(sizeof(t_list));
+	// 	lst->fd = f_fd;
+	// 	lst->next = NULL;
+	// 	return (lst);
 	// }
-	// if (*head == 0)
+	// if (lst == 0)
 	// {
 	// 	temp = malloc(sizeof(t_list));
 	// 	temp->fd = f_fd;
 	// 	temp->next = NULL;
-	// 	*head = temp;
+	// 	lst = temp;
 	// 	return (temp);
 	// }
-	temp = *head;
+	temp = lst;
 	while (temp)
 	{
 		if (temp->fd == f_fd)
 			return (temp);
 		temp = temp->next;
 	}
-	while ((*head)->next)
-		(*head) = (*head)->next;
+	while (lst->next)
+		lst = lst->next;
 	temp = malloc(sizeof(t_list));
-	if (!temp)
-		return (NULL);
-	(*head)->next = temp;
-	temp->save = NULL;
+	lst->next = temp;
 	temp->next = NULL;
 	temp->fd = f_fd;
 	return (temp);
 }
 
-// void	my_lst_free(t_list *find, t_list *head)
-// {
-// 	// head = head + 0;
-// 	// find = find+0;
-// 	//TODO : check while(!=)
-// 	//need head leak check
-// 	// if (head->next == find)
-// 	while(head->next != find)
-// 		head = head->next;
-// 	find->fd = 0;
-// 	head->next = find->next;
-// 	find->next = NULL;
-// 	free(find);
-// }
-void my_lst_free(t_list *find, t_list *head)
+void	my_lst_free(t_list *find, t_list *lst)
 {
-    while (head->next != NULL && head->next != find)
-        head = head->next;
-
-    if (head->next == NULL)
-        return ;
-
-    head->next = find->next;
-    find->next = NULL;
-    free(find);
+	// //TODO : check while(!=)
+	// //need lst leak check
+	// while(lst->next != find)
+	// 	lst = lst->next;
+	// find->fd = 0;
+	// lst->next = find->next;
+	// find->next = NULL;
+	// free(find);
+	lst = lst + 0;
+	free(find);
 }
 
-char	*my_save_buf(t_list *find, t_list *head)
+char	*my_save_buf(t_list *find, t_list *lst)
 {
 	char		*ret;
 	int			check;
@@ -182,19 +166,18 @@ char	*my_save_buf(t_list *find, t_list *head)
 		check = read(find->fd, find->buf, BUFFER_SIZE);
 		if (check < 0)
 		{
-			my_lst_free(find, head);
-			return (NULL);
+			my_lst_free(find, lst);
+			return (0);
 		}
-		else if (check == 0 && find->save != 0)
+		if (check == 0 && find->save != 0)
 		{
 			ret = ft_substr(find->save, 0, ft_strlen(find->save));
-			my_lst_free(find, head);
+			my_lst_free(find, lst);
 			return (ret);
 		}
 		else if (check == 0 && find->save == 0)
 		{
-			// ret = ft_strdup("");
-			my_lst_free(find, head);
+			my_lst_free(find, lst);
 			return (NULL);
 		}
 		else
@@ -221,33 +204,17 @@ char	*my_save_buf(t_list *find, t_list *head)
 char	*get_next_line(int fd)
 {
 
-	static t_list	*head;
+	static t_list	*lst;
 	t_list			*find;
-	char			*ret;
 
 	if (BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (0);
+	//lst->fd = -1;
 	//printf("before : %s, %p",lst->save, lst);
-	//TODO
-	if (head == NULL)
-	{
-		head = malloc(sizeof(t_list));
-		if (!head)
-			return (NULL);
-		head->fd = -1;
-		head->next = NULL;
-	}
-	find = my_lst_find(&head, fd);
-
+	find = my_lst_find(lst, fd);
 	// printf("save : %s\n", find->save);
-//	printf("before : %d, %p",lst->fd, lst);
-	ret = my_save_buf(find, head);
-	if (head->next == NULL)
-	{
-		free(head);
-		head = NULL;
-	}
-	return (ret);
+	printf("before : %d, %p",lst->fd, lst);
+	return (my_save_buf(find, lst));
 }
 
 // void	leak_check()
@@ -255,35 +222,30 @@ char	*get_next_line(int fd)
 // 	system("leaks a.out");
 // }
 
-// #include <errno.h>
-// #include <string.h>
+int	main(void)
+{
+	int		idx;
+	int		fd;
+	char	*str;
 
-// extern int errno;
-			
-// int	main(void)
-// {
-// 	int		idx;
-// 	int		fd;
-// 	char	*str;
-
-// 	// atexit(leak_check);
-// 	idx = 1;
-// 	fd = open("text.txt", O_RDWR);
-// 	while (1)
-// 	{
-// 		str = get_next_line(fd);
-// 		printf("%d: <%s\n", idx, str);
-// 		idx++;
-// 		if (!str)
-// 		{
-// 			free(str);
-// 			break ;
-// 		}
-// 		free(str);
-// 	}
-// 	close(fd);
-// 	return (0);
-// }
+	//atexit(leak_check);
+	idx = 1;
+	fd = open("text.txt", O_RDWR);
+	while (1)
+	{
+		str = get_next_line(fd);
+		printf("%d: <%s\n", idx, str);
+		idx++;
+		if (!str)
+		{
+			free(str);
+			break ;
+		}
+		free(str);
+	}
+	close(fd);
+	return (0);
+}
 
 // int	main()
 // {
@@ -305,5 +267,4 @@ char	*get_next_line(int fd)
 // 	printf("---------------------------------------\n");
 // 	ret = get_next_line(fd);
 // 	printf("4 ret : %s\n", ret);
-// 	free(ret);
 // }

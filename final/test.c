@@ -1,19 +1,20 @@
-#include "get_next_line.h"
+// #include "get_next_line.h"
+#include <stdio.h>
 
-int change_value(t_list *lst)
+char *change_value(void)
 {
-	lst->save = ft_strdup("12345");
-	return (0);
+	char	new;
+
+	new = 'a';
+	return (&new);
 }
 
 int main(void)
 {
-	static t_list *lst;
-	t_list new;
-	
-	lst = &new;
-	change_value(lst);
-	printf("%s\n", lst->save);
+	char	*c;
+
+	c = change_value();
+	*c = 'c';
 	
 	return (0);
 }
