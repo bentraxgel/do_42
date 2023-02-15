@@ -67,6 +67,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 		i++;
 	}
 	str[i] = 0;
+	free(s); //TODO : leaks check
 	return (str);
 }
 
@@ -99,7 +100,9 @@ char	*ft_strjoin(char *s1, char *s2)
 	ft_memcpy(ret, s1, s1_len);
 	ft_memcpy(ret + s1_len, s2, s2_len);
 	ret[s1_len + s2_len] = 0;
+	//TODO : free()했는데 leaks 확인 해보기
 	free(s1);
+	free(s2);
 	return (ret);
 }
 
@@ -228,7 +231,7 @@ char	*get_next_line(int fd)
 	if (BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (0);
 	//printf("before : %s, %p",lst->save, lst);
-	//TODO
+	//TODO : head 할당 꼭 여기서 할 필요 없긴 함.
 	if (head == NULL)
 	{
 		head = malloc(sizeof(t_list));
