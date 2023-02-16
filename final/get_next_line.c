@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 
+
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 3
 # endif
@@ -93,8 +94,8 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 		i++;
 	}
 	str[i] = 0;
-	// if (s != NULL)
-	// 	free(s); //TODO : leaks check 지금 얘가 문제인거같음 없애면 leak. 있으면 할당하지않은거 해제했다고 함
+	if (str != NULL)
+		free(s); //TODO : leaks check 지금 얘가 문제인거같음 없애면 leak. 있으면 할당하지않은거 해제했다고 함
 	return (str);
 }
 
@@ -200,7 +201,73 @@ void my_lst_free(t_list *find, t_list *head)
     free(find);
 }
 
-char	*my_save_buf(t_list *find, t_list *head)
+// char	*my_save_buf(t_list *find, t_list *head)
+// {
+// 	char		*ret;
+// 	int			check;
+// 	int			idx;
+
+// 	ret = 0;
+// 	//idx = -1;
+// 	while (ret == 0)
+// 	{
+// 		ft_memset(find->buf, 0, BUFFER_SIZE + 1);
+// 		check = read(find->fd, find->buf, BUFFER_SIZE);
+// 		if (check < 0)
+// 		{
+// 			my_lst_free(find, head);
+// 			return (NULL);
+// 		}
+// 		else if (check == 0 && find->save != 0)
+// 		{
+// 			ret = ft_substr(find->save, 0, ft_strlen(find->save));
+// 			my_lst_free(find, head);
+// 			return (ret);
+// 		}
+// 		else if (check == 0 && find->save == 0)
+// 		{
+// 			// ret = ft_strdup("");
+// 			my_lst_free(find, head);
+// 			return (NULL);
+// 		}
+// 		else
+// 		{
+// 			find->save = ft_strjoin(find->save, find->buf);
+// 			idx = -1;
+// 			while (find->save[++idx])
+// 			{
+// 				if (find->save[idx] == '\n')
+// 				{
+// 					ret = ft_substr(find->save, 0, idx + 1);
+// 					find->save = ft_substr(find->save, idx + 1,\
+// 								 ft_strlen(find->save) - (idx + 1));
+// 					// printf("save: %s\n", find->save);
+// 					// printf("buff: %s\n", find->buf);
+// 					// printf("ret: %s\n", ret);
+// 					return (ret);
+// 				}
+// 			}
+// 		}
+// 	}
+// 	return (ret);
+// }
+size_t	ft_strlcpy(char *dst, char *src, size_t dstsize)
+{
+	size_t	idx;
+
+	idx = 0;
+	if (dstsize != 0)
+	{
+		while (src[idx] && idx < dstsize - 1)
+		{
+			dst[idx] = src[idx];
+			idx++;
+		}
+		dst[idx] = 0;
+	}
+	return (ft_strlen(src));
+}
+char	*my_save_buf(t_list *find, t_list *head) //TODO : substr -> strlcpy
 {
 	char		*ret;
 	int			check;
@@ -219,7 +286,8 @@ char	*my_save_buf(t_list *find, t_list *head)
 		}
 		else if (check == 0 && find->save != 0)
 		{
-			ret = ft_substr(find->save, 0, ft_strlen(find->save));
+			ret = malloc(ft_strlen(find->save));
+			ret = ft_strlcpy(find->save, find->save, ft_strlen(find->save));
 			my_lst_free(find, head);
 			return (ret);
 		}
@@ -237,8 +305,9 @@ char	*my_save_buf(t_list *find, t_list *head)
 			{
 				if (find->save[idx] == '\n')
 				{
-					ret = ft_substr(find->save, 0, idx + 1);
-					find->save = ft_substr(find->save, idx + 1,\
+					ret = malloc(idx + 1);
+					ret = ft_strlcpy(find->save, find->save, idx + 1);
+					find->save = ft_strlcpy(find->save, &(find->save[idx + 1]),\
 								 ft_strlen(find->save) - (idx + 1));
 					// printf("save: %s\n", find->save);
 					// printf("buff: %s\n", find->buf);
@@ -250,6 +319,7 @@ char	*my_save_buf(t_list *find, t_list *head)
 	}
 	return (ret);
 }
+
 char	*get_next_line(int fd)
 {
 
@@ -293,30 +363,30 @@ void	leak_check()
 
 // extern int errno;
 			
-// int	main(void)
-// {
-// 	int		idx;
-// 	int		fd;
-// 	char	*str;
+int	main(void)
+{
+	int		idx;
+	int		fd;
+	char	*str;
 
-// 	atexit(leak_check);
-// 	idx = 1;
-// 	fd = open("text.txt", O_RDWR);
-// 	while (1)
-// 	{
-// 		str = get_next_line(fd);
-// 		printf("%d: <%s\n", idx, str);
-// 		idx++;
-// 		if (!str)
-// 		{
-// 			free(str);
-// 			break ;
-// 		}
-// 		free(str);
-// 	}
-// 	close(fd);
-// 	return (0);
-// }
+	atexit(leak_check);
+	idx = 1;
+	fd = open("text.txt", O_RDWR);
+	while (1)
+	{
+		str = get_next_line(fd);
+		printf("%d: <%s\n", idx, str);
+		idx++;
+		if (!str)
+		{
+			free(str);
+			break ;
+		}
+		free(str);
+	}
+	close(fd);
+	return (0);
+}
 
 // int	main()
 // {
