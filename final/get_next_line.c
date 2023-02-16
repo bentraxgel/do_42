@@ -1,4 +1,23 @@
-#include "get_next_line.h"
+// #include "get_next_line.h"
+
+/*	test	*/
+#include <fcntl.h>
+#include <stdio.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 3
+# endif
+# include <stdlib.h>
+# include <unistd.h>
+
+typedef struct s_list
+{
+	int				fd;
+	char			buf[BUFFER_SIZE + 1];
+	char			*save;
+	struct s_list	*next;
+}t_list;
+
 #include <stdio.h> // TODO
 
 size_t	ft_strlen(const char *s)
@@ -19,29 +38,32 @@ void	*ft_memset(void *str, int value, size_t len)
 		*(unsigned char *)(str + len) = (unsigned char)value;
 	return (str);
 }
+//이 함수를 현재 사용하지 않음.
+// char	*ft_strdup(const char *s1)
+// {
+// 	char	*ret;
+// 	int		idx;
 
-char	*ft_strdup(const char *s1)
-{
-	char	*ret;
-	int		idx;
-
-	idx = 0;
-	while (s1[idx])
-	{
-		idx++;
-	}
-	ret = (char *)malloc(sizeof(char) * (idx + 1));
-	if (!ret)
-		return (0);
-	idx = 0;
-	while (s1[idx])
-	{
-		ret[idx] = s1[idx];
-		idx++;
-	}
-	ret[idx] = 0;
-	return (ret);
-}
+// 	idx = 0;
+// 	while (s1[idx])
+// 	{
+// 		idx++;
+// 	}
+// 	// printf("dup_idx : %d\n", idx);
+// 	ret = (char *)malloc(sizeof(char) * (idx + 1));
+// 	if (!ret)
+// 		return (0);
+// 	idx = 0;
+// 	// printf("dup_ret_before : %s\n", ret);
+// 	while (s1[idx])
+// 	{
+// 		ret[idx] = s1[idx];
+// 		idx++;
+// 	}
+// 	ret[idx] = 0;
+// 	// printf("dup_ret_after : %s\n", ret);
+// 	return (ret);
+// }
 
 char	*ft_substr(char *s, unsigned int start, size_t len)
 {
@@ -53,8 +75,12 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	i = 0;
 	sstart = (size_t)start;
 	s_len = ft_strlen(s);
-	if (s_len <= sstart)
-		return (ft_strdup(""));
+	if (s_len <= sstart)//TODO : 이거로 인해 많이 잡힘.strdup(" ")으로 인해 자꾸 한줄 더 출력됐음.
+	{
+		free(s);
+		return (NULL);
+	}
+		// return (ft_strdup(""));
 	if (s_len - start <= len)
 		str = (char *)malloc(sizeof(char) * (s_len - start + 1));
 	if (s_len - start > len)
@@ -67,7 +93,8 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 		i++;
 	}
 	str[i] = 0;
-	free(s); //TODO : leaks check
+	// if (s != NULL)
+	// 	free(s); //TODO : leaks check 지금 얘가 문제인거같음 없애면 leak. 있으면 할당하지않은거 해제했다고 함
 	return (str);
 }
 
@@ -100,9 +127,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	ft_memcpy(ret, s1, s1_len);
 	ft_memcpy(ret + s1_len, s2, s2_len);
 	ret[s1_len + s2_len] = 0;
-	//TODO : free()했는데 leaks 확인 해보기
-	free(s1);
-	free(s2);
+	// if (s1 != NULL) //TODO : 할당되지 않은것 free하는것에 대해 얘도 해당되는지 확인해보기
+		free(s1); //NULL을 free하는것에 대해 검색해보기_아마 알아서 처리될것
 	return (ret);
 }
 
@@ -160,12 +186,15 @@ t_list	*my_lst_find(t_list **head, int f_fd)
 // }
 void my_lst_free(t_list *find, t_list *head)
 {
+	if (find == NULL) //TODO : 필요성이 있는 예외처리인가?
+		return ;
     while (head->next != NULL && head->next != find)
         head = head->next;
 
     if (head->next == NULL)
         return ;
-
+	if (find->save != NULL)
+		free(find->save);
     head->next = find->next;
     find->next = NULL;
     free(find);
@@ -245,7 +274,7 @@ char	*get_next_line(int fd)
 	// printf("save : %s\n", find->save);
 //	printf("before : %d, %p",lst->fd, lst);
 	ret = my_save_buf(find, head);
-	if (head->next == NULL)
+	if (head && head->next == NULL)
 	{
 		free(head);
 		head = NULL;
@@ -253,10 +282,11 @@ char	*get_next_line(int fd)
 	return (ret);
 }
 
-// void	leak_check()
-// {
-// 	system("leaks a.out");
-// }
+void	leak_check()
+{
+	printf("LEAK CHECK\n");
+	system("leaks a.out");
+}
 
 // #include <errno.h>
 // #include <string.h>
@@ -269,7 +299,7 @@ char	*get_next_line(int fd)
 // 	int		fd;
 // 	char	*str;
 
-// 	// atexit(leak_check);
+// 	atexit(leak_check);
 // 	idx = 1;
 // 	fd = open("text.txt", O_RDWR);
 // 	while (1)
