@@ -76,12 +76,8 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	i = 0;
 	sstart = (size_t)start;
 	s_len = ft_strlen(s);
-	if (s_len <= sstart)//TODO : 이거로 인해 많이 잡힘.strdup(" ")으로 인해 자꾸 한줄 더 출력됐음.
-	{
-		// free(s); //TODO : save_buf()에서 free함
+	if (s_len <= sstart)
 		return (NULL);
-	}
-		// return (ft_strdup(""));
 	if (s_len - start <= len)
 		str = (char *)malloc(sizeof(char) * (s_len - start + 1));
 	if (s_len - start > len)
@@ -94,8 +90,6 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 		i++;
 	}
 	str[i] = 0;
-	// if (str != NULL)
-	// 	free(s); //TODO : leaks check 지금 얘가 문제인거같음 없애면 leak. 있으면 할당하지않은거 해제했다고 함
 	return (str);
 }
 
@@ -128,8 +122,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	ft_memcpy(ret, s1, s1_len);
 	ft_memcpy(ret + s1_len, s2, s2_len);
 	ret[s1_len + s2_len] = 0;
-	// if (s1 != NULL) //TODO : 할당되지 않은것 free하는것에 대해 얘도 해당되는지 확인해보기
-		free(s1); //NULL을 free하는것에 대해 검색해보기_아마 알아서 처리될것
+	free(s1);
 	return (ret);
 }
 
