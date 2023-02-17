@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quesera <quesera@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/18 03:18:32 by quesera           #+#    #+#             */
-/*   Updated: 2023/02/18 03:20:11 by quesera          ###   ########.fr       */
+/*   Created: 2023/02/18 02:12:45 by seok              #+#    #+#             */
+/*   Updated: 2023/02/18 02:52:30 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_list	*my_lst_find(t_list **head, int f_fd)
 {
 	t_list	*temp;
-	
+
 	temp = *head;
 	while (temp)
 	{
@@ -35,31 +35,47 @@ t_list	*my_lst_find(t_list **head, int f_fd)
 	return (temp);
 }
 
-void my_lst_free(t_list *find, t_list *head)
+void	my_lst_free(t_list *find, t_list *head)
 {
-	if (find == NULL) //TODO : 필요성이 있는 예외처리인가?
+	if (find == NULL) //TODO : 필요한 예외처리인가?
 		return ;
-    while (head->next != NULL && head->next != find)
-        head = head->next;
-
-    if (head->next == NULL)
-        return ;
+	while (head->next != NULL && head->next != find)
+		head = head->next;
+	if (head->next == NULL)
+		return ;
 	if (find->save != NULL)
 		free(find->save);
-    head->next = find->next;
-    find->next = NULL;
-    free(find);
+	head->next = find->next;
+	find->next = NULL;
+	free(find);
 }
 
-char	*my_save_buf(t_list *find, t_list *head)
+void	my_check_zero(t_list *head, t_list *find, int check, char **ret)
 {
-	char		*ret;
+	if (check < 0)
+	{
+		my_lst_free(find, head);
+		ret = NULL;
+	}
+	else if (check == 0 && find->save != 0)
+	{
+		*ret = ft_substr(find->save, 0, ft_strlen(find->save));
+		my_lst_free(find, head);
+	}
+	else if (check == 0 && find->save == 0)
+	{
+		my_lst_free(find, head);
+		ret = NULL;
+	}
+	return ;
+}
+
+char	*my_save_buf(t_list *find, t_list *head, char *ret)
+{
 	char		*temp;
 	int			check;
 	int			idx;
 
-	ret = 0;
-	//idx = -1;
 	while (ret == 0)
 	{
 		ft_memset(find->buf, 0, BUFFER_SIZE + 1);
@@ -71,41 +87,25 @@ char	*my_save_buf(t_list *find, t_list *head)
 			if (find->save[idx] == '\n')
 			{
 				ret = ft_substr(find->save, 0, idx + 1);
-				temp = ft_substr(find->save, idx + 1,\
+				temp = ft_substr(find->save, idx + 1, \
 								ft_strlen(find->save) - (idx + 1));
-				free(find->save); //TODO : 명준방식?
+				free(find->save);
 				find->save = temp;
 				return (ret);
 			}
 		}
-		if (check < 0)
-		{
-			my_lst_free(find, head);
-			return (NULL);
-		}
-		else if (check == 0 && find->save != 0)
-		{
-			ret = ft_substr(find->save, 0, ft_strlen(find->save));
-			my_lst_free(find, head);
-			return (ret);
-		}
-		else if (check == 0 && find->save == 0)
-		{
-			my_lst_free(find, head);
-			return (NULL);
-		}
-		
+		my_check_zero(head, find, check, &ret);
 	}
 	return (ret);
 }
 
 char	*get_next_line(int fd)
 {
-
 	static t_list	*head;
 	t_list			*find;
 	char			*ret;
 
+	ret = 0;
 	if (BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (0);
 	if (head == NULL)
@@ -117,7 +117,7 @@ char	*get_next_line(int fd)
 		head->next = NULL;
 	}
 	find = my_lst_find(&head, fd);
-	ret = my_save_buf(find, head);
+	ret = my_save_buf(find, head, ret);
 	if (head && head->next == NULL)
 	{
 		free(head);
