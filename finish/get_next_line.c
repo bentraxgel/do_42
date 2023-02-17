@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quesera <quesera@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 03:18:32 by quesera           #+#    #+#             */
-/*   Updated: 2023/02/18 03:20:11 by quesera          ###   ########.fr       */
+/*   Updated: 2023/02/18 03:24:20 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_list	*my_lst_find(t_list **head, int f_fd)
 {
 	t_list	*temp;
-	
+
 	temp = *head;
 	while (temp)
 	{
@@ -35,20 +35,19 @@ t_list	*my_lst_find(t_list **head, int f_fd)
 	return (temp);
 }
 
-void my_lst_free(t_list *find, t_list *head)
+void	my_lst_free(t_list *find, t_list *head)
 {
 	if (find == NULL) //TODO : 필요성이 있는 예외처리인가?
 		return ;
-    while (head->next != NULL && head->next != find)
-        head = head->next;
-
-    if (head->next == NULL)
-        return ;
+	while (head->next != NULL && head->next != find)
+		head = head->next;
+	if (head->next == NULL)
+		return ;
 	if (find->save != NULL)
 		free(find->save);
-    head->next = find->next;
-    find->next = NULL;
-    free(find);
+	head->next = find->next;
+	find->next = NULL;
+	free(find);
 }
 
 char	*my_save_buf(t_list *find, t_list *head)
@@ -59,7 +58,6 @@ char	*my_save_buf(t_list *find, t_list *head)
 	int			idx;
 
 	ret = 0;
-	//idx = -1;
 	while (ret == 0)
 	{
 		ft_memset(find->buf, 0, BUFFER_SIZE + 1);
@@ -94,14 +92,12 @@ char	*my_save_buf(t_list *find, t_list *head)
 			my_lst_free(find, head);
 			return (NULL);
 		}
-		
 	}
 	return (ret);
 }
 
 char	*get_next_line(int fd)
 {
-
 	static t_list	*head;
 	t_list			*find;
 	char			*ret;
