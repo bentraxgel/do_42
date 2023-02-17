@@ -78,7 +78,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	s_len = ft_strlen(s);
 	if (s_len <= sstart)//TODO : 이거로 인해 많이 잡힘.strdup(" ")으로 인해 자꾸 한줄 더 출력됐음.
 	{
-		free(s);
+		// free(s); //TODO : save_buf()에서 free함
 		return (NULL);
 	}
 		// return (ft_strdup(""));
@@ -94,8 +94,8 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 		i++;
 	}
 	str[i] = 0;
-	if (str != NULL)
-		free(s); //TODO : leaks check 지금 얘가 문제인거같음 없애면 leak. 있으면 할당하지않은거 해제했다고 함
+	// if (str != NULL)
+	// 	free(s); //TODO : leaks check 지금 얘가 문제인거같음 없애면 leak. 있으면 할당하지않은거 해제했다고 함
 	return (str);
 }
 
@@ -204,6 +204,7 @@ void my_lst_free(t_list *find, t_list *head)
 // char	*my_save_buf(t_list *find, t_list *head)
 // {
 // 	char		*ret;
+// 	char		*temp;
 // 	int			check;
 // 	int			idx;
 
@@ -239,8 +240,15 @@ void my_lst_free(t_list *find, t_list *head)
 // 				if (find->save[idx] == '\n')
 // 				{
 // 					ret = ft_substr(find->save, 0, idx + 1);
-// 					find->save = ft_substr(find->save, idx + 1,\
+// 					temp = ft_substr(find->save, idx + 1,\
 // 								 ft_strlen(find->save) - (idx + 1));
+// 					// if (find->save != NULL)
+// 					// {
+// 						free(find->save); //TODO : 명준방식?
+// 					// 	find->save = 0;
+// 					// }
+// 					// find->save = ft_substr(temp, 0, ft_strlen(temp));
+// 					find->save = temp;
 // 					// printf("save: %s\n", find->save);
 // 					// printf("buff: %s\n", find->buf);
 // 					// printf("ret: %s\n", ret);
@@ -251,25 +259,10 @@ void my_lst_free(t_list *find, t_list *head)
 // 	}
 // 	return (ret);
 // }
-size_t	ft_strlcpy(char *dst, char *src, size_t dstsize)
-{
-	size_t	idx;
-
-	idx = 0;
-	if (dstsize != 0)
-	{
-		while (src[idx] && idx < dstsize - 1)
-		{
-			dst[idx] = src[idx];
-			idx++;
-		}
-		dst[idx] = 0;
-	}
-	return (ft_strlen(src));
-}
-char	*my_save_buf(t_list *find, t_list *head) //TODO : substr -> strlcpy
+char	*my_save_buf(t_list *find, t_list *head)
 {
 	char		*ret;
+	char		*temp;
 	int			check;
 	int			idx;
 
@@ -279,6 +272,28 @@ char	*my_save_buf(t_list *find, t_list *head) //TODO : substr -> strlcpy
 	{
 		ft_memset(find->buf, 0, BUFFER_SIZE + 1);
 		check = read(find->fd, find->buf, BUFFER_SIZE);
+		find->save = ft_strjoin(find->save, find->buf);
+		idx = -1;
+		while (find->save[++idx])
+		{
+			if (find->save[idx] == '\n')
+			{
+				ret = ft_substr(find->save, 0, idx + 1);
+				temp = ft_substr(find->save, idx + 1,\
+								ft_strlen(find->save) - (idx + 1));
+				// if (find->save != NULL)
+				// {
+					free(find->save); //TODO : 명준방식?
+				// 	find->save = 0;
+				// }
+				// find->save = ft_substr(temp, 0, ft_strlen(temp));
+				find->save = temp;
+				// printf("save: %s\n", find->save);
+				// printf("buff: %s\n", find->buf);
+				// printf("ret: %s\n", ret);
+				return (ret);
+			}
+		}
 		if (check < 0)
 		{
 			my_lst_free(find, head);
@@ -286,8 +301,7 @@ char	*my_save_buf(t_list *find, t_list *head) //TODO : substr -> strlcpy
 		}
 		else if (check == 0 && find->save != 0)
 		{
-			ret = malloc(ft_strlen(find->save));
-			ret = ft_strlcpy(find->save, find->save, ft_strlen(find->save));
+			ret = ft_substr(find->save, 0, ft_strlen(find->save));
 			my_lst_free(find, head);
 			return (ret);
 		}
@@ -297,25 +311,7 @@ char	*my_save_buf(t_list *find, t_list *head) //TODO : substr -> strlcpy
 			my_lst_free(find, head);
 			return (NULL);
 		}
-		else
-		{
-			find->save = ft_strjoin(find->save, find->buf);
-			idx = -1;
-			while (find->save[++idx])
-			{
-				if (find->save[idx] == '\n')
-				{
-					ret = malloc(idx + 1);
-					ret = ft_strlcpy(find->save, find->save, idx + 1);
-					find->save = ft_strlcpy(find->save, &(find->save[idx + 1]),\
-								 ft_strlen(find->save) - (idx + 1));
-					// printf("save: %s\n", find->save);
-					// printf("buff: %s\n", find->buf);
-					// printf("ret: %s\n", ret);
-					return (ret);
-				}
-			}
-		}
+		
 	}
 	return (ret);
 }
@@ -363,30 +359,30 @@ void	leak_check()
 
 // extern int errno;
 			
-int	main(void)
-{
-	int		idx;
-	int		fd;
-	char	*str;
+// int	main(void)
+// {
+// 	int		idx;
+// 	int		fd;
+// 	char	*str;
 
-	atexit(leak_check);
-	idx = 1;
-	fd = open("text.txt", O_RDWR);
-	while (1)
-	{
-		str = get_next_line(fd);
-		printf("%d: <%s\n", idx, str);
-		idx++;
-		if (!str)
-		{
-			free(str);
-			break ;
-		}
-		free(str);
-	}
-	close(fd);
-	return (0);
-}
+// 	atexit(leak_check);
+// 	idx = 1;
+// 	fd = open("text.txt", O_RDWR);
+// 	while (1)
+// 	{
+// 		str = get_next_line(fd);
+// 		printf("%d: <%s\n", idx, str);
+// 		idx++;
+// 		if (!str)
+// 		{
+// 			free(str);
+// 			break ;
+// 		}
+// 		free(str);
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
 
 // int	main()
 // {
