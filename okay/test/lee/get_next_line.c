@@ -1,74 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/28 09:51:24 by junlee2           #+#    #+#             */
-/*   Updated: 2023/02/13 02:57:03 by seok             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-// #include "get_next_line.h"
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/28 09:58:24 by junlee2           #+#    #+#             */
-/*   Updated: 2023/02/13 02:46:46 by seok             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "get_next_line.h"
-
-t_fdlist	*find_fd(int fd, t_fdlist *fdlist)
-{
-	t_fdlist	*fdnode;
-
-	fdnode = fdlist;
-	while (fdnode->next != 0)
-	{
-		if (fdnode->next->fd == fd)
-			return (fdnode->next);
-		fdnode = fdnode->next;
-	}
-	fdnode->next = (t_fdlist *)malloc(sizeof(t_fdlist));
-	if (!fdnode->next)
-		return (0);
-	fdnode->next->fd = fd;
-	fdnode->next->s_idx = -1;
-	fdnode->next->next = 0;
-	fdnode->next->prev = fdnode;
-	return (fdnode->next);
-}
-
-char	*free_fdlist(t_fdlist *fdlist)
-{
-	fdlist->prev->next = fdlist->next;
-	if (fdlist->next)
-		fdlist->next->prev = fdlist->prev;
-	free(fdlist);
-	return (0);
-}
-
-void	*ft_memcpy(void *dst, const void *src, size_t n)
-{
-	size_t	i;
-
-	if (dst == 0 && src == 0)
-		return (0);
-	i = 0;
-	while (i < n)
-	{
-		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
-		i++;
-	}
-	return (dst);
-}
 
 void	return_buffer(t_fdlist buff, char *returnstr, ssize_t max_idx)
 {
@@ -164,31 +95,4 @@ char	*get_next_line(int fd)
 	if (!workbench)
 		return (0);
 	return (line_manager(workbench));
-}
-#include <fcntl.h>
-#include <stdio.h>
-
-int	main(void)
-{
-	int		idx;
-	int		fd;
-	char	*str;
-
-	//atexit(leak_check);
-	idx = 1;
-	fd = open("text.txt", O_RDWR);
-	while (1)
-	{
-		str = get_next_line(fd);
-		printf("%d: <%s\n", idx, str);
-		idx++;
-		if (!str)
-		{
-			free(str);
-			break ;
-		}
-		free(str);
-	}
-	close(fd);
-	return (0);
 }

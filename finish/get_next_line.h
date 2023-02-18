@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 01:59:31 by seok              #+#    #+#             */
-/*   Updated: 2023/02/18 03:24:58 by seok             ###   ########.fr       */
+/*   Updated: 2023/02/18 14:02:55 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 3
+#  define BUFFER_SIZE 10
 # endif
 
 # include <stdlib.h>
