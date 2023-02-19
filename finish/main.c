@@ -22,7 +22,7 @@ int	main(void)
 	str = get_next_line(fd);
 	printf("%s\n", str);
 	close(fd);
-	fd = open("text.txt", O_RDWR);
+	fd = open("t.txt", O_RDWR);
 	printf("1_fd : %d\n", fd);
 	while (1)
 	{

@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 03:18:32 by quesera           #+#    #+#             */
-/*   Updated: 2023/02/19 05:23:53 by seok             ###   ########.fr       */
+/*   Updated: 2023/02/20 05:30:23 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	my_lst_free(t_list *find, t_list *head)
 		head = head->next;
 	if (head->next == NULL)
 		return ;
-	// if (find->save != NULL)
-	// 	free(find->save);
-	// find->save = NULL;
+	if (find->save != NULL)
+		free(find->save);
+	// find->save = NULL; //main에서 close()했을 경우 어떻게..? gnl에서는 그냥 같은 fd라고 인식할것...인데 아니라는것을 어떻게 증명할 수 있지?
 	head->next = find->next;
 	find->next = NULL;
 	free(find);
