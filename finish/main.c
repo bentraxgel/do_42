@@ -16,6 +16,14 @@ int	main(void)
 	atexit(leak_check);
 	idx = 1;
 	fd = open("text.txt", O_RDWR);
+	printf("1_fd : %d\n", fd);
+	str = get_next_line(fd);
+	printf("%s\n", str);
+	str = get_next_line(fd);
+	printf("%s\n", str);
+	close(fd);
+	fd = open("text.txt", O_RDWR);
+	printf("1_fd : %d\n", fd);
 	while (1)
 	{
 		str = get_next_line(fd);

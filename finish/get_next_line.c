@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 03:18:32 by quesera           #+#    #+#             */
-/*   Updated: 2023/02/18 17:57:01 by seok             ###   ########.fr       */
+/*   Updated: 2023/02/19 05:23:53 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,13 @@ void	my_lst_free(t_list *find, t_list *head)
 		head = head->next;
 	if (head->next == NULL)
 		return ;
-	if (find->save != NULL)
-		free(find->save);
+	// if (find->save != NULL)
+	// 	free(find->save);
+	// find->save = NULL;
 	head->next = find->next;
 	find->next = NULL;
 	free(find);
-	find = NULL;
+	// find = NULL;
 }
 
 char	*my_save_buf(t_list *find, t_list *head)
