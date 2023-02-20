@@ -148,8 +148,8 @@ char	*test_ret(int fd)
 
 #include <errno.h>
 extern int errno;
-		if (errno != 0)
-			printf("errno: %s\n", strerror(errno));
+		// if (errno != 0)
+		// 	printf("errno: %s\n", strerror(errno));
 
 char	*test_ret1(t_list *lst)
 {
@@ -192,6 +192,8 @@ int	main()
 	// int	fd = open("text.txt", O_RDONLY);
 	for (int i = 0; i < 7; i++)
 	{
+		if (errno != 0)
+			printf("errno: %s\n", strerror(errno));
 		// printf("%d번째 : %s\n", i, my_save_buf(fd));
 		// printf("%d번째 : %s\n", i, test_ret(fd));
 		// printf("%d번째 : %s\n", i, test_ret(lst->fd, lst->save));
