@@ -4,7 +4,8 @@
 
 void	leak_check()
 {
-	system("leaks a.out");
+	system("leaks --list -- a.out");
+	// system("leaks a.out");
 }
 
 int	main(void)

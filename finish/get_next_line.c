@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 03:18:32 by quesera           #+#    #+#             */
-/*   Updated: 2023/02/20 22:34:45 by seok             ###   ########.fr       */
+/*   Updated: 2023/02/20 23:18:20 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,40 @@
 
 void	my_lst_free(t_list *find, t_list *head)
 {
-	// if (find == NULL) //TODO : 필요성이 있는 예외처리인가?
-	// 	return ;
-	while (head->next != NULL && head->next != find)
-		head = head->next;
-	if (head->next == NULL)
-	{
+	if (find == NULL) //TODO : 필요성이 있는 예외처리인가?
+		return ;
+	t_list	*temp;
+
+	temp = head;
+	while (temp->next != NULL && temp->next != find)
+		temp = temp->next;
+	// while (head->next != NULL && head->next != find)
+	// 	head = head->next;
+
+	// if (head->next == NULL)
+	// {
 		if (head == NULL)
 			free(head);
-		return ;
-	}
+	// 	return ;
+	// }
+
 	if (find->save != NULL)
 		free(find->save);
-	head->next = find->next;
+	temp->next = find->next;
+	// head->next = find->next;
 	find->next = NULL;
 	free(find);
 
+	// if (head->next == NULL)
+	// {
+	// 	if (head == NULL)
+	// 		free(head);
+	// 	return ;
+	// }
+
+	// if (head == NULL)
+	// 	free(head);
+	
 	// find = NULL;
 }
 
@@ -51,8 +69,11 @@ t_list	*my_lst_find(t_list **head, int f_fd)
 	{
 		if (temp->fd == f_fd)
 		{
-			// if (read(f_fd, NULL, 0) < 0)
-			// 	my_lst_free(temp, *head);
+			if (read(f_fd, NULL, 0) < 0)
+			{
+				my_lst_free(temp, *head);
+				return (0);
+			}
 			return (temp);
 		}
 		temp = temp->next;
@@ -132,6 +153,9 @@ char	*get_next_line(int fd)
 	// }
 	find = my_lst_find(&head, fd); //TODO : 4
 
+	if(find == NULL)
+		return (NULL);
+		
 	if (BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 	{
 		// if (read(fd, NULL, 0) < 0)
@@ -146,6 +170,9 @@ char	*get_next_line(int fd)
 		// }
 		//TODO : 4
 		my_lst_free(find, head);
+		// if (head->fd == -1 && head->next == NULL)
+		// 	free(head);
+			// my_lst_free(head, head);
 
 		// if (read(fd, NULL, 0) <= 0)
 		// {
