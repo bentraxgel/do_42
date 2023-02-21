@@ -17,29 +17,39 @@ int	main(void)
 	atexit(leak_check);
 	idx = 1;
 	// printf("1_fd : %d\n", fd);
-	str = get_next_line(-1);
-	printf("%s\n", str);
-	str = get_next_line(100);
-	printf("%s\n", str);
-	fd = open("text.txt", O_RDWR);
-	close(fd);
-	printf("fd : %d\n", fd);
-	str = get_next_line(fd);
-	printf("%s\n", str);
+
+	// str = get_next_line(-1);
+	// printf("%s\n", str);
+	// str = get_next_line(100);
+	// printf("%s\n", str);
 	// fd = open("text.txt", O_RDWR);
-	// printf("1_fd : %d\n", fd);
-	// while (1)
-	// {
-	// 	str = get_next_line(fd, 1);
-	// 	printf("%d: <%s\n", idx, str);
-	// 	idx++;
-	// 	if (!str)
-	// 	{
-	// 		free(str);
-	// 		break ;
-	// 	}
-	// 	free(str);
-	// }
+	// close(fd);
+	// printf("close_fd : %d\n", fd);
+	// str = get_next_line(fd);
+	// printf("%s\n", str);
+	fd = open("text.txt", O_RDWR);
+	printf("new open_fd : %d\n", fd);
+
+		str = get_next_line(fd, 0);
+		printf("%d: <%s\n", idx, str);
+		str = get_next_line(fd, 0);
+		printf("%d: <%s\n", idx, str);
+		str = get_next_line(fd, 1);
+		printf("%d: <%s\n", idx, str);
+		close(fd);
+		fd = open("text.txt", O_RDWR);
+	while (1)
+	{
+		str = get_next_line(fd, 0);
+		printf("%d: <%s\n", idx, str);
+		idx++;
+		if (!str)
+		{
+			free(str);
+			break ;
+		}
+		free(str);
+	}
 	close(fd);
 	return (0);
 }
