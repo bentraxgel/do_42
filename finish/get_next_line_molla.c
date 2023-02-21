@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_molla.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 03:18:32 by quesera           #+#    #+#             */
-/*   Updated: 2023/02/21 19:00:48 by seok             ###   ########.fr       */
+/*   Updated: 2023/02/21 20:38:11 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,11 @@ t_list	*my_lst_find(t_list **head, int f_fd)
 	{
 		if (temp->fd == f_fd)
 		{
-			//TODO : free_1
-			// if (read(f_fd, NULL, 0) < 0)
-			// {
-			// 	my_lst_free(temp, *head);
-			// 	return (0);
-			// }
+			if (read(f_fd, NULL, 0) < 0)
+			{
+				my_lst_free(temp, *head);
+				return (0);
+			}
 			return (temp);
 		}
 		temp = temp->next;

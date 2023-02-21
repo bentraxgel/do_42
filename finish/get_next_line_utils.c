@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 02:06:52 by seok              #+#    #+#             */
-/*   Updated: 2023/02/21 20:29:55 by seok             ###   ########.fr       */
+/*   Updated: 2023/02/21 20:58:59 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,20 @@ size_t	ft_strlen(const char *s)
 	return ((size_t) idx);
 }
 
-void	*ft_memset(void *str, int value, size_t len)
+void	my_lst_free(t_list *find, t_list *head)
 {
-	while (len--)
-		*(unsigned char *)(str + len) = (unsigned char)value;
-	return (str);
+	t_list	*temp;
+
+	temp = head;
+	while (temp->next != NULL && temp->next != find)
+		temp = temp->next;
+	if (head == NULL)
+		free(head);
+	if (find->save != NULL)
+		free(find->save);
+	temp->next = find->next;
+	find->next = NULL;
+	free(find);
 }
 
 char	*ft_substr(char *s, unsigned int start, size_t len)

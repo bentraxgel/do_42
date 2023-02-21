@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 01:59:31 by seok              #+#    #+#             */
-/*   Updated: 2023/02/21 19:34:27 by seok             ###   ########.fr       */
+/*   Updated: 2023/02/21 21:05:51 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_list	*my_lst_find(t_list **head, int f_fd);
 void	my_lst_free(t_list *find, t_list *head);
 void	my_check_zero(t_list *head, t_list *find, int check, char **ret);
 // char	*my_save_buf(t_list *find, t_list *head, char *ret);
-char	*my_save_buf(t_list *find, t_list *head);
+char	*my_save_buf(int fd, t_list **head);
 // char	*get_next_line(int fd, int check); //TODO check del
 char	*get_next_line(int fd); //TODO check del
 
