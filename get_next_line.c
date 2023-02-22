@@ -3,77 +3,99 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/19 20:31:52 by seok              #+#    #+#             */
-/*   Updated: 2023/02/08 05:28:12 by seok             ###   ########.fr       */
+/*   Created: 2023/02/18 03:18:32 by quesera           #+#    #+#             */
+/*   Updated: 2023/02/21 22:46:51 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-t_list	*my_lst_find(t_list **lst, int f_fd)
+t_list	*my_lst_make(t_list **head)
+{
+	(*head) = malloc(sizeof(t_list));
+	if (!(*head))
+		return (NULL);
+	(*head)->fd = -1;
+	(*head)->next = NULL;
+	return (*head);
+}
+
+t_list	*my_lst_find(t_list **head, int f_fd)
 {
 	t_list	*temp;
 
-	temp = (*lst);
+	if (*head == NULL)
+		*head = my_lst_make(head);
+	temp = *head;
 	while (temp)
 	{
 		if (temp->fd == f_fd)
 			return (temp);
 		temp = temp->next;
 	}
-	while ((*lst)->next)
-		*lst = (*lst)->next;
+	while ((*head)->next)
+		(*head) = (*head)->next;
 	temp = malloc(sizeof(t_list));
-	(*lst)->next = temp;
+	if (!temp)
+		return (NULL);
+	(*head)->next = temp;
+	temp->save = NULL;
 	temp->next = NULL;
 	temp->fd = f_fd;
 	return (temp);
 }
 
-void	my_lst_free(t_list *find, t_list **lst)
+int	my_save(t_list *find, char **ret, int check)
 {
-	while((*lst)->next == find)
-		*lst = (*lst)->next;
-	find->fd = 0;
-	(*lst)->next = find->next;
-	find->next = NULL;
-	free(find);
+	char	*temp;
+	int		idx;
+
+	idx = BUFFER_SIZE + 1;
+	while (idx--)
+		find->buf[idx] = 0;
+	check = 0;
+	check = read(find->fd, find->buf, BUFFER_SIZE);
+	find->save = ft_strjoin(find->save, find->buf);
+	idx = -1;
+	while (find->save[++idx])
+	{
+		if (find->save[idx] == '\n')
+		{
+			*ret = ft_substr(find->save, 0, idx + 1);
+			temp = ft_substr(find->save, idx + 1, \
+							ft_strlen(find->save) - (idx + 1));
+			free(find->save);
+			find->save = temp;
+			return (1);
+		}
+	}
+	return (check);
 }
 
-char	*my_save_buf(t_list *find, t_list *lst)
+char	*my_save_buf(int fd, t_list **head)
 {
 	char		*ret;
 	int			check;
-	int			idx;
+	t_list		*find;
 
 	ret = 0;
-	idx = -1;
+	check = 0;
+	find = my_lst_find(head, fd);
 	while (ret == 0)
 	{
-		ft_memset(find->buf, 0, BUFFER_SIZE + 1);
-		check = read(find->fd, find->buf, BUFFER_SIZE);
-		if (check == 0 && find->save != 0)
+		check = my_save(find, &ret, check);
+		if (check < 0 || (check == 0 && find->save == 0))
+		{
+			my_lst_free(find, *head);
+			return (NULL);
+		}
+		else if (check == 0 && find->save != 0)
 		{
 			ret = ft_substr(find->save, 0, ft_strlen(find->save));
-			my_lst_free(find, &lst);
-		}
-		else if (check == 0 && find->save == 0)
-			my_lst_free(find, &lst);
-		else
-		{
-			find->save = ft_strjoin(find->save, find->buf);
-			while (find->save[++idx])
-			{
-				if (find->save[idx] == '\n') 
-				{
-					ret = ft_substr(find->save, 0, idx + 1);
-					find->save = ft_substr(find->save, idx + 1,\
-								ft_strlen(find->save) - (idx + 1));
-					return (ret);
-				}
-			}
+			my_lst_free(find, *head);
+			return (ret);
 		}
 	}
 	return (ret);
@@ -81,11 +103,29 @@ char	*my_save_buf(t_list *find, t_list *lst)
 
 char	*get_next_line(int fd)
 {
-	static t_list	*lst;
+	static t_list	*head;
 	t_list			*find;
+	char			*ret;
 
-	if (BUFFER_SIZE <= 0 || fd < 0)
+	if (BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
+	{
+		find = head;
+		while (find)
+		{
+			if (find->fd == fd)
+			{
+				my_lst_free(find, head);
+				return (NULL);
+			}
+			find = find->next;
+		}
 		return (0);
-	find = my_lst_find(&lst, fd);
-	return (my_save_buf(find, lst));
+	}
+	ret = my_save_buf(fd, &head);
+	if (head->fd == -1 && head->next == NULL)
+	{
+		free(head);
+		head = NULL;
+	}
+	return (ret);
 }

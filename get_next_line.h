@@ -3,23 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/04 17:45:51 by seok              #+#    #+#             */
-/*   Updated: 2023/02/08 05:30:40 by seok             ###   ########.fr       */
+/*   Created: 2023/02/18 01:59:31 by seok              #+#    #+#             */
+/*   Updated: 2023/02/21 21:05:51 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-/*	test	*/
-#include <fcntl.h>
-#include <stdio.h>
-
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 3
+#  define BUFFER_SIZE 10
 # endif
+
 # include <stdlib.h>
 # include <unistd.h>
 
@@ -31,12 +28,17 @@ typedef struct s_list
 	struct s_list	*next;
 }t_list;
 
-char	*get_next_line(int fd);
-char	*my_find_char(char *save, int check);
-void	*ft_memset(void *str, int value, size_t len);
 size_t	ft_strlen(const char *s);
+void	*ft_memset(void *str, int value, size_t len);
+char	*ft_substr(char *s, unsigned int start, size_t len);
 void	*ft_memcpy(void *dest, const void *src, size_t len);
-char	*ft_strdup(const char *s1);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin(char *s1, char *s2);
+t_list	*my_lst_find(t_list **head, int f_fd);
+void	my_lst_free(t_list *find, t_list *head);
+void	my_check_zero(t_list *head, t_list *find, int check, char **ret);
+// char	*my_save_buf(t_list *find, t_list *head, char *ret);
+char	*my_save_buf(int fd, t_list **head);
+// char	*get_next_line(int fd, int check); //TODO check del
+char	*get_next_line(int fd); //TODO check del
+
 #endif

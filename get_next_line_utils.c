@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/15 16:18:18 by seok              #+#    #+#             */
-/*   Updated: 2023/02/08 05:25:49 by seok             ###   ########.fr       */
+/*   Created: 2023/02/18 02:06:52 by seok              #+#    #+#             */
+/*   Updated: 2023/02/21 20:58:59 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,42 +17,30 @@ size_t	ft_strlen(const char *s)
 	int	idx;
 
 	idx = 0;
+	if (s == NULL)
+		return (0);
 	while (s[idx])
 		idx++;
 	return ((size_t) idx);
 }
 
-void	*ft_memset(void *str, int value, size_t len)
+void	my_lst_free(t_list *find, t_list *head)
 {
-	while (len--)
-		*(unsigned char *)(str + len) = (unsigned char)value;
-	return (str);
+	t_list	*temp;
+
+	temp = head;
+	while (temp->next != NULL && temp->next != find)
+		temp = temp->next;
+	if (head == NULL)
+		free(head);
+	if (find->save != NULL)
+		free(find->save);
+	temp->next = find->next;
+	find->next = NULL;
+	free(find);
 }
 
-char	*ft_strdup(const char *s1)
-{
-	char	*ret;
-	int		idx;
-
-	idx = 0;
-	while (s1[idx])
-	{
-		idx++;
-	}
-	ret = (char *)malloc(sizeof(char) * (idx + 1));
-	if (!ret)
-		return (0);
-	idx = 0;
-	while (s1[idx])
-	{
-		ret[idx] = s1[idx];
-		idx++;
-	}
-	ret[idx] = 0;
-	return (ret);
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, unsigned int start, size_t len)
 {
 	char	*str;
 	size_t	sstart;
@@ -63,7 +51,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	sstart = (size_t)start;
 	s_len = ft_strlen(s);
 	if (s_len <= sstart)
-		return (ft_strdup(""));
+		return (NULL);
 	if (s_len - start <= len)
 		str = (char *)malloc(sizeof(char) * (s_len - start + 1));
 	if (s_len - start > len)
@@ -94,7 +82,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t len)
 	return (dest);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	int		s1_len;
 	int		s2_len;
@@ -108,5 +96,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_memcpy(ret, s1, s1_len);
 	ft_memcpy(ret + s1_len, s2, s2_len);
 	ret[s1_len + s2_len] = 0;
+	free(s1);
 	return (ret);
 }
