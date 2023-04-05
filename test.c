@@ -27,7 +27,8 @@ int	ft_printf(const char *format, ...)
 
 int	main()
 {
+    // printf ("print : %d\n", printf("hello : %dworld\n", 75));
 	ft_printf("abc", 'a', 97);
-    printf("\nprintf : %.0s++", "123");
-    printf("\nprintf : %.1d++\n", 123);
+    printf("\ns_printf : %-.2s++", "123");
+    printf("\nd_printf : %-.7d++\n", 123);
 }

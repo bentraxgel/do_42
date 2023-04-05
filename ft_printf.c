@@ -17,11 +17,20 @@
 int	ft_printf(const char *format, ...)
 {
 	int		len;
+	int		idx;
 	va_list ap;
 	
 	len = 0;
+	idx = 0;
 	va_start(ap, format);
 	
+	while (*format)
+	{
+		if (*(format + idx) == '%')
+		{
+			idx = my_check(format, idx);
+		}
+	}
 	// printf ("va_start : %p\n", ap);
 	// // while (*format)
 	// for (int i = 0; i < 3; i++)
