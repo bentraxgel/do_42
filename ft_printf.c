@@ -14,21 +14,29 @@
 #include <printf.h>
 #include <stdio.h> //TODO del
 
+int	my_check(char *format, int idx)
+{
+	if (*(format + idx) == 'c')
+}
+
 int	ft_printf(const char *format, ...)
 {
 	int		len;
 	int		idx;
+	char	*str;
 	va_list ap;
 	
 	len = 0;
-	idx = 0;
+	idx = -1;
+	str = 0;
 	va_start(ap, format);
 	
-	while (*format)
+	while (*(format + idx++))
 	{
 		if (*(format + idx) == '%')
 		{
-			idx = my_check(format, idx);
+			str = malloc(idx);
+			idx = my_check(format, idx + 1);
 		}
 	}
 	// printf ("va_start : %p\n", ap);

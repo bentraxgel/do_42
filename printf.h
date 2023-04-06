@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printf.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 14:20:05 by seok              #+#    #+#             */
-/*   Updated: 2023/04/02 14:20:14 by seok             ###   ########.fr       */
+/*   Updated: 2023/04/06 17:19:18 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,6 @@
 
 # include <unistd.h> //write
 # include <stdarg.h> //가변인자
+# include <stdlib.h> //malloc
 
 #endif
