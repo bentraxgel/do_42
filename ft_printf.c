@@ -11,34 +11,46 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <printf.h>
+#include "printf.h"
 #include <stdio.h> //TODO del
 
-int	my_check(char *format, int idx)
+int	my_check(const char *format, int idx, char **str)
 {
-	if (*(format + idx) == 'c')
+	*str = ft_strjoin(*str, "!check!");
+	printf("\nmy_check : %c\n", *(format + idx));
+	return (idx++);
+	// if (*(format + idx) == 'c')
 }
 
 int	ft_printf(const char *format, ...)
 {
 	int		len;
 	int		idx;
+	int		start;
 	char	*str;
+	char	*tmp;
 	va_list ap;
 	
 	len = 0;
 	idx = -1;
 	str = 0;
+	tmp = 0;
 	va_start(ap, format);
 	
-	while (*(format + idx++))
+	while (*(format + ++idx) != '\0')
 	{
 		if (*(format + idx) == '%')
 		{
-			str = malloc(idx);
-			idx = my_check(format, idx + 1);
+			tmp = ft_substr(format, start, idx - start);
+			str = ft_strjoin(str, tmp); //TODO 언젠간 free
+			free(tmp);
+			start = my_check(format, idx + 1, &str);
+			idx = start;
 		}
+		printf("NOT\n");
 	}
+	printf("finish : %s\n", str);
+
 	// printf ("va_start : %p\n", ap);
 	// // while (*format)
 	// for (int i = 0; i < 3; i++)
@@ -49,4 +61,12 @@ int	ft_printf(const char *format, ...)
 	// va_end(ap);
 	//return (num);
 	return (len);
+}
+
+int	main()
+{
+	printf("this is main : ");
+	printf("ft_ : %d\n", ft_printf("hello%cye", 'A'));
+	printf("\nEND\n");
+
 }
