@@ -14,11 +14,17 @@
 #include "printf.h"
 #include <stdio.h> //TODO del
 
+void	leaks()
+{
+	system("leaks a.out");
+}
+
 int	my_check(const char *format, int idx, char **str)
 {
-	*str = ft_strjoin(*str, "!check!");
+	*str = ft_strjoin_free(*str, "!check!");
 	printf("\nmy_check : %c\n", *(format + idx));
-	return (idx++);
+	printf("check idx : %d\n", idx);
+	return (idx + 1);
 	// if (*(format + idx) == 'c')
 }
 
@@ -42,12 +48,22 @@ int	ft_printf(const char *format, ...)
 		if (*(format + idx) == '%')
 		{
 			tmp = ft_substr(format, start, idx - start);
-			str = ft_strjoin(str, tmp); //TODO 언젠간 free
+			str = ft_strjoin_free(str, tmp); //TODO 언젠간 free
 			free(tmp);
 			start = my_check(format, idx + 1, &str);
+			printf("start : %d\n", start);
 			idx = start;
 		}
+		printf("idx : %d\n", idx);
 		printf("NOT\n");
+	}
+	printf("while_idx : %d\n", idx);
+	if (start != idx)
+	{
+		printf("In\n");
+		tmp = ft_substr(format, start, idx - start);
+		str = ft_strjoin_free(str, tmp);
+		free(tmp);
 	}
 	printf("finish : %s\n", str);
 
@@ -65,6 +81,7 @@ int	ft_printf(const char *format, ...)
 
 int	main()
 {
+	atexit(leaks);
 	printf("this is main : ");
 	printf("ft_ : %d\n", ft_printf("hello%cye", 'A'));
 	printf("\nEND\n");
