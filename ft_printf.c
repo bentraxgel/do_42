@@ -33,6 +33,10 @@ option인지 flag인지 그거
 		}
 	}
 */
+void	my_c(char **str, const char *c)
+{
+	*str = ft_strjoin_free(*str, c);
+}
 int	my_check(const char *format, int idx, char **str)
 {
 	int		i;
@@ -57,13 +61,9 @@ int	my_check(const char *format, int idx, char **str)
 			free(*str);
 		return (-1);
 	}
+	my_c(str, &format[idx]);
 	*str = ft_strjoin_free(*str, "!check!");
-	printf("\nmy_check : %c\n", *(format + idx));
-	printf("check idx : %d\n", idx);
-	printf("check_str : %s\n", *str);
-	// return (idx + 1);
 	return (idx);
-	// if (*(format + idx) == 'c')
 }
 
 int	ft_printf(const char *format, ...)
