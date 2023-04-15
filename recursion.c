@@ -3,17 +3,22 @@
 
 void	make_str(int n, char **str)
 {
-	char ch;
+	char *ch;
 	char	*tmp;
+	char	g;
 
+	// ch = 0;
 	tmp = *str;
 	// *str = malloc(ft_strlen(*str) + 1);
 	if (0 <= n && n <= 9)
 	{
-		ch = n + '0';
+		*str = ft_strjoin_free(*str, ft_itoa(n));
+		// g = n + '0';
+		// ch = &g;
 		printf("s : %s\n", *str);
 		printf("p : %p\n", *str);
-		*str = ft_strjoin_free(*str, &ch);
+		printf("p : %p\n", str);
+		// *str = ft_strjoin_free(*str, ch);
 	}
 	else if (n == 10)
 		*str = ft_strjoin_free(*str, "A");
@@ -27,19 +32,28 @@ void	make_str(int n, char **str)
 		*str = ft_strjoin_free(*str, "E");
 	else if (n == 15)
 		*str = ft_strjoin_free(tmp, "F");
-	printf("make : %s\n", *str);
+	// printf("make : %s\n", *str);
 }
 
-void	go(int n, char *str)
+char	*go(int n, char *str)
 {
 	// char *str;
 
 	// str = 0;
+	/*
 	if (n == 0)
-		return ;
+		return (str);
 	go(n / 10, str);
 	make_str(n % 10, &str);
-	printf("%d\n", n % 10);
+	*/
+	// printf("%d\n", n % 10);
+	// printf("%s"))
+	if (n != 0)
+	{
+		go(n / 10, str);
+		make_str(n % 10, &str);
+	}
+	return (str);
 }
 
 int	main()
@@ -50,8 +64,9 @@ int	main()
 	str = 0;
 			printf("mainp : %p\n", str);
 
-	// go(127, str);
-	make_str(1, &str);
-	make_str(2, &str);
+	printf("main__%s\n", go(127, str));
+	// make_str(1, &str);
+	// make_str(2, &str);
+	// make_str(127, &str);
 	// printf("hex : %s\n", str);
 }
