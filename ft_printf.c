@@ -19,22 +19,39 @@ void	leaks()
 	system("leaks a.out");
 }
 
-int	my_print(char *str) //출력하는 함수
-{
+/*
+option인지 flag인지 그거
 	int	i;
-
-	i = 0;
-	while (str[i])
+	while (OPTION[i])
 	{
-		write(1, &str[i], 1);
-		i++;
+		i = 0;
+		if (format[idx] == OPTION[i])
+		{
+			//배열에 값 1로 바꿈 (check하는것)
+			idx++;
+			i++;
+		}
 	}
-	return (i);
-}
-
+*/
 int	my_check(const char *format, int idx, char **str)
 {
-	if (format[idx] != 'c') //TODO specifier이 아닌 경우 test
+	int		i;
+	char	c;
+
+	i = -1;
+	c = 0;
+	printf("1:check_str : %s\n", *str);
+	while (SPECIFIER[++i])
+	{
+		//TODO 골라골라 편한걸로 골라
+		// if (format[idx] == SPECIFIER[i])
+		if (format[idx] == "cspdiuxX%"[i])
+		{
+			c = SPECIFIER[i];
+			break ;
+		}
+	}
+	if (c == 0) //TODO specifier이 아닌 경우 test
 	{
 		if (str != 0)
 			free(*str);
@@ -43,7 +60,9 @@ int	my_check(const char *format, int idx, char **str)
 	*str = ft_strjoin_free(*str, "!check!");
 	printf("\nmy_check : %c\n", *(format + idx));
 	printf("check idx : %d\n", idx);
-	return (idx + 1);
+	printf("check_str : %s\n", *str);
+	// return (idx + 1);
+	return (idx);
 	// if (*(format + idx) == 'c')
 }
 
@@ -56,30 +75,34 @@ int	ft_printf(const char *format, ...)
 	char	*tmp;
 	va_list ap;
 	
-	len = 0;
+	len = -1;
 	idx = -1;
 	str = 0;
 	tmp = 0;
+	start = 0;
 	va_start(ap, format);
 	
+		printf("\n\nprintf:check_str : %s\n\n", str);
+
 	while (*(format + ++idx) != '\0')
 	{
+		printf("printf_start : %d", start);
 		if (*(format + idx) == '%')
 		{
 			tmp = ft_substr(format, start, idx - start);
 			str = ft_strjoin_free(str, tmp); //TODO 언젠간 free
 			free(tmp);
-			start = my_check(format, idx + 1, &str);
+			idx = my_check(format, idx + 1, &str);
+			start = idx + 1;
 			printf("start : %d\n", start);
-			idx = start;
 		}
-		if (idx < 0) //종료조건 (fail)
+		if (idx < 0) //종료조건 (fail) 위에서 free함
 			return (0);
 		printf("idx : %d\n", idx);
-		printf("NOT\n");
+		printf("NOT : %c\n", format[idx]);
 	}
 	printf("while_idx : %d\n", idx);
-	if (start != idx) //서식지정자 이후 문자열까지 싹싹 긁어모아~
+	if (start + 1 != idx) //서식지정자 이후 문자열까지 싹싹 긁어모아~
 	{
 		printf("In\n");
 		tmp = ft_substr(format, start, idx - start);
@@ -88,10 +111,14 @@ int	ft_printf(const char *format, ...)
 	}
 	if (str != 0) //종료조건 (true)
 	{
-		len = my_print(str);
 		printf("\nfinish : %s\n", str);
+		while (*(str + (++len)))
+			ft_putchar_fd(*(str + len), 1);
+		printf("\n");
+		// len = my_write(str);
 	}
 	free(str);
+	str = NULL;
 
 	// printf ("va_start : %p\n", ap);
 	// // while (*format)
@@ -112,6 +139,8 @@ int	main()
 	printf("ft_ : %d\n", ft_printf("hello%cye", 'A'));
 	printf("\n\nothers\n");
 	printf("ft_ : %d\n", ft_printf("hello%dye", 'A'));
+	printf("\n\nothers\n");
+	printf("ft_ : %d\n", ft_printf("hello%d%s", 'A'));
 	printf("\nEND\n");
 
 }
