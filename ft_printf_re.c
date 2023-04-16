@@ -38,34 +38,23 @@ void	my_c(char c, char **str)
 	*str = ft_strjoin_free(*str, c);
 }
 
-int	my_check(const char *format, int idx, char **str)
+int	my_check_type(const char *format, int idx, char **str)
 {
 	int		i;
-	char	c;
+	int		type_size;
 
 	i = -1;
-	c = 0;
-	printf("1:check_str : %s\n", *str);
+	type_size = 0;
 	while (SPECIFIER[++i])
 	{
 		//TODO 골라골라 편한걸로 골라
 		// if (format[idx] == SPECIFIER[i])
 		if (format[idx] == "cspdiuxX%"[i])
-		{
-			c = SPECIFIER[i];
-			my_check_if(SPECIFIER[i], str);
-			break ;
-		}
+			return (my_typesize(SPECIFIER[i])); //typesize반환
 	}
-	if (c == 0) //TODO specifier이 아닌 경우 test
-	{
-		if (str != 0)
-			free(*str);
-		return (-1);
-	}
-	my_c(str, &format[idx]);
-	*str = ft_strjoin_free(*str, "!check!");
-	return (idx);
+	if (str != 0)
+		free(*str);
+	return (-1);
 }
 
 int	ft_printf(const char *format, ...)
