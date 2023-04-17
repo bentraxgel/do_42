@@ -45,16 +45,18 @@ int	ft_print(const char *format, ...)
 	printf("va_arg : %s\n", va_arg(ap, char *));
 	printf("va_arg : %d\n", va_arg(ap, int));
 */
-	int	num = va_arg(ap, int);
+	// int	num = va_arg(ap, int);
+	char	num = va_arg(ap, int);
 	printf("num : %d\n", num);
+	printf("num : %c\n", num);
 	// char c = va_arg(ap, unsigned int) + '0';// (char *) 포인터는 8byte
 	// str = &c;
 	// printf("c %p\n", &c);
 	// printf("c %c\n", c);
 	// printf("str_%%p : %p\n", str);
 	// printf("str_%%s : %s\n", str);
-	// printf("\n\nsizeof : %lu", sizeof(unsigned long));
-	// printf("\n\nsizeof : %lu", sizeof(unsigned int));
+	printf("\n\nsizeof : %lu", sizeof(unsigned long));
+	printf("\n\nsizeof : %lu", sizeof(long long));
 	return (0);
 
 	// str = "hello";// 0x123
@@ -65,5 +67,5 @@ int	ft_print(const char *format, ...)
 
 int	main()
 {
-	ft_print("t", "hello", -1);
+	ft_print("t", "hello", 65);
 }
