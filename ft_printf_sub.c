@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf.h                                           :+:      :+:    :+:   */
+/*   ft_printf_sub.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/02 14:20:05 by seok              #+#    #+#             */
-/*   Updated: 2023/04/18 17:33:24 by seok             ###   ########.fr       */
+/*   Created: 2023/04/15 22:34:58 by seok              #+#    #+#             */
+/*   Updated: 2023/04/18 17:33:17 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PRINTF_H
-# define PRINTF_H
+#include "printf.h"
 
-# include <unistd.h> //write
-# include <stdarg.h> //가변인자
-# include <stdlib.h> //malloc
-
-//TODO how to ues libft?
-# include "libft/libft.h"
-
-# define SPECIFIER "cspdiuxX%"
-int	my_specifier(char ch, va_list *ap);
-int	my_va_int(char ch, long long num);
-int	my_va_void(void *str);
-int	my_print(char *str);
-
-#endif
+int	my_specifier(char ch, va_list *ap)
+{
+	if (ch == '%')
+	{
+		write(1, "%", 1);
+		return (1);
+	}
+	else if (ch == 's')
+		return (my_print(va_arg(*ap, char *)));
+	else if (ch == 'p')
+		return (my_va_void(va_arg(*ap, void *)));
+	else
+		return (my_va_int(ch, va_arg(*ap, int)));
+	return (0);
+}

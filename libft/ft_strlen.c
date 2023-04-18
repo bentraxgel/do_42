@@ -17,7 +17,7 @@ size_t	ft_strlen(const char *s)
 	int	idx;
 
 	idx = 0;
-	if (s == 0) //TODO 문자열이 비었을 경우에 대해 예외처리해야함.
+	if (s == 0)
 		return (0);
 	while (s[idx])
 		idx++;

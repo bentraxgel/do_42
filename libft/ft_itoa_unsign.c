@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf.h                                           :+:      :+:    :+:   */
+/*   ft_itoa_unsign.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/02 14:20:05 by seok              #+#    #+#             */
-/*   Updated: 2023/04/18 17:33:24 by seok             ###   ########.fr       */
+/*   Created: 2023/04/18 15:58:36 by seok              #+#    #+#             */
+/*   Updated: 2023/04/18 16:08:50 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PRINTF_H
-# define PRINTF_H
+#include "libft.h"
 
-# include <unistd.h> //write
-# include <stdarg.h> //가변인자
-# include <stdlib.h> //malloc
+char	*ft_itoa_unsign(unsigned int num)
+{
+	unsigned int	n;
+	int				len;
+	char			*ret;
 
-//TODO how to ues libft?
-# include "libft/libft.h"
-
-# define SPECIFIER "cspdiuxX%"
-int	my_specifier(char ch, va_list *ap);
-int	my_va_int(char ch, long long num);
-int	my_va_void(void *str);
-int	my_print(char *str);
-
-#endif
+	n = num;
+	len = 0;
+	while (num > 0)
+	{
+		len++;
+		num /= 10;
+	}
+	ret = malloc(len);
+	if (!ret)
+		return (0);
+	ret[len] = 0;
+	while (n > 0)
+	{
+		ret[--len] = n % 10 + '0';
+		n /= 10;
+	}
+	return (ret);
+}
