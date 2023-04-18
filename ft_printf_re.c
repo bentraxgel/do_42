@@ -19,48 +19,38 @@ void	leaks()
 	system("leaks a.out");
 }
 
-void	my_c(char c, char **str)
-{
-	*str = ft_strjoin_free(*str, c);
-}
 
-char	my_specifier(const char *format, int idx, char **str)
-{
-	int		i;
-	int		type_size;
-
-	i = -1;
-	type_size = 0;
-	if (format[idx] == "cspdiuxX%"[i])
-		return (SPECIFIER[i]);
-	else
-		//그냥 출력
-	return (0);
-}
 
 int	ft_printf(const char *format, ...)
 {
 	int		len;
 	int		idx;
-	int		start;
+	int		i;
 	va_list ap;
-	
+
 	idx = 0;
 	va_start(ap, format);
-	while (format[idx]) != '\0')
+	while (format[idx] != '\0')
 	{
-		if (*(format + idx) == '%')
+		if (format[idx] == '%')
 		{
-			ch = my_specifier(format, idx, &str); //뭔지 문자배출
-			idx++;
+			i = -1;
+			while (SPECIFIER[++i])
+			{
+				if (format[idx + 1] == SPECIFIER[i])
+				{
+					my_specifier(SPECIFIER[i]);
+					idx++;
+					break ;
+				}
+				else
+					return (-1);
+			}
 		}
 		else
-		{
-			
-		}
+			write(1, format[idx], 1);
 	}
 	va_end(ap);
-	//return (num);
 	return (len);
 }
 
