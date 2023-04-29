@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-
+ //leak이..num을 어찌해야하누..
 void func(char *av, int *num) //atoi하면서 오류 찾고 exit
 {
 	printf("num add %p\n", num);
