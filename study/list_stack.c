@@ -36,7 +36,7 @@ void	destroy_stack(lststack **stack)
 	free(stack);
 }
 
-new*	create_node(char *data)
+node*	create_node(char *data)
 {
 	node *new;
 
