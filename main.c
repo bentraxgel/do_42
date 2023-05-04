@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:15 by seok              #+#    #+#             */
-/*   Updated: 2023/04/28 08:41:36 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/04 13:16:53 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,15 @@
 #include "push_swap.h"
 #include <stdio.h>
 
-//	write(2, "ERROR\n", 6); //TODO 함수종료
-
-int	main(int argc, char **argv)
+int	main(int argc, char *argv[])
 {
-	int		i = 0;
+	int		i;
 	char	*arg;
 	char	*space;
+	char	**word;
+	int		*num;
 
+	i = 0;
 	space = " ";
 	if (argc == 1)
 		return (0);
@@ -33,6 +34,14 @@ int	main(int argc, char **argv)
 		arg = ft_strjoin_free(arg, argv[i]);
 		arg = ft_strjoin_free(arg, space);
 	}
-	printf("arg : %s\n", arg);
+	word = ft_split(arg, ' ');
+	i = 0;
+	while (word[i])
+		i++;
+	num = (int *)malloc(sizeof(int *) * (i + 1));
+	while (--i >= 0)
+		num[i] = ft_atoi_pro(word[i]);
+	for (int i = 0; i < 5; i++)
+		printf("num[%d] : %d\n", i, num[i]);
 	return (0);
 }
