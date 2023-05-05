@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:37 by seok              #+#    #+#             */
-/*   Updated: 2023/05/05 05:20:00 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/05 08:35:41 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ typedef struct s_info
 	int			*a;
 	int			*b;
 	int			*sort;
-	long long	a_len;
-	long long	b_len;
-	long long	total_len;
+	size_t	a_len;
+	size_t	b_len;
+	size_t	total_len;
 } t_info;
 
 void	my_error();
