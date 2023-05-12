@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 06:03:10 by seok              #+#    #+#             */
-/*   Updated: 2023/05/12 19:23:05 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/12 21:04:38 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ void	p_command(t_info *stack, int flag)
 {
 	int		tmp;
 
-	stack->b_len = ft_arrlen(stack->b);
 	if (flag == STACK_A && stack->a_len > 0)
 	{
 		tmp = stack->a[stack->a_len - 1];
+		stack->a[stack->a_len - 1] = 0;
 		stack->a_len--;
 		stack->b[stack->b_len] = tmp;
 		stack->b_len++;
@@ -75,6 +75,7 @@ void	p_command(t_info *stack, int flag)
 	else if (flag == STACK_B && stack->b_len > 0)
 	{
 		tmp = stack->b[stack->b_len - 1];
+		stack->b[stack->b_len - 1] = 0;
 		stack->b_len--;
 		stack->a[stack->a_len] = tmp;
 		stack->a_len++;

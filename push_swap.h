@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:37 by seok              #+#    #+#             */
-/*   Updated: 2023/05/12 15:37:48 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/12 22:48:38 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,11 @@ void	r_command(t_info *stack, int flag, size_t len);
 void	rr_command(t_info *stack, int flag, size_t len);
 void	p_command(t_info *stack, int flag);
 void	s_command(t_info *stack, int flag);
+
+//optimization.c
+t_list	*r_print(t_list *command);
+t_list	*rr_print(t_list *command);
+t_list	*s_print(t_list *command);
+void	print_command(t_list *command);
 
 #endif
