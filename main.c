@@ -6,12 +6,22 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:15 by seok              #+#    #+#             */
-/*   Updated: 2023/05/05 06:00:52 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/12 19:25:58 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <stdio.h> //TODO : 지워야징
+
+void	func(t_list *command)
+{
+	printf("func\n");
+	while(command)
+	{
+		printf("%s", command->content);
+		command = command->next;
+	}
+}
 
 int	main(int argc, char *argv[])
 {
@@ -35,12 +45,46 @@ int	main(int argc, char *argv[])
 	while (word[i])
 		i++;
 	stack.total_len = i;
+	stack.a_len = i;
+	int	len = i; //TODO 이따가 이거 없이 한번 해보기 될거야 무조건!
 	stack.a = (int *)malloc(sizeof(int *) * (i + 1));
 	stack.sort = (int *)malloc(sizeof(int *) * (i + 1));
-	while (--i >= 0)
-		stack.a[i] = ft_atoi_pro(word[i]);
+	i = -1;
+	while (word[++i])
+		stack.a[len - i - 1] = ft_atoi_pro(word[i]);
 	stack.sort = stack.a;
+
+	//얘는 만약 정렬이 다 돼있을경우엔 필요없기때문에 생각해서 위치 두자.
+	stack.b = (int *)malloc(sizeof(int *) * (i + 1));
+	/**/
 	for (int i = 0; i < 5; i++)
 		printf("num[%d] : %d\n", i, stack.a[i]);
+	printf("len : %zu\n", stack.a_len);
+	// rr_command(&stack, STACK_A, stack.a_len);
+	s_command(&stack, STACK_A);
+	printf("\n");
+	printf("\ns_command\n");
+	for (int i = 0; i < 5; i++)
+		printf("num[%d] : %d\n", i, stack.a[i]);
+	printf("len : %zu\n", stack.a_len);
+	
+	p_command(&stack, STACK_A);
+	printf("\n");
+	printf("\np_command\n");
+	for (int i = 0; i < 5; i++)
+		printf("num[%d] : %d\n", i, stack.a[i]);
+	printf("len : %zu\n", stack.a_len);
+
+	p_command(&stack, STACK_A);
+	printf("\np_command\n");
+	printf("\n");
+	for (int i = 0; i < 5; i++)
+		printf("num[%d] : %d\n", i, stack.a[i]);
+	printf("len : %zu\n", stack.a_len);
+	
+	func(stack.command);
+	// for (int i = 0; i < 5; i++)
+	// 	printf("%s\n", stack.command.content);
+	/**/
 	return (0);
 }
