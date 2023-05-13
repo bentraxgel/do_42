@@ -6,10 +6,28 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 23:16:10 by seok              #+#    #+#             */
-/*   Updated: 2023/05/12 23:16:31 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/13 20:47:14 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include "libft.h"
 
-int	ft_duplicate()
+int	ft_duplicate(int *arr, size_t len)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (i < len)
+	{
+		j = i + 1;
+		while(j < len)
+		{
+			if (arr[i] == arr[j]){
+				return(1);}
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}

@@ -12,22 +12,22 @@
 
 #include	"libft.h"
 
-void	*ft_calloc(size_t count, size_t size)
+void	*ft_calloc(size_t count, size_t typesize)
 {
 	void	*ret;
 
-	if (count < 0 || size < 0)
+	if (count < 0 || typesize < 0)
 		return (0);
-	if (count == 0 || size == 0)
+	if (count == 0 || typesize == 0)
 	{
 		count = 1;
-		size = 1;
+		typesize = 1;
 	}
-	if (SIZE_MAX / size < count)
+	if (SIZE_MAX / typesize < count)
 		return (0);
-	ret = (void *)malloc(count * size);
+	ret = (void *)malloc(count * typesize);
 	if (!ret)
 		return (0);
-	ft_memset(ret, 0, count * size);
+	ft_memset(ret, 0, count * typesize);
 	return (ret);
 }

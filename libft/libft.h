@@ -40,7 +40,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t len);
 void	*ft_memcpy(void *dest, const void *src, size_t len);
 void	*ft_memmove(void *dest, const void *src, size_t len);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-void	*ft_calloc(size_t count, size_t size);
+void	*ft_calloc(size_t count, size_t typesize);
 char	*ft_strdup(const char *s1);
 int		ft_memcmp(const void *s1, const void *s2, size_t len);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
@@ -72,5 +72,6 @@ char	*ft_itoa_hex(unsigned int num, char ch);
 char	*ft_itoa_hex_long(unsigned long long num);
 int		ft_atoi_pro(const char *str);
 size_t	ft_lstlen(t_list *lst);
+int		ft_duplicate(int *arr, size_t len);
 
 #endif
