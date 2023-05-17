@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:37 by seok              #+#    #+#             */
-/*   Updated: 2023/05/17 21:11:19 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/17 23:06:51 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_info
 
 //utill.c
 int	my_error();
-int	my_indexing(int **arr, size_t len);
+int	*my_indexing(int *arr, size_t len);
 int	*indexing(int *arr, size_t len);
 int	sort_check(int *arr, size_t len);
 int	duplicate_check(int *arr, size_t len);

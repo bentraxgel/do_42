@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:15 by seok              #+#    #+#             */
-/*   Updated: 2023/05/17 21:08:08 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/17 23:06:08 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,22 +70,17 @@ int	main(int argc, char *argv[])
 	if (duplicate_check(stack.a, stack.a_len) == FALSE)
 		my_error();
 //등수메기기
-	if (my_indexing(&stack.a, stack.a_len) == FALSE) //false == 이미 정렬 완
+	stack.a = my_indexing(stack.a, stack.a_len);
+	if (sort_check(stack.a, stack.a_len) == TRUE)
 	{
 		free(stack.a);
 		return (0);
 	}
-	// if (stack.a == TRUE){
-	// 	printf("DO\n");
-	// 	free(stack.a);
-	// }
-	//등수메기고 값 줘도되잖아.?
-	// free(stack.a); //이전에 할당된 주소값이 있기때문에 주소로 주려면 free해야함
-	// stack.a = stack.total;
-
 	//얘는 만약 정렬이 다 돼있을경우엔 필요없기때문에 생각해서 위치 두자.
 	stack.b = (int *)ft_calloc(stack.a_len + 1, sizeof(int *));
-
+/*
+	이제 여기서 sort해야함......!!
+*/
 	// // if (stack.a)
 		free(stack.a); //왜 얘는 없어도 누수가 안나지? total주소 받아서 그런가.
 	// // if (stack.b)
