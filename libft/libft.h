@@ -72,6 +72,5 @@ char	*ft_itoa_hex(unsigned int num, char ch);
 char	*ft_itoa_hex_long(unsigned long long num);
 int		ft_atoi_pro(const char *str);
 size_t	ft_lstlen(t_list *lst);
-int		ft_duplicate(int *arr, size_t len);
 
 #endif

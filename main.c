@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:15 by seok              #+#    #+#             */
-/*   Updated: 2023/05/13 22:11:06 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/17 21:08:08 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	main(int argc, char *argv[])
 	stack.a_len = i;
 	stack.b_len = 0;
 	stack.a = (int *)malloc(sizeof(int *) * (i + 1));
-	stack.total = (int *)malloc(sizeof(int *) * (i + 1));
+	// stack.total = (int *)malloc(sizeof(int *) * (i + 1));
 
 	i = -1;
 	while (word[++i])
@@ -67,80 +67,31 @@ int	main(int argc, char *argv[])
 	free(word);
 
 //중복된 숫자가 있는지 확인
-	if (ft_duplicate(stack.a, stack.a_len))
+	if (duplicate_check(stack.a, stack.a_len) == FALSE)
 		my_error();
 //등수메기기
-	stack.a = ft_indexing(stack.a, stack.a_len);
+	if (my_indexing(&stack.a, stack.a_len) == FALSE) //false == 이미 정렬 완
+	{
+		free(stack.a);
+		return (0);
+	}
+	// if (stack.a == TRUE){
+	// 	printf("DO\n");
+	// 	free(stack.a);
+	// }
 	//등수메기고 값 줘도되잖아.?
 	// free(stack.a); //이전에 할당된 주소값이 있기때문에 주소로 주려면 free해야함
 	// stack.a = stack.total;
 
 	//얘는 만약 정렬이 다 돼있을경우엔 필요없기때문에 생각해서 위치 두자.
-	stack.b = (int *)malloc(sizeof(int *) * (i + 1));
-		for (int i = 0; i < 5; i++)
-			printf("a[%d] : %d\tb[%d] : %d\n", i, stack.a[i], i, stack.b[i]);
-		printf("a_len : %zu\tb_len : %zu\n", stack.a_len, stack.b_len);
-	/*
-		// rr_command(&stack, STACK_A, stack.a_len);
-		s_command(&stack, STACK_A);
-		printf("\n");
-		printf("\ns_command\n");
-		for (int i = 0; i < 5; i++)
-			printf("a[%d] : %d\tb[%d] : %d\n", i, stack.a[i], i, stack.b[i]);
-		printf("a_len : %zu\tb_len : %zu\n", stack.a_len, stack.b_len);
-		
-		p_command(&stack, STACK_A);
-		printf("\n");
-		printf("\np_command\n");
-		for (int i = 0; i < 5; i++)
-			printf("a[%d] : %d\tb[%d] : %d\n", i, stack.a[i], i, stack.b[i]);
-		printf("a_len : %zu\tb_len : %zu\n", stack.a_len, stack.b_len);
+	stack.b = (int *)ft_calloc(stack.a_len + 1, sizeof(int *));
 
-		p_command(&stack, STACK_A);
-		printf("\n");
-		for (int i = 0; i < 5; i++)
-			printf("a[%d] : %d\tb[%d] : %d\n", i, stack.a[i], i, stack.b[i]);
-		printf("a_len : %zu\tb_len : %zu\n", stack.a_len, stack.b_len);
-		printf("<<<b_len : %zu>>>>>>\n", stack.b_len);
-		
-		r_command(&stack, STACK_A, stack.a_len);
-		r_command(&stack, STACK_B, stack.b_len);
-		// s_command(&stack, STACK_A);
-		s_command(&stack, STACK_B);
-		rr_command(&stack, STACK_A, stack.a_len);
-		rr_command(&stack, STACK_B, stack.b_len);
-		
-		printf("\np_command\n");
-		printf("\n");
-		for (int i = 0; i < 5; i++)
-			printf("a[%d] : %d\tb[%d] : %d\n", i, stack.a[i], i, stack.b[i]);
-		printf("a_len : %zu\tb_len : %zu\n", stack.a_len, stack.b_len);
-
-		p_command(&stack, STACK_B);
-		printf("\np_command\n");
-		printf("\n");
-		for (int i = 0; i < 5; i++)
-			printf("a[%d] : %d\tb[%d] : %d\n", i, stack.a[i], i, stack.b[i]);
-		printf("a_len : %zu\tb_len : %zu\n", stack.a_len, stack.b_len);
-		p_command(&stack, STACK_B);
-		printf("\np_command\n");
-		printf("\n");
-		for (int i = 0; i < 5; i++)
-			printf("a[%d] : %d\tb[%d] : %d\n", i, stack.a[i], i, stack.b[i]);
-		printf("a_len : %zu\tb_len : %zu\n", stack.a_len, stack.b_len);
-		
-		func(stack.command);
-		printf("\noptimization\n");
-		print_command(stack.command);
-		// func(stack.command);
-		// for (int i = 0; i < 5; i++)
-		// 	printf("%s\n", stack.command.content);
-	*/
 	// // if (stack.a)
-		// free(stack.a); //왜 얘는 없어도 누수가 안나지? total주소 받아서 그런가.
+		free(stack.a); //왜 얘는 없어도 누수가 안나지? total주소 받아서 그런가.
 	// // if (stack.b)
 		free(stack.b);
+		free(stack.command); //TODO 명령어들 출력하고 free잊지말고 해야함. node들이 만들어져있기때문
 	// // if (stack.total)
-		free(stack.total);
+		// free(stack.total);
 	return (0);
 }

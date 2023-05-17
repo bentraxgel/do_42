@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:37 by seok              #+#    #+#             */
-/*   Updated: 2023/05/13 21:49:19 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/17 21:11:19 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "libft/libft.h"
 #include <stdio.h>
 
+# define TRUE 1
+# define FALSE 0
 typedef enum e_set
 {
 	STACK_A = 0,
@@ -34,8 +36,11 @@ typedef struct s_info
 } t_info;
 
 //utill.c
-void	my_error();
-int	*ft_indexing(int *arr, size_t len);
+int	my_error();
+int	my_indexing(int **arr, size_t len);
+int	*indexing(int *arr, size_t len);
+int	sort_check(int *arr, size_t len);
+int	duplicate_check(int *arr, size_t len);
 
 //command.c
 void	r_command(t_info *stack, int flag, size_t len);
