@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:37 by seok              #+#    #+#             */
-/*   Updated: 2023/05/17 23:06:51 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/17 23:37:19 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,15 @@ typedef struct s_info
 	t_list		*command;
 	int			*a;
 	int			*b;
-	int			*total;
+	int			*total; //이자식 없어도 될것같은데
 	size_t	a_len;
 	size_t	b_len;
 	size_t	total_len;
 } t_info;
 
-//utill.c
+//main_utill.c
 int	my_error();
 int	*my_indexing(int *arr, size_t len);
-int	*indexing(int *arr, size_t len);
 int	sort_check(int *arr, size_t len);
 int	duplicate_check(int *arr, size_t len);
 
@@ -53,5 +52,8 @@ t_list	*r_print(t_list *command);
 t_list	*rr_print(t_list *command);
 t_list	*s_print(t_list *command);
 void	print_command(t_list *command);
+
+//sort_hard.c
+void	two_sort(t_info *stack, int flag);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:15 by seok              #+#    #+#             */
-/*   Updated: 2023/05/17 23:06:08 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/17 23:45:02 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,13 @@ int	main(int argc, char *argv[])
 	while (--i >= 0)
 		free(word[i]);
 	free(word);
-
+//****이 밑에 함수들 len이랑 비교할 index들 다 int로 돼있는데 그거 size_t로 바꿔야함
 //중복된 숫자가 있는지 확인
 	if (duplicate_check(stack.a, stack.a_len) == FALSE)
 		my_error();
+	// for (int i = 0; i < stack.a_len; i++)
+	for (int i = stack.a_len - 1; i >= 0; i--)
+		printf("a[%d] : %d\n", i, stack.a[i]);
 //등수메기기
 	stack.a = my_indexing(stack.a, stack.a_len);
 	if (sort_check(stack.a, stack.a_len) == TRUE)
@@ -78,6 +81,14 @@ int	main(int argc, char *argv[])
 	}
 	//얘는 만약 정렬이 다 돼있을경우엔 필요없기때문에 생각해서 위치 두자.
 	stack.b = (int *)ft_calloc(stack.a_len + 1, sizeof(int *));
+	// for (int i = 0; i < stack.a_len; i++)
+	for (int i = stack.a_len - 1; i >= 0; i--)
+		printf("a[%d] : %d\n", i, stack.a[i]);
+	two_sort(&stack, STACK_A);
+	printf("\ntwo_sort\n\n");
+	// for (int i = 0; i < stack.a_len; i++)
+	for (int i = stack.a_len - 1; i >= 0; i--)
+		printf("a[%d] : %d\n", i, stack.a[i]);
 /*
 	이제 여기서 sort해야함......!!
 */
@@ -86,7 +97,6 @@ int	main(int argc, char *argv[])
 	// // if (stack.b)
 		free(stack.b);
 		free(stack.command); //TODO 명령어들 출력하고 free잊지말고 해야함. node들이 만들어져있기때문
-	// // if (stack.total)
-		// free(stack.total);
+
 	return (0);
 }
