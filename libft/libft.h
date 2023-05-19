@@ -70,7 +70,6 @@ char	*ft_strjoin_free(char *s1, char *s2);
 char	*ft_itoa_unsign(unsigned int num);
 char	*ft_itoa_hex(unsigned int num, char ch);
 char	*ft_itoa_hex_long(unsigned long long num);
-int		ft_atoi_pro(const char *str);
 size_t	ft_lstlen(t_list *lst);
 
 #endif

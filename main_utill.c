@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utill.c                                            :+:      :+:    :+:   */
+/*   main_utill.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:36:14 by seok              #+#    #+#             */
-/*   Updated: 2023/05/17 23:14:29 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/20 05:15:24 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	my_error(void) //TODO ㅈㅏ료형 void에서 int로 바꿔본
 	exit(FALSE);
 }
 
-int	*my_indexing(int *arr, size_t len)
+void	a_stack_indexing(t_stack *stack, int start, int len)
 {
 	int	i;
 	int	j;
@@ -27,25 +27,46 @@ int	*my_indexing(int *arr, size_t len)
 
 	i = 0;
 	tmp = ft_calloc(len + 1, sizeof(int));
-	while(i < len)
+	while(start + i < len)
 	{
 		j = 0;
-		while (j < len)
+		while (start + j < len)
 		{
-			if (arr[i] > arr[j])
+			if (stack->a[start + i] > stack->a[start + j])
 				tmp[i] += 1;
 			j++;
 		}
 		i++;
 	}
-	while (--i >= 0)
-		arr[i] = tmp[i];
-/*
-왜이랬냐면, arr = tmp로 했더니 다른 함수에서 malloc한거라 그런지
-main에서 stack.b할당하니까 tmp랑 같은 주소를 가져버려서 이렇게 바꿈.
-*/
+	i = -1;
+	while (start + (++i) < len)
+		stack->a[start + i] = tmp[i];
 	free(tmp);
-	return (arr);
+}
+
+void	b_stack_indexing(t_stack *stack, int start, int len)
+{
+	int	i;
+	int	j;
+	int	*tmp;
+
+	i = 0;
+	tmp = ft_calloc(len + 1, sizeof(int));
+	while(start + i < len)
+	{
+		j = 0;
+		while (start + j < len)
+		{
+			if (stack->b[start + i] > stack->b[start + j])
+				tmp[i] += 1;
+			j++;
+		}
+		i++;
+	}
+	i = -1;
+	while (start + (++i) < len)
+		stack->b[start + i] = tmp[i];
+	free(tmp);
 }
 
 int	sort_check(int *arr, size_t len)

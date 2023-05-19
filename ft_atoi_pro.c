@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "../push_swap.h"
+#include "libft/libft.h"
+#include "push_swap.h"
 
 int	ft_isspace_pro(int c)
 {

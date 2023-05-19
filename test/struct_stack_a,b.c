@@ -1,16 +1,22 @@
-#include "push_swap.h"
+#include "../push_swap.h"
 #include <stdio.h>
 
-void	func(t_info *stack)
+void	func1(t_stack *stack)
+{
+	stack->a_len = 1000;
+}
+
+void	func(t_stack *stack)
 {
 	stack->a[0] = 20;
 	stack->a[3] = 123;
 	stack->a_len = 300;
+	func1(stack);
 }
 
 int	main()
 {
-	t_info stack;
+	t_stack stack;
 
 	stack.a = malloc(sizeof(int) * 10);
 	stack.b = malloc(sizeof(int) * 10);
@@ -19,15 +25,15 @@ int	main()
 
 	stack.a_len = 80;
 
-	printf("len : %lld\n", stack.a_len);
-	for(int i = 0; i < 5; i++)
-		printf("a[%d] : %d\n", i, stack.a[i]);
-	stack.b = stack.a;
-	for(int i = 0; i < 5; i++)
-		printf("b[%d] : %d\n", i, stack.b[i]);
-	printf("\n\n");
+	printf("len : %zu\n", stack.a_len);
+	// for(int i = 0; i < 5; i++)
+	// 	printf("a[%d] : %d\n", i, stack.a[i]);
+	// stack.b = stack.a;
+	// for(int i = 0; i < 5; i++)
+	// 	printf("b[%d] : %d\n", i, stack.b[i]);
+	// printf("\n\n");
 	func(&stack);
-	printf("len : %lld\n", stack.a_len);
-	for(int i = 0; i < 5; i++)
-		printf("a[%d] : %d\n", i, stack.a[i]);
+	printf("len : %zu\n", stack.a_len);
+	// for(int i = 0; i < 5; i++)
+	// 	printf("a[%d] : %d\n", i, stack.a[i]);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 23:05:43 by seok              #+#    #+#             */
-/*   Updated: 2022/12/28 23:06:35 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/20 01:33:08 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,3 +17,4 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *))
 	del(lst->content);
 	free(lst);
 }
+
