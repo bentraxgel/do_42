@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 23:14:53 by seok              #+#    #+#             */
-/*   Updated: 2023/05/20 05:42:24 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/20 18:03:01 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,19 @@ void	my_pivot(int start, int len, t_info *info)
 
 void	two_sort(t_stack *stack, int flag, int idx)
 {
-	if (idx == 2)
+	if (flag == STACK_A)
 	{
-		if (flag == STACK_A)
-		{
-			if (stack->a[idx] < stack->a[idx + 1])
-				return ;
-			else if (stack->a[idx] > stack->a[idx + 1])
-				s_command(stack, STACK_A);
-		}
-		else if (flag == STACK_B)
-		{
-			if (stack->b[idx] > stack->b[idx + 1])
-				return ;
-			else if (stack->b[idx] < stack->b[idx + 1])
-				s_command(stack, STACK_B);
-		}
+		if (stack->a[idx] < stack->a[idx - 1])
+			return ;
+		else if (stack->a[idx] > stack->a[idx - 1])
+			s_command(stack, STACK_A);
+	}
+	else if (flag == STACK_B)
+	{
+		if (stack->b[idx] > stack->b[idx - 1])
+			return ;
+		else if (stack->b[idx] < stack->b[idx - 1])
+			s_command(stack, STACK_B);
 	}
 }
 
@@ -53,7 +50,7 @@ void	two_sort(t_stack *stack, int flag, int idx)
 // 			b_three_sort(stack, len - 1);
 // 	}
 // 	else if (len == 4)
-// 		four_sort(stack, flag, len - 1);
+// 		four_sort(stack, flag, len - 1); /TODO just len
 // 	else
 // 		five_sort(stack, flag, len - 1);
 

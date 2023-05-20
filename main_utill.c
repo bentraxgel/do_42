@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:36:14 by seok              #+#    #+#             */
-/*   Updated: 2023/05/20 05:15:24 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/20 17:26:29 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	a_stack_indexing(t_stack *stack, int start, int len)
 
 	i = 0;
 	tmp = ft_calloc(len + 1, sizeof(int));
-	while(start + i < len)
+	while(i < len)
 	{
 		j = 0;
-		while (start + j < len)
+		while (j < len)
 		{
 			if (stack->a[start + i] > stack->a[start + j])
 				tmp[i] += 1;
@@ -39,7 +39,7 @@ void	a_stack_indexing(t_stack *stack, int start, int len)
 		i++;
 	}
 	i = -1;
-	while (start + (++i) < len)
+	while (++i < len)
 		stack->a[start + i] = tmp[i];
 	free(tmp);
 }
@@ -52,10 +52,10 @@ void	b_stack_indexing(t_stack *stack, int start, int len)
 
 	i = 0;
 	tmp = ft_calloc(len + 1, sizeof(int));
-	while(start + i < len)
+	while(i < len)
 	{
 		j = 0;
-		while (start + j < len)
+		while ( j < len)
 		{
 			if (stack->b[start + i] > stack->b[start + j])
 				tmp[i] += 1;
@@ -64,7 +64,7 @@ void	b_stack_indexing(t_stack *stack, int start, int len)
 		i++;
 	}
 	i = -1;
-	while (start + (++i) < len)
+	while (++i < len)
 		stack->b[start + i] = tmp[i];
 	free(tmp);
 }

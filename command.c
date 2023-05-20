@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 06:03:10 by seok              #+#    #+#             */
-/*   Updated: 2023/05/20 00:48:42 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/20 19:20:05 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,10 @@ void	rr_command(t_stack *stack, int flag, size_t idx)
 		stack->b[i] = bottom;
 		ft_lstadd_back(&stack->command, ft_lstnew("rrb\n"));
 	}
+	for (int i = 5; i >= 0; i--)
+		printf("a[%d] : %d\tb[%d] : %d\n", i, stack->a[i], i, stack->b[i]);
+	printf("a_len : %zu\t b_len : %zu\n", stack->a_len, stack->b_len);
+
 }
 
 void	p_command(t_stack *stack, int flag)
