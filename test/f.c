@@ -2,8 +2,9 @@
 
  int	main()
  {
+	int	i = 0;
 	int ra = 2;
 
-	while (ra--)
+	while (i++ < ra)
 		printf("do\n");
  }

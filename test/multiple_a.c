@@ -2,25 +2,25 @@
 
 void	a_multiple_sort(t_stack *stack, t_info *info, int num)
 {
-	int	i = 0;
-	int	a = 3;
-	int	b = num - 3;
-	while (i++ < b)
-	{
-		printf("num : %d\n", num);
-		command(PB, stack, info);
-		printf("\nPB -- b: %d\ti : %d\n", b,  i);
-		for (int i = stack->total_len; i >= 0; i--)
-			printf("a[%d] : %d\tb[%d] : %d\n", i, stack->a[i], i, stack->b[i]);
-		printf("a : %d\t b : %d\n", a, b);
-	}
-	hard_sort(stack, info, num, STACK_B);
+	// int	i = 0;
+	// int	a = 3;
+	// int	b = num - 3;
+	// while (i++ < b)
+	// {
+	// 	printf("num : %d\n", num);
+	// 	command(PB, stack, info);
+	// 	printf("\nPB -- b: %d\ti : %d\n", b,  i);
+	// 	for (int i = stack->total_len; i >= 0; i--)
+	// 		printf("a[%d] : %d\tb[%d] : %d\n", i, stack->a[i], i, stack->b[i]);
+	// 	printf("a : %d\t b : %d\n", a, b);
+	// }
+	hard_sort(stack, info, num, STACK_A);
 	// mini_sort(stack, info, a, STACK_A);
 	// mini_sort(stack, info, b, STACK_B);
 	printf("\nhard_sort\n");
 	for (int i = stack->total_len; i >= 0; i--)
 		printf("a[%d] : %d\tb[%d] : %d\n", i, stack->a[i], i, stack->b[i]);
-	printf("a : %d\t b : %d\n", a, b);
+	// printf("a : %d\t b : %d\n", a, b);
 	printf("\n\nwhile\n");
 
 	// while (a + b)
@@ -43,7 +43,7 @@ int	main()
 {
 	t_stack stack;
 	t_info	info;
-	int		num = 3;
+	int		num = 5;
 
 	stack.a = malloc(sizeof(int *) * 10);
 	stack.a_len = num;
@@ -58,10 +58,10 @@ int	main()
 	for (int i = 0; i < num; i++)
 	{
 		if (i % 2)
-			stack.b[i] = 10 + i;
+			stack.a[i] = 10 + i;
 		else
-			stack.b[i] = i + 1;
-		printf("%d ", stack.b[i]);
+			stack.a[i] = i + 1;
+		printf("%d ", stack.a[i]);
 	}
 	printf("\n");
 	// stack.a[4] = 10;

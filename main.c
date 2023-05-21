@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:15 by seok              #+#    #+#             */
-/*   Updated: 2023/05/21 06:16:26 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/22 02:40:07 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	leaks()
 int	main(int argc, char *argv[])
 {
 	atexit(leaks); //TODO del
-	int		i;
+	size_t	i;
 	char	*arg;
 	char	*space;
 	char	**word;
@@ -62,37 +62,47 @@ int	main(int argc, char *argv[])
 	free(arg);
 
 	i = 0;
-	while (word[i])
+	while (word[i]){
+		printf("word[%zu] : %s\n", i, word[i]);
 		i++;
+	}
 	stack.total_len = i; //TODO del
 	printf("total_len : %zu\n", stack.total_len);
 	stack.a_len = i;
 	stack.b_len = 0;
 	stack.a = (int *)malloc(sizeof(int) * (i + 1));
 	// stack.total = (int *)malloc(sizeof(int *) * (i + 1));
-
 	i = -1;
-	while (word[++i])
+	while (word[++i]){
+		printf("%zu\t",i);
 		stack.a[stack.a_len - i - 1] = ft_atoi_pro(word[i]);
-	while (--i >= 0)
+	}
+	printf("\n i : %zu\n", i);
+	while (i-- > 0){
+		printf("%zu\t", i);
 		free(word[i]);
+	}
+printf("\nOK\n");
 	free(word);
-//****이 밑에 함수들 len이랑 비교할 index들 다 int로 돼있는데 그거 size_t로 바꿔야함
 //중복된 숫자가 있는지 확인 + TODO 빈값있는지 확인!!!
 	if (duplicate_check(stack.a, stack.a_len) == FALSE)
 		my_error();
 	// for (int i = 0; i < stack.a_len; i++)
+	printf("after atoi\n");
 	for (int i = stack.total_len - 1; i >= 0; i--)
 		printf("a[%d] : %d\n", i, stack.a[i]);
 //등수메기기 - 이게 sort함수에 들어가도 될지도? 함수 첫 시작에!
 	// stack.a = my_indexing(stack.a, stack.a_len);
 	a_stack_indexing(&stack, 0, stack.a_len);
+	printf("\nafter index\n");
+	for (int i = stack.total_len - 1; i >= 0; i--)
+		printf("a[%d] : %d\n", i, stack.a[i]);
 	if (sort_check(stack.a, stack.a_len) == TRUE)
 	{
+		printf("\tTRUE\n");
 		free(stack.a);
 		return (0);
 	}
-	//얘는 만약 정렬이 다 돼있을경우엔 필요없기때문에 생각해서 위치 두자.
 	stack.b = (int *)ft_calloc(stack.a_len + 1, sizeof(int));
 	stack.command = ft_lstnew("start\n");
 
@@ -102,18 +112,13 @@ int	main(int argc, char *argv[])
 
 	// two_sort(&stack, STACK_A); //TODO idx줘야함
 	printf("len : %zu\n", stack.a_len);
-	printf("\ntwo_sort\n\n");
-	// for (int i = 0; i < stack.a_len; i++)
-	rr_command(&stack, STACK_A, stack.a_len - 1);
-	func(stack.command);
-	for (int i = stack.total_len - 1; i >= 0; i--)
-		printf("a[%d] : %d\tb[%d] : %d\n", i, stack.a[i], i, stack.b[i]);
-	printf("a_len : %zu\tb_len : %zu\n", stack.a_len, stack.b_len);
-	// p_command(&stack, STACK_A);
+	printf("\nMAIN_sort\n\n");
+
 /*
 	이제 여기서 sort해야함......!!
 */
-	// a_stack_
+	a_stack_sort(&stack, stack.a_len);	
+
 	func(stack.command);
 	for (int i = stack.total_len - 1; i >= 0; i--)
 		printf("a[%d] : %d\tb[%d] : %d\n", i, stack.a[i], i, stack.b[i]);

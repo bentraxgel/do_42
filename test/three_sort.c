@@ -6,23 +6,24 @@ void	a_three(t_stack *stack, t_info *info, int top)
 
 	if (stack->a[top] > stack->a[top - 1] && stack->a[top] > stack->a[top - 2])
 	{
-		r_command(stack, info, STACK_A, stack->a_len);
+		command(RA, stack, info);
 		if (stack->a[top - 1] > stack->a[top - 2])
-			s_command(stack, STACK_A);
+			command(SA, stack, info);
 	}
 	else if (stack->a[top] < stack->a[top - 1] \
 			&& stack->a[top] < stack->a[top - 2])
 	{
-		rr_command(stack, STACK_A, stack->a_len);
-		s_command(stack, STACK_A);
+		command(RRA, stack, info);
+		command(SA, stack, info);
 	}
 	else if (stack->a[top] > stack->a[top - 1] \
 			&& stack->a[top] < stack->a[top - 2])
-		s_command(stack, STACK_A);
+			command(SA, stack, info);
 	else if (stack->a[top] < stack->a[top - 1] \
 			&& stack->a[top] > stack->a[top - 2])
-		rr_command(stack, STACK_A, stack->a_len);
+			command(RRA, stack, info);
 }
+
 
 void	b_three_sort(t_stack *stack, t_info *info, int top)
 {
@@ -32,24 +33,24 @@ void	b_three_sort(t_stack *stack, t_info *info, int top)
 	{
 		if (stack->b[top - 1] < stack->b[top - 2])
 		{
-			s_command(stack, STACK_B);
-			rr_command(stack, STACK_B, stack->b_len);
+			command(SB, stack, info);
+			command(RRB, stack, info);
 		}
 		else
-			r_command(stack, info, STACK_B, stack->b_len);
+			command(RB, stack, info);
 	}
 	else if (stack->b[top] > stack->b[top - 1] \
 			&& stack->b[top] > stack->b[top - 2])
 	{
-		rr_command(stack, STACK_B, stack->b_len);
-		s_command(stack, STACK_B);
+		command(RRB, stack, info);
+		command(SB, stack, info);
 	}
 	else if (stack->b[top] > stack->b[top - 1] \
 			&& stack->b[top] < stack->b[top - 2])
-		rr_command(stack, STACK_B, stack->b_len);
+		command(RRB, stack, info);
 	else if (stack->b[top] < stack->b[top - 1] \
 			&& stack->b[top] > stack->b[top - 2])
-		s_command(stack, STACK_B);
+		command(SB, stack, info);
 }
 
 int	q_main()
@@ -95,7 +96,7 @@ int	main()
 {
 	t_stack stack;
 	t_info	info;
-	int		num = 3;
+	int		num = 10;
 
 	stack.a = malloc(sizeof(int *) * 10);
 	stack.a_len = num;
@@ -111,7 +112,7 @@ int	main()
 		if (i % 2)
 			stack.a[i] = 10 + i;
 		else
-			stack.a[i] = i;
+			stack.a[i] = i + 1;
 		printf("%d ", stack.a[i]);
 	}
 	for (int i = 0; i < num; i++)
@@ -131,8 +132,9 @@ int	main()
 	for (int i = num; i >= 0; i--)
 		printf("a[%d] : %d\tb[%d] : %d\n", i, stack.a[i], i, stack.b[i]);
 	printf("sort\n");
-	a_three_only(&stack, &info, stack.a_len - 1);
-	b_three_only(&stack, &info, stack.b_len - 1);
+	// a_three_only(&stack, &info, stack.a_len - 1);
+	a_three_another(&stack, &info, stack.a_len - 1);
+	b_three_another(&stack, &info, stack.b_len - 1);
 	printf("\na_sort\n");
 	for (int i = num; i >= 0; i--)
 		printf("a[%d] : %d\tb[%d] : %d\n", i, stack.a[i], i, stack.b[i]);

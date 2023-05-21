@@ -142,7 +142,7 @@ void	a_four(t_stack *stack, t_info *info)
 	i = -1;
 	info->pb = 0;
 	info->ra = 0;
-	a_stack_indexing(stack, stack->a_len - 4, 4);
+	// a_stack_indexing(stack, stack->a_len - 4, 4);
 	while (++i < 4)
 	{
 		if (stack->a[stack->a_len - 1] == 0 || stack->a[stack->a_len - 1] == 1)
@@ -166,7 +166,7 @@ void	b_four(t_stack *stack, t_info *info)
 	i = -1;
 	info->pa = 0;
 	info->rb = 0;
-	b_stack_indexing(stack, stack->b_len - 4, 4);
+	// b_stack_indexing(stack, stack->b_len - 4, 4);
 	while (++i < 4)
 	{
 		if (stack->b[stack->b_len - 1] == 0 || stack->b[stack->b_len - 1] == 1)
@@ -186,7 +186,7 @@ int	main()
 {
 	t_stack stack;
 	t_info	info;
-	int		num = 10;
+	int		num = 4;
 
 	stack.a = malloc(sizeof(int *) * 10);
 	stack.a_len = num;
@@ -204,6 +204,14 @@ int	main()
 		else
 			stack.a[i] = i;
 		printf("%d ", stack.a[i]);
+	}
+	for (int i = 0; i < num; i++)
+	{
+		if (i % 2)
+			stack.b[i] = 20 + i;
+		else
+			stack.b[i] = 5 + i;
+		printf("%d ", stack.b[i]);
 	}
 	printf("\n");
 	// stack.a[4] = 10;

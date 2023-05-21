@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:36:14 by seok              #+#    #+#             */
-/*   Updated: 2023/05/20 21:24:17 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/22 01:27:51 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	my_error(void) //TODO ㅈㅏ료형 void에서 int로 바꿔본
 	exit(FALSE);
 }
 
-void	a_stack_indexing(t_stack *stack, int start, int len)
+void	a_stack_indexing(t_stack *stack, size_t start, size_t len)
 {
-	int	i;
-	int	j;
-	int	*tmp;
+	size_t	i;
+	size_t	j;
+	int		*tmp;
 
 	i = 0;
 	tmp = ft_calloc(len + 1, sizeof(int));
@@ -44,11 +44,11 @@ void	a_stack_indexing(t_stack *stack, int start, int len)
 	free(tmp);
 }
 
-void	b_stack_indexing(t_stack *stack, int start, int len)
+void	b_stack_indexing(t_stack *stack, size_t start, size_t len)
 {
-	int	i;
-	int	j;
-	int	*tmp;
+	size_t	i;
+	size_t	j;
+	int		*tmp;
 
 	i = 0;
 	tmp = ft_calloc(len + 1, sizeof(int));

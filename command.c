@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 06:03:10 by seok              #+#    #+#             */
-/*   Updated: 2023/05/21 07:55:19 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/22 01:34:18 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,67 +38,63 @@ int	command(t_cmd cmd, t_stack *stack, t_info *info)
 }
 
 //r, rr둘 다 매개변수로 stack->x_len을 int len으로 받음.
-void	r_command(t_stack *stack, t_info *info, t_set flag, size_t idx)
+void	r_command(t_stack *stack, t_info *info, t_set flag, size_t top)
 {
-	int	top;
+	size_t	va_top;
 
 	if (flag == STACK_A && stack->a_len > 1)
 	{
-		top = stack->a[idx];
-		while (idx)
+		va_top = stack->a[top];
+		while (top)
 		{
-			stack->a[idx] = stack->a[idx - 1];
-			idx--;
+			stack->a[top] = stack->a[top - 1];
+			top--;
 		}
-		stack->a[idx] = top;
+		stack->a[top] = va_top;
 		ft_lstadd_back(&stack->command, ft_lstnew("ra\n"));
 		info->ra++;
 	}
 	else if (flag == STACK_B && stack->b_len > 1)
 	{
-		top = stack->b[idx];
-		while (idx)
+		va_top = stack->b[top];
+		while (top)
 		{
-			stack->b[idx] = stack->b[idx - 1];
-			idx--;
+			stack->b[top] = stack->b[top - 1];
+			top--;
 		}
-		stack->b[idx] = top;
+		stack->b[top] = va_top;
 		ft_lstadd_back(&stack->command, ft_lstnew("rb\n"));
 		info->rb++;
 	}
 }
 
-void	rr_command(t_stack *stack, t_set flag, size_t idx)
+void	rr_command(t_stack *stack, t_set flag, size_t top)
 {
-	int		bottom;
+	size_t	va_bottom;
 	size_t	i;
 
 	i = -1;
 	if (flag == STACK_A && stack->a_len > 1)
 	{
-		bottom = stack->a[0];
-		while (++i < idx)
+		va_bottom = stack->a[0];
+		while (++i < top)
 			stack->a[i] = stack->a[i + 1];
-		stack->a[i] = bottom;
+		stack->a[i] = va_bottom;
 		ft_lstadd_back(&stack->command, ft_lstnew("rra\n"));
 	}
 	else if (flag == STACK_B && stack->b_len > 1)
 	{
-		bottom = stack->b[0];
-		while (++i < idx)
+		va_bottom = stack->b[0];
+		while (++i < top)
 			stack->b[i] = stack->b[i + 1];
-		stack->b[i] = bottom;
+		stack->b[i] = va_bottom;
 		ft_lstadd_back(&stack->command, ft_lstnew("rrb\n"));
 	}
-	// for (int i = 10; i >= 0; i--)
-	// 	printf("a[%d] : %d\tb[%d] : %d\n", i, stack->a[i], i, stack->b[i]);
-	// printf("a_len : %zu\t b_len : %zu\n", stack->a_len, stack->b_len);
-
 }
 
 void	p_command(t_stack *stack, t_info *info, t_set flag)
 {
-	int		tmp;
+	size_t	tmp;
 
 	if (flag == STACK_B && stack->a_len > 0)
 	{
@@ -124,7 +120,7 @@ void	p_command(t_stack *stack, t_info *info, t_set flag)
 
 void	s_command(t_stack *stack, t_set flag)
 {
-	int	tmp;
+	size_t	tmp;
 
 	if (flag == STACK_A && stack->a_len > 1)
 	{

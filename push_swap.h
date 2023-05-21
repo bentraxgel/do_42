@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:37 by seok              #+#    #+#             */
-/*   Updated: 2023/05/21 07:50:38 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/22 01:35:40 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,16 @@ typedef struct s_info
 
 //main_utill.c
 int		my_error();
-void	a_stack_indexing(t_stack *stack, int start, int len);
-void	b_stack_indexing(t_stack *stack, int start, int len);
+	//두개가 따로 필요한 이유는?
+void	a_stack_indexing(t_stack *stack, size_t start, size_t len);
+void	b_stack_indexing(t_stack *stack, size_t start, size_t len);
 int		sort_check(int *arr, size_t len);
 int		duplicate_check(int *arr, size_t len);
 
 //command.c
 int		command(t_cmd cmd, t_stack *stack, t_info *info);
-void	r_command(t_stack *stack, t_info *info, t_set flag, size_t len);
-void	rr_command(t_stack *stack, t_set flag, size_t len);
+void	r_command(t_stack *stack, t_info *info, t_set flag, size_t top);
+void	rr_command(t_stack *stack, t_set flag, size_t top);
 void	p_command(t_stack *stack, t_info *info, t_set flag);
 void	s_command(t_stack *stack, t_set flag);
 
@@ -77,24 +78,35 @@ t_list	*rr_print(t_list *command);
 t_list	*s_print(t_list *command);
 void	print_command(t_list *command);
 
-//sort.c
-void	a_stack_sort(t_stack *stack, int num);
-void	b_stack_sort(t_stack *stack, int num, t_info *info);
+//sort_stack.c
+void	a_stack_sort(t_stack *stack, size_t num);
+void	b_stack_sort(t_stack *stack, size_t num, t_info *info);
 
 //sort_utill.c
-void	my_pivot(int start, int len, t_info *info);
+void	my_pivot(size_t start, size_t len, t_info *info);
+void	hard_sort(t_stack *stack, t_info *info, size_t num, t_set flag);
+void	mini_sort(t_stack *stack, t_info *info, size_t num, t_set flag);
 void	two_sort(t_stack *stack, t_set flag);
-void	hard_sort(t_stack *stack, t_info *info, int num, t_set flag);
-void	a_hard_sort(t_stack *stack, t_info *info, int num);
-void	b_hard_sort(t_stack *stack, t_info *info, int num);
 
-//sort_a_stack.c
-void	a_three_only(t_stack *stack, t_info *info, int top);
-void	a_four_only(t_stack *stack, t_info *info);
-void	a_five_only(t_stack *stack, t_info *info);
+//sort_three.c
+void	a_three_only(t_stack *stack, t_info *info, size_t top);
+void	a_three_another(t_stack *stack, t_info *info, size_t top);
+void	b_three_only(t_stack *stack, t_info *info, size_t top);
+void	b_three_another(t_stack *stack, t_info *info, size_t top);
 
-//sort_b_stack.c
-void	b_three_only(t_stack *stack, t_info *info, int top);
+//sort_a_case.c
+void	a_first_case(t_stack *stack, t_info *info);
+void	a_second_case(t_stack *stack, t_info *info);
+void	a_third_case(t_stack *stack, t_info *info);
+void	a_fourth_case(t_stack *stack, t_info *info);
+void	a_fifth_case(t_stack *stack, t_info *info);
+
+//sort_b_case.c
+void	b_first_case(t_stack *stack, t_info *info);
+void	b_second_case(t_stack *stack, t_info *info);
+void	b_third_case(t_stack *stack, t_info *info);
+void	b_fourth_case(t_stack *stack, t_info *info);
+void	b_fifth_case(t_stack *stack, t_info *info);
 
 //ft_atoi_pro.c
 int		ft_isspace_pro(int c);

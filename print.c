@@ -6,12 +6,39 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:06:06 by seok              #+#    #+#             */
-/*   Updated: 2023/05/12 22:46:25 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/22 01:37:10 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "libft/libft.h"
+
+void	print_command(t_list *command)
+{
+	//command = command->next한번 해야할것
+	//while안에 마지막줄을 맨 위로 올리면 될듯?  "start\n"때문에!
+	while (command)
+	{
+		if (!(ft_strncmp(command->content, "ra\n", 3)) ||\
+			!(ft_strncmp(command->content, "rb\n", 3)))
+		{
+			command = r_print(command);
+		}
+		else if (!(ft_strncmp(command->content, "rra\n", 3)) ||\
+			!(ft_strncmp(command->content, "rrb\n", 3)))
+		{
+			command = rr_print(command);
+		}
+		else if (!(ft_strncmp(command->content, "sa\n", 3)) ||\
+			!(ft_strncmp(command->content, "sb\n", 3)))
+		{
+			command = s_print(command);
+		}
+		else
+			ft_putstr_fd(command->content, STDOUT_FILENO);
+		command = command->next;
+	}
+}
 
 t_list	*r_print(t_list *command)
 {
@@ -77,29 +104,4 @@ t_list	*s_print(t_list *command)
 	else
 		ft_putstr_fd(command->content, STDOUT_FILENO);
 	return (ret);
-}
-
-void	print_command(t_list *command)
-{
-	while (command)
-	{
-		if (!(ft_strncmp(command->content, "ra\n", 3)) ||\
-			!(ft_strncmp(command->content, "rb\n", 3)))
-		{
-			command = r_print(command);
-		}
-		else if (!(ft_strncmp(command->content, "rra\n", 3)) ||\
-			!(ft_strncmp(command->content, "rrb\n", 3)))
-		{
-			command = rr_print(command);
-		}
-		else if (!(ft_strncmp(command->content, "sa\n", 3)) ||\
-			!(ft_strncmp(command->content, "sb\n", 3)))
-		{
-			command = s_print(command);
-		}
-		else
-			ft_putstr_fd(command->content, STDOUT_FILENO);
-		command = command->next;
-	}
 }
