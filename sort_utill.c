@@ -6,100 +6,111 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 23:14:53 by seok              #+#    #+#             */
-/*   Updated: 2023/05/22 04:29:32 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/22 07:34:49 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	my_pivot(size_t start, size_t len, t_info *info)
-{
-	info->p1 = ((len - start) / 3) + start;
-	info->p2 = ((len - start) / 3 * 2) + start;
-	info->pa = 0;
-	info->pb = 0;
-	info->ra = 0;
-	info->rb = 0;
-}
-
 void	hard_sort(t_stack *stack, t_info *info, size_t num, t_set flag)
 {
-	int	a;
-	int	b;
-	int	i;
-
-	a = 3;
-	b = num - 3;
-	i = 0;
 	if (num <= 3)
 		mini_sort(stack, info, num, flag);
 	else
 	{
-		while (i++ < b){
-			command(PB, stack, info);
-			printf("<<PB>>");
-		}
-		printf("\nbefore mini\n");
-		for (int i = stack->total_len; i >= 0; i--)
-			printf("a[%d] : %d\tb[%d] : %d\n", i, stack->a[i], i, stack->b[i]);
-		printf("a : %d\t b : %d\n", a, b);
-		mini_sort(stack, info, a, STACK_A);
-		mini_sort(stack, info, b, STACK_B);
-		printf("\nafter mini\n");
-		for (int i = stack->total_len; i >= 0; i--)
-			printf("a[%d] : %d\tb[%d] : %d\n", i, stack->a[i], i, stack->b[i]);
-		printf("a : %d\t b : %d\n\n\n", a, b);
-		printf("\tB_LEN : %zu\n", stack->b_len);
-		while (a + b)
+		if (flag == STACK_A)
 		{
-			if (a == 0)
-			{
-				printf("	cmd : if a0 %d + %d =%d\n", a, b, a+b);
-				b -= command(PA, stack, info);
-			}
-			else if (b == 0)
-			{
-				printf("	cmd : if b0 %d + %d =%d\n", a, b, a+b);
-				a -= command(RRA, stack, info);
-			}
-			else if (stack->a[0] > stack->b[stack->b_len - 1])
-			{
-				printf("	cmd : if a- %d + %d =%d\n", a, b, a+b);
-				a -= command(RRA, stack, info);
-			}
-			else if (stack->a[0] < stack->b[stack->b_len - 1])
-			{
-				printf("	cmd : if b- %d + %d =%d\n", a, b, a+b);
-				b -= command(PA, stack, info);
-			}
-		while (i-- > 0){
-			command(PA, stack, info);
-			printf("%d <<PA>>\n", i);
+			if (stack->a_len == num)
+				hard_a_only(stack, info, num);
+		// 	else
+		// 		hard_a_another(stack, info, num);
 		}
-		// for (int i = stack->total_len; i >= 0; i--)
-		// 	printf("a[%d] : %d\tb[%d] : %d\n", i, stack->a[i], i, stack->b[i]);
-		// printf("a : %d\t b : %d\n", a, b);
+		else
+		{
+			if (stack->b_len == num)
+				hard_b_only(stack, info, num);
+		// 	else
+		// 		hard_b_another(stack, info, num);
 		}
-		// while (a + b + info->ra + info->pa)
-		// {
-		// 	if (a == 0 && info->pa)
-		// 		b -= command(PA, stack, info);
-		// 	else if (b == 0 && info->ra)
-		// 		a -= command(RRA, stack, info);
-		// 	else if (stack->a[stack->a_len - 1] < stack->b[stack->b_len - 1])
-		// 		a -= command(RA, stack, info);
-		// 	else if (stack->a[stack->a_len - 1] > stack->b[stack->b_len - 1])
-		// 		b -= command(PA, stack, info);
-		// for (int i = stack->total_len; i >= 0; i--)
-		// 	printf("a[%d] : %d\tb[%d] : %d\n", i, stack->a[i], i, stack->b[i]);
-		// printf("a : %d\t b : %d\n", a, b);
-		// }
 	}
+}
+
+void	hard_a_only(t_stack *stack, t_info *info, size_t num)
+{
+	int	i;
+
+	info->a = 3;
+	info->b = num - 3;
+	i = 0;
+	while (i++ < info->b)
+		command(PB, stack, info);
+	mini_sort(stack, info, info->a, STACK_A);
+	mini_sort(stack, info, info->b, STACK_B);
+	while (info->a + info->b)
+	{
+		if (info->a == 0)
+			info->b -= command(PA, stack, info);
+		else if (info->b == 0)
+			info->a -= command(RRA, stack, info);
+		else if (stack->a[0] > stack->b[stack->b_len - 1])
+			info->a -= command(RRA, stack, info);
+		else if (stack->a[0] < stack->b[stack->b_len - 1])
+			info->b -= command(PA, stack, info);
+	}
+	while (i-- > 0)
+		command(PA, stack, info);
+}
+
+void	hard_a_another(t_stack *stack, t_info *info, size_t num)
+{
+	mini_pivot(stack, info, STACK_A);
+	while (info->b)
+	{
+		if (stack->a[stack->a_len - 1] <= info->p0)
+			info->b -= command(PB, stack, info);
+		else
+			info->a += command(RA, stack, info);
+	}
+	while (info->a)
+		info->a -= command(RRA, stack, info);
+	mini_sort(stack, info, num, STACK_A);
+	mini_sort(stack, info, num, STACK_B);
+	while (info->pb)
+		info->pb -= command(PA, stack, info);
+}
+
+void	hard_b_only(t_stack *stack, t_info *info, size_t num)
+{
+	int	i;
+
+	info->a = num - 3;
+	info->b = 3;
+	i = 0;
+	
+	while (i++ < info->a)
+		command(PA, stack, info);
+	mini_sort(stack, info, info->a, STACK_A);
+	mini_sort(stack, info, info->b, STACK_B);
+	printf("\nmini\n");
+	for (int i = stack->total_len; i >= 0; i--)
+		printf("a[%d] : %d\tv[%d] : %d\n", i, stack->a[i], i, stack->b[i]);
+	while (info->a + info->b)
+	{
+		if (info->b == 0)
+			info->a -= command(PB, stack, info);
+		else if (info->a == 0)
+			info->b -= command(RRB, stack, info);
+		else if (stack->b[0] > stack->a[stack->a_len - 1])
+			info->a -= command(PB, stack, info);
+		else if (stack->b[0] < stack->a[stack->a_len - 1])
+			info->b -= command(RRB, stack, info);
+	}
+	while (i-- > 0)
+		command(PB, stack, info);
 }
 
 void	mini_sort(t_stack *stack, t_info *info, size_t num, t_set flag)
 {
-	printf("\n\t<<<MINI>>>>\n");
 	if (num == 1)
 		return ;
 	else if (num == 2)
@@ -108,7 +119,6 @@ void	mini_sort(t_stack *stack, t_info *info, size_t num, t_set flag)
 	{
 		if (flag == STACK_A)
 		{
-			printf("\tSTACK_A\n");
 			if (stack->a_len == num)
 				a_three_only(stack, info, stack->a_len - 1);
 			else
@@ -116,8 +126,6 @@ void	mini_sort(t_stack *stack, t_info *info, size_t num, t_set flag)
 		}
 		else if (flag == STACK_B)
 		{
-			printf("\tSTACK_B\n");
-			printf("\tSTACK_B\n");
 			if (stack->b_len == num)
 				b_three_only(stack, info, stack->b_len - 1);
 			else
@@ -137,12 +145,8 @@ void	two_sort(t_stack *stack, t_set flag)
 	}
 	else if (flag == STACK_B)
 	{
-		printf("two_STACK_B\n");
 		if (stack->b[stack->b_len - 1] > stack->b[stack->b_len - 2])
-		{
-			printf("if");
 			return ;
-		}
 		else if (stack->b[stack->b_len - 1] < stack->b[stack->b_len - 2])
 			s_command(stack, STACK_B);
 	}

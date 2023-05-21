@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:15 by seok              #+#    #+#             */
-/*   Updated: 2023/05/22 02:40:07 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/22 05:17:18 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	leaks()
 
 int	main(int argc, char *argv[])
 {
-	atexit(leaks); //TODO del
+	// atexit(leaks); //TODO del
 	size_t	i;
 	char	*arg;
 	char	*space;
@@ -97,12 +97,15 @@ printf("\nOK\n");
 	printf("\nafter index\n");
 	for (int i = stack.total_len - 1; i >= 0; i--)
 		printf("a[%d] : %d\n", i, stack.a[i]);
-	if (sort_check(stack.a, stack.a_len) == TRUE)
-	{
-		printf("\tTRUE\n");
-		free(stack.a);
-		return (0);
-	}
+		
+	/* sort함수 안에서 하는걸로 충분할듯*/	
+	// if (sort_check(stack.a, stack.a_len) == TRUE)
+	// {
+	// 	printf("\tTRUE\n");
+	// 	free(stack.a);
+	// 	return (0);
+	// }
+	
 	stack.b = (int *)ft_calloc(stack.a_len + 1, sizeof(int));
 	stack.command = ft_lstnew("start\n");
 

@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:36:14 by seok              #+#    #+#             */
-/*   Updated: 2023/05/22 01:27:51 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/22 05:14:13 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	sort_check(int *arr, size_t len)
 	i = 0;
 	while (i + 1 < len)
 	{
-		if (arr[i] >= arr[i + 1])
+		if (arr[i] <= arr[i + 1])
 			return (FALSE);
 		i++;
 	}

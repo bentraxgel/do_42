@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 00:35:00 by seok              #+#    #+#             */
-/*   Updated: 2023/05/22 01:58:18 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/22 05:43:06 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	a_stack_sort(t_stack *stack, size_t num) //num == stack.a_len 갯수
 
 	if (stack->b_len == 0 && sort_check(stack->a, stack->a_len) == TRUE) //TODO 확실해?
 		return ;
-	if (num <= 5)
+	if (num <= 6)
 	{
-		hard_sort(stack, &info, num, STACK_A);
+		hard_a_sort(stack, &info, num, STACK_A);
 		return ;
 	}
 	// my_pivot(0, stack->a_len, &info);
@@ -64,9 +64,9 @@ void	b_stack_sort(t_stack *stack, size_t num, t_info *info)
 	size_t	i;
 
 	i = -1;
-	if (num <= 5)
+	if (num <= 6)
 	{
-		hard_sort(stack, info, num, STACK_B);
+		hard_b_sort(stack, info, num, STACK_B);
 		while (num--)
 			p_command(stack, info, STACK_B);
 		return ;

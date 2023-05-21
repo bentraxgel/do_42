@@ -5,15 +5,15 @@ void	a_multiple_sort(t_stack *stack, t_info *info, int num)
 	int	i = 0;
 	int	a = 3;
 	int	b = num - 3;
-	while (i++ < b)
-	{
-		printf("num : %d\n", num);
-		command(PB, stack, info);
-		printf("\nPB -- b: %d\ti : %d\n", b,  i);
-		for (int i = stack->total_len; i >= 0; i--)
-			printf("a[%d] : %d\tb[%d] : %d\n", i, stack->a[i], i, stack->b[i]);
-		printf("a : %d\t b : %d\n", a, b);
-	}
+	// while (i++ < b)
+	// {
+	// 	printf("num : %d\n", num);
+	// 	command(PB, stack, info);
+	// 	printf("\nPB -- b: %d\ti : %d\n", b,  i);
+	// 	for (int i = stack->total_len; i >= 0; i--)
+	// 		printf("a[%d] : %d\tb[%d] : %d\n", i, stack->a[i], i, stack->b[i]);
+	// 	printf("a : %d\t b : %d\n", a, b);
+	// }
 	hard_sort(stack, info, num, STACK_B);
 	// mini_sort(stack, info, a, STACK_A);
 	// mini_sort(stack, info, b, STACK_B);
@@ -58,7 +58,7 @@ int	main()
 	for (int i = 0; i < num; i++)
 	{
 		if (i % 2)
-			stack.b[i] = 10 + i;
+			stack.b[i] = 10 - i;
 		else
 			stack.b[i] = i + 1;
 		printf("%d ", stack.b[i]);
