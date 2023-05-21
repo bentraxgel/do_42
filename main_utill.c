@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:36:14 by seok              #+#    #+#             */
-/*   Updated: 2023/05/20 17:26:29 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/20 21:24:17 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	b_stack_indexing(t_stack *stack, int start, int len)
 	while(i < len)
 	{
 		j = 0;
-		while ( j < len)
+		while (j < len)
 		{
 			if (stack->b[start + i] > stack->b[start + j])
 				tmp[i] += 1;

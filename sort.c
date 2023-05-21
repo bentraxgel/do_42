@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 23:10:50 by seok              #+#    #+#             */
-/*   Updated: 2023/05/20 03:30:37 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/21 05:11:37 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ void	a_stack_sort(t_stack *stack, int num) //num == stack.a_len 갯수
 
 	if (stack->b_len == 0 && sort_check(stack->a, stack->a_len) == TRUE) //TODO 확실해?
 		return ;
-	if (1 < num && num <= 5)
+	if (num <= 5)
 	{
-		hard_sort(stack->a_len, STACK_A, stack);
+		
+		hard_sort(stack, &info, num, STACK_A);
 		return ;
 	}
 	// my_pivot(0, stack->a_len, &info);
@@ -33,31 +34,25 @@ void	a_stack_sort(t_stack *stack, int num) //num == stack.a_len 갯수
 	while (--num >= 0)
 	{
 		if (info.p2 <= stack->a[num])
-		{
-			r_command(&stack, STACK_A, stack->a_len);
-			info.ra++;
-		}
+			r_command(&stack, &info, STACK_A, stack->a_len);
 		else
 		{
-			p_command(&stack, STACK_A);
+			p_command(&stack, &info, STACK_A);
 			info.pb++;
 			if (info.p1 <= stack->a[num])
-			{
-				r_command(&stack, STACK_B, stack->b_len);
-				info.rb++;
-			}
+				r_command(&stack, &info, STACK_B, stack->b_len);
 		}
 	}
 	i = -1;
 	while (++i < info.ra && i <info.rb)
 	{
-		r_command(&stack, STACK_A, stack->a_len);
-		r_command(&stack, STACK_B, stack->b_len);
+		rr_command(&stack, STACK_A, stack->a_len);
+		rr_command(&stack, STACK_B, stack->b_len);
 	}
 	while (i++ < info.ra)
-		r_command(stack, STACK_A, stack->a_len);
+		rr_command(stack, STACK_A, stack->a_len);
 	while (i++ < info.rb)
-		r_command(stack, STACK_B, stack->b_len);
+		rr_command(stack, STACK_B, stack->b_len);
 	//밑에도 똑같은 역할하는 반복문 있음. 함수 만들자
 
 	a_stack_sort(&stack, info.ra);
@@ -71,16 +66,17 @@ void	b_stack_sort(t_stack *stack, int num, t_info *info)
 	int	i;
 
 	i = -1;
-	if (1 < num && num <= 5)
+	if (num <= 5)
 	{
-		hard_sort(stack->b_len, STACK_B, stack);
-		while(num--)
-			p_command(stack, STACK_B);
+		hard_sort(stack, &info, num, STACK_B);
+		while (num--)
+			p_command(stack, info, STACK_B);
 		return ;
 	}
 	my_pivot(stack->b[stack->b_len - num], stack->b[num], info);
 	while (--num >= 0)
 	{
+		//num아니고 stack->b_len이어야함????왜냐면 top인거잖아?
 		if (stack->a[num] < info->p1)
 		{
 			r_command(stack, STACK_B, stack->b_len);
@@ -101,13 +97,13 @@ void	b_stack_sort(t_stack *stack, int num, t_info *info)
 	
 	while (++i < info->ra && i < info->rb)
 	{
-		r_command(stack, STACK_A, stack->a_len);
-		r_command(stack, STACK_B, stack->b_len);
+		rr_command(stack, STACK_A, stack->a_len);
+		rr_command(stack, STACK_B, stack->b_len);
 	}
 	while (i++ < info->ra)
-		r_command(stack, STACK_A, stack->a_len);
+		rr_command(stack, STACK_A, stack->a_len);
 	while (i++ < info->rb)
-		r_command(stack, STACK_B, stack->b_len);
+		rr_command(stack, STACK_B, stack->b_len);
 	a_stack_sort(stack, info->ra);
 	b_stack_sort(stack, info->rb, info);
 }

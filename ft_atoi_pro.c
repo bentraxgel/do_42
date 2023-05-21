@@ -20,7 +20,7 @@ int	ft_isspace_pro(int c)
 
 void	my_check_digit(const char *str)
 {
-	if (*str == '-' || *str == '+')
+	if (ft_strlen(str) != 1 && (*str == '-' || *str == '+'))
 		str++;
 	while (*str)
 	{
