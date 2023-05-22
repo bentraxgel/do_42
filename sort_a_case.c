@@ -21,6 +21,7 @@ void	a_first_case(t_stack *stack, t_info *info)
 	command(PA, stack, info);
 	command(PA, stack, info);
 }
+
 void	a_second_case(t_stack *stack, t_info *info)
 {
 	command(RA, stack, info);
