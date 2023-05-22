@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:15 by seok              #+#    #+#             */
-/*   Updated: 2023/05/22 11:22:32 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/22 16:46:41 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	exception(char *str)
 
 int	main(int argc, char *argv[])
 {
-	// atexit(leaks); //TODO del
+	atexit(leaks); //TODO del
 	size_t	i;
 	char	*arg;
 	char	*space;
@@ -74,7 +74,8 @@ int	main(int argc, char *argv[])
 		}
 		else
 		{
-			free(arg);
+			//TODO exit확인
+			// free(arg);
 			my_error();
 		}
 	}

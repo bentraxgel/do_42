@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:37 by seok              #+#    #+#             */
-/*   Updated: 2023/05/22 11:21:09 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/22 22:45:05 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	exception(char *str);
 
 //main_utill.c
 int		my_error();
-	//두개가 따로 필요한 이유는?
+	//두개가 따로 필요한 이유는? : 없는거같은디
 void	a_stack_indexing(t_stack *stack, size_t start, size_t len);
 void	b_stack_indexing(t_stack *stack, size_t start, size_t len);
 int		sort_check(int *arr, size_t len);
@@ -86,21 +86,25 @@ t_list	*rr_print(t_list *command);
 t_list	*s_print(t_list *command);
 void	print_command(t_list *command);
 
-//pivot.c
-void	my_pivot(size_t start, size_t len, t_info *info);
+//pivot.c //하기싫어ㅓㅓㅓㅓ
+void	save_pivot(t_stack *stack, t_info *info, t_set flag, size_t num);
+// void	save_pivot(size_t start, size_t len, t_info *info, size_t num);
+void	reset_info(t_info *info);
 
+//TODO 노미넷 여기부터
 //sort_stack.c
 void	a_stack_sort(t_stack *stack, size_t num);
 void	b_stack_sort(t_stack *stack, size_t num, t_info *info);
+void	sort_rr(t_stack *stack, t_info *info);
+void	mini_sort(t_stack *stack, t_info *info, size_t num, t_set flag);
+void	hard_sort(t_stack *stack, t_info *info, size_t num, t_set flag);
 
 //sort_utill.c
-void	hard_sort(t_stack *stack, t_info *info, size_t num, t_set flag);
-// void	hard_b_sort(t_stack *stack, t_info *info, size_t num, t_set flag);
-void	hard_a_only(t_stack *stack, t_info *info, size_t num);
-void	hard_a_another(t_stack *stack, t_info *info, size_t num);
-void	hard_b_only(t_stack *stack, t_info *info, size_t num);
-void	mini_sort(t_stack *stack, t_info *info, size_t num, t_set flag);
 void	two_sort(t_stack *stack, t_set flag);
+void	hard_a_only(t_stack *stack, t_info *info, size_t num);
+// void	hard_a_another(t_stack *stack, t_info *info, size_t num);
+void	hard_b_only(t_stack *stack, t_info *info, size_t num);
+// void	hard_b_sort(t_stack *stack, t_info *info, size_t num, t_set flag);
 
 //sort_three.c
 void	a_three_only(t_stack *stack, t_info *info, size_t top);

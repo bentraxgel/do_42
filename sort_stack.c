@@ -6,30 +6,24 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 00:35:00 by seok              #+#    #+#             */
-/*   Updated: 2023/05/22 05:43:06 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/22 22:39:46 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-//a_stack : 오름차순 ascending sort
-// void	a_stack_sort(t_stack *stack)
-void	a_stack_sort(t_stack *stack, size_t num) //num == stack.a_len 갯수
+void	a_stack_sort(t_stack *stack, size_t num)
 {
 	t_info	info;
-	size_t	i;
 
-	if (stack->b_len == 0 && sort_check(stack->a, stack->a_len) == TRUE) //TODO 확실해?
+	if (stack->b_len == 0 && sort_check(stack->a, stack->a_len) == TRUE)
 		return ;
 	if (num <= 6)
 	{
-		hard_a_sort(stack, &info, num, STACK_A);
+		hard_sort(stack, &info, num, STACK_A);
 		return ;
 	}
-	// my_pivot(0, stack->a_len, &info);
-	my_pivot(stack->a[stack->a_len - num], stack->a[num], &info);
-	printf("a_p1 : %d\n", info.p1);
-	printf("a_p2 : %d\n", info.p2);
+	save_pivot(stack, &info, STACK_A, num);
 	while (--num >= 0)
 	{
 		if (info.p2 <= stack->a[num])
@@ -41,37 +35,22 @@ void	a_stack_sort(t_stack *stack, size_t num) //num == stack.a_len 갯수
 				command(RB, stack, &info);
 		}
 	}
-	i = -1;
-	while (++i < info.ra && i <info.rb)
-	{
-		command(RRA, stack, &info);
-		command(RRB, stack, &info);
-	}
-	while (i++ < info.ra)
-		command(RA, stack, &info);
-	while (i++ < info.rb)
-		command(RRB, stack, &info);
-	//밑에도 똑같은 역할하는 반복문 있음. 함수 만들자
-
+	sort_rr(stack, &info);
 	a_stack_sort(stack, info.ra);
 	b_stack_sort(stack, info.rb, &info);
 	b_stack_sort(stack, info.pb - info.rb, &info);
 }
 
-//b_stack : descending sort
 void	b_stack_sort(t_stack *stack, size_t num, t_info *info)
 {
-	size_t	i;
-
-	i = -1;
 	if (num <= 6)
 	{
-		hard_b_sort(stack, info, num, STACK_B);
+		hard_sort(stack, info, num, STACK_B);
 		while (num--)
 			p_command(stack, info, STACK_B);
 		return ;
 	}
-	my_pivot(stack->b[stack->b_len - num], stack->b[num], info);
+	save_pivot(stack, info, STACK_B, num);
 	while (--num >= 0)
 	{
 		if (stack->a[num] < info->p1)
@@ -84,16 +63,71 @@ void	b_stack_sort(t_stack *stack, size_t num, t_info *info)
 		}
 	}
 	a_stack_sort(stack, info->pa - info->ra);
-	
+	sort_rr(stack, info);
+	a_stack_sort(stack, info->ra);
+	b_stack_sort(stack, info->rb, info);
+}
+
+void	sort_rr(t_stack *stack, t_info *info)
+{
+	size_t	i;
+
+	i = -1;
 	while (++i < info->ra && i < info->rb)
 	{
 		command(RRA, stack, info);
 		command(RRB, stack, info);
 	}
 	while (i++ < info->ra)
-		command(RRA, stack, info);
+		command(RA, stack, info);
 	while (i++ < info->rb)
 		command(RRB, stack, info);
-	a_stack_sort(stack, info->ra);
-	b_stack_sort(stack, info->rb, info);
+}
+
+void	mini_sort(t_stack *stack, t_info *info, size_t num, t_set flag)
+{
+	if (num == 1)
+		return ;
+	else if (num == 2)
+		two_sort(stack, flag);
+	else
+	{
+		if (flag == STACK_A)
+		{
+			if (stack->a_len == num)
+				a_three_only(stack, info, stack->a_len - 1);
+			else
+				a_three_another(stack, info, stack->a_len - 1);
+		}
+		else if (flag == STACK_B)
+		{
+			if (stack->b_len == num)
+				b_three_only(stack, info, stack->b_len - 1);
+			else
+				b_three_another(stack, info, stack->b_len - 1);
+		}
+	}
+}
+
+void	hard_sort(t_stack *stack, t_info *info, size_t num, t_set flag)
+{
+	if (num <= 3)
+		mini_sort(stack, info, num, flag);
+	else
+	{
+		if (flag == STACK_A)
+		{
+			if (stack->a_len == num)
+				hard_a_only(stack, info, num);
+			// else
+			// 	hard_a_another(stack, info, num);
+		}
+		else
+		{
+			if (stack->b_len == num)
+				hard_b_only(stack, info, num);
+			// else
+			// 	hard_b_another(stack, info, num);
+		}
+	}
 }

@@ -25,7 +25,7 @@ void move(char **av, int *num)
 {
 	int	i = 1;
 	int j = 0;
-	int	*num;
+	// int	*num;
 
 	printf("move num add %p\n", num);
 	// for(int i = 0; av[i]; i++)
