@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:37 by seok              #+#    #+#             */
-/*   Updated: 2023/05/22 07:26:57 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/22 11:21:09 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,12 @@ typedef struct s_info
 	int	pb;
 	int	a;
 	int	b;
+	int	num;
 } t_info;
+
+//main.c
+int	exception(char *str);
+
 
 //main_utill.c
 int		my_error();
@@ -92,6 +97,7 @@ void	b_stack_sort(t_stack *stack, size_t num, t_info *info);
 void	hard_sort(t_stack *stack, t_info *info, size_t num, t_set flag);
 // void	hard_b_sort(t_stack *stack, t_info *info, size_t num, t_set flag);
 void	hard_a_only(t_stack *stack, t_info *info, size_t num);
+void	hard_a_another(t_stack *stack, t_info *info, size_t num);
 void	hard_b_only(t_stack *stack, t_info *info, size_t num);
 void	mini_sort(t_stack *stack, t_info *info, size_t num, t_set flag);
 void	two_sort(t_stack *stack, t_set flag);
