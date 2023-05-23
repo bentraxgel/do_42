@@ -55,14 +55,23 @@ int	main()
 	// {
 	// 	stack.a[i] = 10 - i; printf("a[%d] : %d\n", i, stack.a[i]);
 	// }
-	for (int i = 0; i < num; i++)
-	{
-		if (i % 2)
-			stack.b[i] = 10 + i;
-		else
-			stack.b[i] = i + 1;
-		printf("%d ", stack.b[i]);
-	}
+
+	// for (int i = 0; i < num; i++)
+	// {
+	// 	if (i % 2)
+	// 		stack.b[i] = 10 + i;
+	// 	else
+	// 		stack.b[i] = i + 1;
+	// 	printf("%d ", stack.b[i]);
+	// }
+
+	stack.b[0] = 13;
+	stack.b[1] = 29;
+	stack.b[2] = 4;
+	stack.b[3] = 24;
+	stack.b[4] = -12;
+	stack.b[5] = 1;
+
 	printf("\n");
 	// stack.a[4] = 10;
 	// stack.a[3] = 15;

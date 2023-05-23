@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 06:03:10 by seok              #+#    #+#             */
-/*   Updated: 2023/05/22 21:29:08 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/23 21:13:46 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,38 @@
 
 int	command(t_cmd cmd, t_stack *stack, t_info *info)
 {
-	if (cmd == RA)
+	if (cmd == RA){
+		printf("RA\n");
 		r_command(stack, info, STACK_A, stack->a_len);
-	else if (cmd == RB)
+	}
+	else if (cmd == RB){
+		printf("PB\n");
 		r_command(stack, info, STACK_B, stack->b_len);
-	else if (cmd == RRA)
+	}
+	else if (cmd == RRA){
+		printf("RRA\n");
 		rr_command(stack, STACK_A, stack->a_len - 1);
-	else if (cmd == RRB)
+	}
+	else if (cmd == RRB){
+		printf("RRB\n");
 		rr_command(stack, STACK_B, stack->b_len - 1);
-	else if (cmd == PA)
+	}
+	else if (cmd == PA){
+		printf("PA\n");
 		p_command(stack, info, STACK_A);
-	else if (cmd == PB)
+	}
+	else if (cmd == PB){
+		printf("PB\n");
 		p_command(stack, info, STACK_B);
-	else if (cmd == SA)
+	}
+	else if (cmd == SA){
+		printf("SA\n");
 		s_command(stack, STACK_A);
-	else if (cmd == SB)
+	}
+	else if (cmd == SB){
+		printf("SB\n");
 		s_command(stack, STACK_B);
+	}
 	else
 		return (0);
 	printf("<<<command>>>\n"); //TODO del_print

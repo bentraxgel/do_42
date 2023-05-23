@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:15 by seok              #+#    #+#             */
-/*   Updated: 2023/05/22 16:46:41 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/23 21:05:03 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,8 @@ printf("\nOK\n");
 	stack.command = ft_lstnew("start\n");
 
 	// for (int i = 0; i < stack.a_len; i++)
-	for (int i = stack.total_len - 1; i >= 0; i--)
-		printf("a[%d] : %d\n", i, stack.a[i]);
+	// for (int i = stack.total_len - 1; i >= 0; i--)
+	// 	printf("a[%d] : %d\n", i, stack.a[i]);
 
 	// two_sort(&stack, STACK_A); //TODO idx줘야함
 	printf("len : %zu\n", stack.a_len);

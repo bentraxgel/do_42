@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:36:14 by seok              #+#    #+#             */
-/*   Updated: 2023/05/22 05:14:13 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/23 21:04:17 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	a_stack_indexing(t_stack *stack, size_t start, size_t len)
 	}
 	i = -1;
 	while (++i < len)
-		stack->a[start + i] = tmp[i];
+		stack->a[start + i] = tmp[i] + 1;
 	free(tmp);
 }
 

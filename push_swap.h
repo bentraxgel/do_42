@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:37 by seok              #+#    #+#             */
-/*   Updated: 2023/05/23 13:46:53 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/23 21:48:07 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,14 @@ void	hard_sort(t_stack *stack, t_info *info, size_t num, t_set flag);
 //sort_utill.c
 void	two_sort(t_stack *stack, t_set flag);
 void	hard_a_only(t_stack *stack, t_info *info, size_t num);
-// void	hard_a_another(t_stack *stack, t_info *info, size_t num);
+void	hard_a_another(t_stack *stack, t_info *info, size_t num);
 void	hard_b_only(t_stack *stack, t_info *info, size_t num);
-// void	hard_b_sort(t_stack *stack, t_info *info, size_t num, t_set flag);
+void	hard_b_another(t_stack *stack, t_info *info, size_t num);
+
+	//TODO del file
+void quickSort(int data[], int start, int end);
+int getPivot(int data[], int start, int end);
+
 //TODO 노미넷 여기까지
 
 //sort_three.c
