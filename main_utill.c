@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:36:14 by seok              #+#    #+#             */
-/*   Updated: 2023/05/23 21:04:17 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/25 19:14:57 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	b_stack_indexing(t_stack *stack, size_t start, size_t len)
 
 int	sort_check(int *arr, size_t len)
 {
-	printf("check sort\n");
+	printf("sort_check\n");
 	int	i;
 
 	i = 0;

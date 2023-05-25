@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   test_pivot.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 06:42:16 by seok              #+#    #+#             */
-/*   Updated: 2023/05/23 21:02:51 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/25 20:36:18 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,19 @@
 
 int	*make_arr(t_stack *stack, t_set flag, size_t num)
 {
+	printf("> make_arr\n");
 	int		*arr;
 	size_t	i;
 
 	i = 0;
 	arr = (int *)malloc(sizeof(int) * num);
+	printf("a_len = %zu\n", stack->a_len);
+	printf("num = %zu\n", num);
+	printf("i = %zu\n", i);
 	while (i < num)
 	{
-		arr[i] = stack->a[stack->a_len - num - 1 - i];
+		arr[i] = stack->a[stack->a_len - num + i];
+		printf("arr[%zu] : %d\tstack->a[%zu] : %d\n", i, arr[i], stack->a_len - num + i, stack->a[stack->a_len - num + i]);
 		i++;
 	}
 	return (arr);
@@ -29,20 +34,22 @@ int	*make_arr(t_stack *stack, t_set flag, size_t num)
 
 void	save_pivot(t_stack *stack, t_info *info, t_set flag, size_t num)
 {
+	printf("> save_pivot\n");
 	int	*arr;
 	
 	if (flag == STACK_A)
 	{
 		arr = make_arr(stack, flag, num);
-		quickSort(arr, stack->a_len - num - 1, stack->a_len - 1);
+		quickSort(arr, 0, num - 1);
 		/* sort */
 	}
 	else
 	{
 		arr = make_arr(stack, flag, num);
-		quickSort(arr, stack->b_len - num - 1, stack->b_len - 1);
+		quickSort(arr, 0, num - 1);
 		/* sort */		
 	}
+	printf("> save_pivot\n");
 	for (int i = 0; i < num; i++)
 		printf("arr[%d] : %d\n", i, arr[i]);
 	/* 이둘은 지우고 밑의 pivot값 구하는 방식을 사용해야함 */
@@ -68,13 +75,13 @@ void	mini_pivot(t_stack *stack, t_info *info, t_set flag, size_t num)
 	{
 		arr = make_arr(stack, flag, num);
 		/* sort */
-		quickSort(arr, stack->a_len - num - 1, stack->a_len - 1);
+		quickSort(arr, 0, num - 1);
 	}
 	else
 	{
 		arr = make_arr(stack, flag, num);
 		/* sort */
-		quickSort(arr, stack->a_len - num - 1, stack->a_len - 1);
+		quickSort(arr, 0, num - 1);
 	}
 	if (num % 2 == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:37 by seok              #+#    #+#             */
-/*   Updated: 2023/05/23 21:48:07 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/26 05:50:53 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,14 @@ void	mini_pivot(t_stack *stack, t_info *info, t_set flag, size_t num);
 void	reset_info(t_info *info);
 
 //sort_stack.c
-void	a_stack_sort(t_stack *stack, size_t num);
+void	a_stack_sort(t_stack *stack, size_t num, t_info *info);
 void	b_stack_sort(t_stack *stack, size_t num, t_info *info);
 void	sort_rr(t_stack *stack, t_info *info);
 void	mini_sort(t_stack *stack, t_info *info, size_t num, t_set flag);
 void	hard_sort(t_stack *stack, t_info *info, size_t num, t_set flag);
 
 //sort_utill.c
-void	two_sort(t_stack *stack, t_set flag);
+void	two_sort(t_stack *stack, t_set flag, t_info *info);
 void	hard_a_only(t_stack *stack, t_info *info, size_t num);
 void	hard_a_another(t_stack *stack, t_info *info, size_t num);
 void	hard_b_only(t_stack *stack, t_info *info, size_t num);

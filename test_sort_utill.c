@@ -6,32 +6,33 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 23:14:53 by seok              #+#    #+#             */
-/*   Updated: 2023/05/23 21:47:00 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/26 05:45:05 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	two_sort(t_stack *stack, t_set flag)
+void	two_sort(t_stack *stack, t_set flag, t_info *info)
 {
 	if (flag == STACK_A)
 	{
 		if (stack->a[stack->a_len - 1] < stack->a[stack->a_len - 2])
 			return ;
 		else if (stack->a[stack->a_len - 1] > stack->a[stack->a_len - 2])
-			s_command(stack, STACK_A);
+			command(SA, stack, info);
 	}
 	else if (flag == STACK_B)
 	{
 		if (stack->b[stack->b_len - 1] > stack->b[stack->b_len - 2])
 			return ;
 		else if (stack->b[stack->b_len - 1] < stack->b[stack->b_len - 2])
-			s_command(stack, STACK_B);
+			command(SB, stack, info);
 	}
 }
 
 void	hard_a_only(t_stack *stack, t_info *info, size_t num)
 {
+	printf("hard_a_only\n");
 	int	i;
 
 	info->a = 3;
@@ -58,6 +59,7 @@ void	hard_a_only(t_stack *stack, t_info *info, size_t num)
 
 void	hard_a_another(t_stack *stack, t_info *info, size_t num)
 {
+	printf("hard_a_another\n");
 	mini_pivot(stack, info, STACK_A, num);
 	while (info->num > 0)
 	{
@@ -76,6 +78,7 @@ void	hard_a_another(t_stack *stack, t_info *info, size_t num)
 
 void	hard_b_only(t_stack *stack, t_info *info, size_t num)
 {
+	printf("hard_b_only\n");
 	int	i;
 
 	info->a = num - 3;
@@ -84,9 +87,11 @@ void	hard_b_only(t_stack *stack, t_info *info, size_t num)
 
 	while (i++ < info->a)
 		command(PA, stack, info);
+	printf("\nmini\n");
+	printf("pa : %d\tpb : %d\n", info->pa, info->pb);
+	printf("ra : %d\trb : %d\n", info->ra, info->rb);
 	mini_sort(stack, info, info->a, STACK_A);
 	mini_sort(stack, info, info->b, STACK_B);
-	printf("\nmini\n");
 	for (int i = stack->total_len; i >= 0; i--)
 		printf("a[%d] : %d\tv[%d] : %d\n", i, stack->a[i], i, stack->b[i]);
 	while (info->a + info->b)
@@ -106,6 +111,7 @@ void	hard_b_only(t_stack *stack, t_info *info, size_t num)
 
 void	hard_b_another(t_stack *stack, t_info *info, size_t num)
 {
+	printf("hard_b_another\n");
 	mini_pivot(stack, info, STACK_A, num);
 	while (info->num > 0)
 	{

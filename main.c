@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:15 by seok              #+#    #+#             */
-/*   Updated: 2023/05/23 21:05:03 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/25 20:28:42 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	main(int argc, char *argv[])
 	char	*space;
 	char	**word;
 	t_stack	stack;
+	t_info	info;
 
 	i = 0;
 	space = " ";
@@ -141,8 +142,8 @@ printf("\nOK\n");
 /*
 	이제 여기서 sort해야함......!!
 */
-	a_stack_sort(&stack, stack.a_len);
-
+	// save_pivot(&stack, &info, STACK_A, stack.a_len);
+	a_stack_sort(&stack, stack.a_len, &info);
 	func(stack.command);
 	for (int i = stack.total_len - 1; i >= 0; i--)
 		printf("a[%d] : %d\tb[%d] : %d\n", i, stack.a[i], i, stack.b[i]);

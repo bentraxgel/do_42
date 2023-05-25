@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 06:03:10 by seok              #+#    #+#             */
-/*   Updated: 2023/05/23 21:13:46 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/26 02:43:34 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	command(t_cmd cmd, t_stack *stack, t_info *info)
 		r_command(stack, info, STACK_A, stack->a_len);
 	}
 	else if (cmd == RB){
-		printf("PB\n");
+		printf("RB\n");
 		r_command(stack, info, STACK_B, stack->b_len);
 	}
 	else if (cmd == RRA){
@@ -43,7 +43,7 @@ int	command(t_cmd cmd, t_stack *stack, t_info *info)
 		s_command(stack, STACK_A);
 	}
 	else if (cmd == SB){
-		printf("SB\n");
+		printf("SB\n"); 
 		s_command(stack, STACK_B);
 	}
 	else
@@ -117,6 +117,7 @@ void	p_command(t_stack *stack, t_info *info, t_set flag)
 		stack->b_len++;
 		ft_lstadd_back(&stack->command, ft_lstnew("pb\n"));
 		info->pb++;
+		printf("\t>>>>>pb : %d\n", info->pb);
 	}
 	else if (flag == STACK_A && stack->b_len > 0)
 	{
