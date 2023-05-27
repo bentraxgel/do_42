@@ -69,8 +69,8 @@ int	main()
 	stack.b[1] = 29;
 	stack.b[2] = 4;
 	stack.b[3] = 24;
-	stack.b[4] = -12;
-	stack.b[5] = 1;
+	// stack.b[4] = -12;
+	// stack.b[5] = 1;
 
 	printf("\n");
 	// stack.a[4] = 10;

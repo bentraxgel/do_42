@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 00:35:00 by seok              #+#    #+#             */
-/*   Updated: 2023/05/26 03:27:32 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/27 17:54:37 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,13 @@ void	a_stack_sort(t_stack *stack, size_t num, t_info *info)//ra한 길이
 		{
 			command(PB, stack, info);
 			printf("<<<p1 : %d\t a[%zu] : %d\n", info->p1, num, target);
-			if (stack->b_len > 1 && info->p1 < target)
-				command(RB, stack, info);
+			if (info->p1 < target)
+			{
+				if (stack->b_len > 1)
+					command(RB, stack, info);
+				else
+					info->rb++;
+			}
 			i++;
 		}
 	}
@@ -62,7 +67,9 @@ void	b_stack_sort(t_stack *stack, size_t num, t_info *info)
 
 	if (num <= 6)
 	{
+		printf("before hard sort\n");
 		hard_sort(stack, info, num, STACK_B);
+		printf("after hard sort\n");
 		while (num--)
 			p_command(stack, info, STACK_B);
 		return ;
@@ -92,9 +99,9 @@ void	sort_rr(t_stack *stack, t_info *info)
 	size_t	i;
 
 	i = -1;
-	while (++i < info->ra && i < info->pb)
+	while (++i < info->ra && i < info->rb)
 	{
-		printf("i : %zu\tra : %d\tpb : %d\n", i, info->ra, info->pb);
+		printf("i : %zu\tra : %d\trb : %d\n", i, info->ra, info->rb);
 		command(RRA, stack, info);
 		command(RRB, stack, info);
 	}
@@ -103,7 +110,7 @@ void	sort_rr(t_stack *stack, t_info *info)
 		command(RRA, stack, info);
 		i++;
 	}
-	while (i < info->pb){
+	while (i < info->rb){
 		command(RRB, stack, info);
 		i++;
 		}

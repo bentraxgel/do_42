@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 23:14:53 by seok              #+#    #+#             */
-/*   Updated: 2023/05/26 05:45:05 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/27 17:46:57 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,18 @@ void	hard_b_only(t_stack *stack, t_info *info, size_t num)
 
 	while (i++ < info->a)
 		command(PA, stack, info);
-	printf("\nmini\n");
-	printf("pa : %d\tpb : %d\n", info->pa, info->pb);
-	printf("ra : %d\trb : %d\n", info->ra, info->rb);
+		
+		printf("\nmini\n");
+		printf("pa : %d\tpb : %d\n", info->pa, info->pb);
+		printf("ra : %d\trb : %d\n", info->ra, info->rb);
+	
 	mini_sort(stack, info, info->a, STACK_A);
 	mini_sort(stack, info, info->b, STACK_B);
-	for (int i = stack->total_len; i >= 0; i--)
-		printf("a[%d] : %d\tv[%d] : %d\n", i, stack->a[i], i, stack->b[i]);
+	
+		for (int i = stack->total_len; i >= 0; i--)
+			printf("a[%d] : %d\tv[%d] : %d\n", i, stack->a[i], i, stack->b[i]);
+	
+	//TODO THAT IS PROBLEM
 	while (info->a + info->b)
 	{
 		if (info->b == 0)
