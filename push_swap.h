@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:37 by seok              #+#    #+#             */
-/*   Updated: 2023/05/26 05:50:53 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/29 14:53:39 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ typedef struct s_info
 	int	a;
 	int	b;
 	int	num;
+	int a_sort; 
+	int	b_sort;
 } t_info;
 
 //main.c
@@ -71,6 +73,7 @@ int		my_error();
 void	a_stack_indexing(t_stack *stack, size_t start, size_t len);
 void	b_stack_indexing(t_stack *stack, size_t start, size_t len);
 int		sort_check(int *arr, size_t len);
+int
 int		duplicate_check(int *arr, size_t len);
 
 //command.c

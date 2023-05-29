@@ -43,41 +43,56 @@ void	a_stack_indexing(t_stack *stack, size_t start, size_t len)
 		stack->a[start + i] = tmp[i] + 1;
 	free(tmp);
 }
+//TODO del
+// void	b_stack_indexing(t_stack *stack, size_t start, size_t len)
+// {
+// 	size_t	i;
+// 	size_t	j;
+// 	int		*tmp;
 
-void	b_stack_indexing(t_stack *stack, size_t start, size_t len)
-{
-	size_t	i;
-	size_t	j;
-	int		*tmp;
-
-	i = 0;
-	tmp = ft_calloc(len + 1, sizeof(int));
-	while(i < len)
-	{
-		j = 0;
-		while (j < len)
-		{
-			if (stack->b[start + i] > stack->b[start + j])
-				tmp[i] += 1;
-			j++;
-		}
-		i++;
-	}
-	i = -1;
-	while (++i < len)
-		stack->b[start + i] = tmp[i];
-	free(tmp);
-}
+// 	i = 0;
+// 	tmp = ft_calloc(len + 1, sizeof(int));
+// 	while(i < len)
+// 	{
+// 		j = 0;
+// 		while (j < len)
+// 		{
+// 			if (stack->b[start + i] > stack->b[start + j])
+// 				tmp[i] += 1;
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	i = -1;
+// 	while (++i < len)
+// 		stack->b[start + i] = tmp[i];
+// 	free(tmp);
+// }
 
 int	sort_check(int *arr, size_t len)
 {
-	printf("sort_check\n");
+	printf("a_sort_check\n");
 	int	i;
 
 	i = 0;
 	while (i + 1 < len)
 	{
 		if (arr[i] <= arr[i + 1])
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
+}
+
+int	b_sort_check(int *arr, size_t len)
+{
+	printf("b_sort_check\n");
+	int	i;
+
+	i = 0;
+	while (i + 1 < len)
+	{
+		if (arr[i] >= arr[i + 1])
 			return (FALSE);
 		i++;
 	}

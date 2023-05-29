@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 00:35:00 by seok              #+#    #+#             */
-/*   Updated: 2023/05/27 17:54:37 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/29 15:01:53 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	a_stack_sort(t_stack *stack, size_t num, t_info *info)//ra한 길이
 {
-	printf("a_stack_sort\n");
+	info->a_sort++;
+	printf("a_stack_sort\ta : %d\tb : %d\n", info->a_sort, info->b_sort);
 	int		target;
 	size_t	i;
 
@@ -61,7 +62,8 @@ void	a_stack_sort(t_stack *stack, size_t num, t_info *info)//ra한 길이
 
 void	b_stack_sort(t_stack *stack, size_t num, t_info *info)
 {
-	printf("b_stack_sort\n");
+	info->b_sort++;
+	printf("b_stack_sort\ta : %d\tb : %d\n", info->a_sort, info->b_sort);
 	size_t	i;
 	int		target;
 

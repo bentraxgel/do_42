@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 23:14:53 by seok              #+#    #+#             */
-/*   Updated: 2023/05/27 17:46:57 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/29 14:59:20 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,17 +101,25 @@ void	hard_b_only(t_stack *stack, t_info *info, size_t num)
 	//TODO THAT IS PROBLEM
 	while (info->a + info->b)
 	{
-		if (info->b == 0)
-			info->a -= command(PB, stack, info);
+		if (b_sort_check(stack->b, stack->b_len) == TRUE || info->b == 0)
+			{
+				printf("<<1>>\n");
+				info->a -= command(PB, stack, info);
+			}
 		else if (info->a == 0)
 			info->b -= command(RRB, stack, info);
 		else if (stack->b[0] > stack->a[stack->a_len - 1])
-			info->a -= command(PB, stack, info);
+			{
+				printf("<<2>>\n");
+				info->a -= command(PB, stack, info);
+			}
 		else if (stack->b[0] < stack->a[stack->a_len - 1])
 			info->b -= command(RRB, stack, info);
 	}
-	while (i-- > 0)
+	while (i-- > 0){
+		printf("<<3>>\n");
 		command(PB, stack, info);
+	}
 }
 
 void	hard_b_another(t_stack *stack, t_info *info, size_t num)
