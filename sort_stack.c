@@ -16,7 +16,7 @@
 // {
 // 	t_info	info;
 
-// 	if (stack->b_len == 0 && sort_check(stack->a, stack->a_len) == TRUE)
+// 	if (stack->b_len == 0 && a_sort_check(stack->a, stack->a_len) == TRUE)
 // 		return ;
 // 	if (num <= 6)
 // 	{

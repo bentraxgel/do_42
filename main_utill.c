@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 14:36:14 by seok              #+#    #+#             */
-/*   Updated: 2023/05/25 19:14:57 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/29 16:11:04 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	a_stack_indexing(t_stack *stack, size_t start, size_t len)
 // 	free(tmp);
 // }
 
-int	sort_check(int *arr, size_t len)
+int	a_sort_check(int *arr, size_t len)
 {
 	printf("a_sort_check\n");
 	int	i;
@@ -81,6 +81,7 @@ int	sort_check(int *arr, size_t len)
 			return (FALSE);
 		i++;
 	}
+	printf("\t\tTRUE\n");
 	return (TRUE);
 }
 
@@ -96,6 +97,7 @@ int	b_sort_check(int *arr, size_t len)
 			return (FALSE);
 		i++;
 	}
+	printf("\t\tTRUE\n");
 	return (TRUE);
 }
 

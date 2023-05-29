@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:37 by seok              #+#    #+#             */
-/*   Updated: 2023/05/29 14:53:39 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/29 19:39:13 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ typedef struct s_info
 	int	p0;
 	int	p1;
 	int p2;
-	int ra;
+	int ra; //TODO size_t로 변환
 	int	rb;
 	int	pa;
 	int	pb;
 	int	a;
 	int	b;
 	int	num;
-	int a_sort; 
+	int a_sort; //TODO del
 	int	b_sort;
 } t_info;
 
@@ -72,8 +72,8 @@ int		my_error();
 	//두개가 따로 필요한 이유는? : 없는거같은디
 void	a_stack_indexing(t_stack *stack, size_t start, size_t len);
 void	b_stack_indexing(t_stack *stack, size_t start, size_t len);
-int		sort_check(int *arr, size_t len);
-int
+int		a_sort_check(int *arr, size_t len);
+int		b_sort_check(int *arr, size_t len);
 int		duplicate_check(int *arr, size_t len);
 
 //command.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:33:15 by seok              #+#    #+#             */
-/*   Updated: 2023/05/29 11:48:00 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/29 20:26:23 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ void	ft_del(t_list *lst)
 	}
 }
 
-void	func(t_list *command) //명령어 출력함수
-{
-	printf("func\n");
-	while(command)
-	{
-		printf("%s", command->content);
-		command = command->next;
-	}
-	// ft_lstclear(&command, (void *)0);
-}
+// void	func(t_list *command) //명령어 출력함수
+// {
+// 	printf("func\n");
+// 	while(command)
+// 	{
+// 		printf("%s", command->content);
+// 		command = command->next;
+// 	}
+// 	// ft_lstclear(&command, (void *)0);
+// }
 
 void	leaks()
 {
@@ -54,7 +54,7 @@ int	exception(char *str)
 
 int	main(int argc, char *argv[])
 {
-	atexit(leaks); //TODO del
+	// atexit(leaks); //TODO del
 	size_t	i;
 	char	*arg;
 	char	*space;
@@ -144,7 +144,7 @@ printf("\nOK\n");
 */
 	// save_pivot(&stack, &info, STACK_A, stack.a_len);
 	a_stack_sort(&stack, stack.a_len, &info);
-	func(stack.command);
+	// func(stack.command);
 	for (int i = stack.total_len - 1; i >= 0; i--)
 		printf("a[%d] : %d\tb[%d] : %d\n", i, stack.a[i], i, stack.b[i]);
 	printf("a_len : %zu\tb_len : %zu\n", stack.a_len, stack.b_len);

@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 00:35:00 by seok              #+#    #+#             */
-/*   Updated: 2023/05/29 15:01:53 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/29 20:20:36 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	a_stack_sort(t_stack *stack, size_t num, t_info *info)//ra한 길이
 	int		target;
 	size_t	i;
 
-	if (stack->b_len == 0 && sort_check(stack->a, stack->a_len) == TRUE)
+	if (stack->b_len == 0 && a_sort_check(stack->a, stack->a_len) == TRUE)
 		return ;
 	// if (num != 0 && num <= 6)
 	if (num <= 6)
@@ -35,8 +35,9 @@ void	a_stack_sort(t_stack *stack, size_t num, t_info *info)//ra한 길이
 	{
 		target = stack->a[num - i];
 		printf("\n-----------------------");
-		printf("\n|i : %zu|\t|num : %zu|\t=|%lu|", i, num, num - i);
-		printf("\np1 : %d\tp2 : %d\na[%zu] : %d\n", info->p1, info->p2, num - i, stack->a[num - i]);
+		printf("\n|i : %zu|\t|num : %zu|\t=|%lu|\n", i, num, num - i);
+		printf("ra : %d + pb : %d\t= %d\n", info->ra, info->pb, info->ra + info->pb);
+		printf("\np1 : %d\tp2 : %d\tstack_a[%zu] : %d\n", info->p1, info->p2, num - i, stack->a[num - i]);
 		if (info->p2 < target)
 			command(RA, stack, info);
 		else
@@ -63,23 +64,38 @@ void	a_stack_sort(t_stack *stack, size_t num, t_info *info)//ra한 길이
 void	b_stack_sort(t_stack *stack, size_t num, t_info *info)
 {
 	info->b_sort++;
-	printf("b_stack_sort\ta : %d\tb : %d\n", info->a_sort, info->b_sort);
+	printf("b_stack_sort\ta : %d\tb : %d\tnum : %zu\n", info->a_sort, info->b_sort, num);
 	size_t	i;
 	int		target;
 
+	if (num == 0)
+		return ;
+	// if (b_sort_check(stack->b, stack->b_len) == TRUE)
 	if (num <= 6)
 	{
 		printf("before hard sort\n");
 		hard_sort(stack, info, num, STACK_B);
 		printf("after hard sort\n");
-		while (num--)
-			p_command(stack, info, STACK_B);
+		// while (num--)
+		// 	command(PB, stack, info);
+		return ;
+	}
+	i = stack->b_len;
+	if (a_sort_check(stack->a, stack->a_len) == TRUE && b_sort_check(stack->b, stack->b_len) == TRUE)
+	{
+		printf("FINAL?");
+		while(i--)
+			command(PA, stack, info);
 		return ;
 	}
 	i = 1;
 	save_pivot(stack, info, STACK_B, num);
-	while (info->ra + info->pb != num)
+	while (info->rb + info->pa != num)
 	{
+		printf("\n-----------------------");
+		printf("\n|i : %zu|\t|num : %zu|\t=|%lu|\n", i, num, num - i);
+		printf("rb : %d + pa : %d\t= %d\n", info->rb, info->pa, info->rb + info->pa);
+		printf("\np1 : %d\tp2 : %d\tstack_b[%zu] : %d\n", info->p1, info->p2, num - i, stack->b[num - i]);
 		target = stack->b[num - i];
 		if (target <= info->p1)
 			command(RB, stack, info);
@@ -87,7 +103,13 @@ void	b_stack_sort(t_stack *stack, size_t num, t_info *info)
 		{
 			command(PA, stack, info);
 			if (target <= info->p2)
-				command(RA, stack, info);
+			{
+				if (stack->a_len > 1)
+					command(RA, stack, info);
+				else
+					info->ra++;
+			}
+			i++;
 		}
 	}
 	a_stack_sort(stack, info->pa - info->ra, info);
@@ -98,6 +120,7 @@ void	b_stack_sort(t_stack *stack, size_t num, t_info *info)
 
 void	sort_rr(t_stack *stack, t_info *info)
 {
+	printf("sort_rr\n");
 	size_t	i;
 
 	i = -1;

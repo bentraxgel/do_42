@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 23:14:53 by seok              #+#    #+#             */
-/*   Updated: 2023/05/29 14:59:20 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/29 17:03:12 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,20 @@ void	hard_b_only(t_stack *stack, t_info *info, size_t num)
 			printf("a[%d] : %d\tv[%d] : %d\n", i, stack->a[i], i, stack->b[i]);
 	
 	//TODO THAT IS PROBLEM
+	if (a_sort_check(stack->a, stack->a_len) == TRUE && b_sort_check(stack->b, stack->b_len) == TRUE)
+	{
+		printf("IN?");
+		while (info->b-- != 0){
+			printf("in  b : %d\n", info->b);
+			command(PA, stack, info);
+		}
+		printf("check-> return\n");
+		return ;
+	}
 	while (info->a + info->b)
 	{
-		if (b_sort_check(stack->b, stack->b_len) == TRUE || info->b == 0)
+		printf("info  a : %d\tb : %d\n", info->a, info->b);
+		if (info->b == 0)
 			{
 				printf("<<1>>\n");
 				info->a -= command(PB, stack, info);

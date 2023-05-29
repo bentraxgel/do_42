@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 06:42:16 by seok              #+#    #+#             */
-/*   Updated: 2023/05/25 20:36:18 by seok             ###   ########.fr       */
+/*   Updated: 2023/05/29 19:35:07 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,32 @@ int	*make_arr(t_stack *stack, t_set flag, size_t num)
 	printf("a_len = %zu\n", stack->a_len);
 	printf("num = %zu\n", num);
 	printf("i = %zu\n", i);
-	while (i < num)
+	if (flag == STACK_A && stack->a_len != 0)
 	{
-		arr[i] = stack->a[stack->a_len - num + i];
-		printf("arr[%zu] : %d\tstack->a[%zu] : %d\n", i, arr[i], stack->a_len - num + i, stack->a[stack->a_len - num + i]);
-		i++;
+		while (i < num)
+		{
+			arr[i] = stack->a[stack->a_len - num + i];
+			printf("arr[%zu] : %d\tstack->a[%zu] : %d\n", i, arr[i], stack->a_len - num + i, stack->a[stack->a_len - num + i]);
+			i++;
+		}
+	}
+	else if (flag == STACK_B && stack->b_len != 0)
+	{
+		while (i < num)
+		{
+			arr[i] = stack->b[stack->b_len - num + i];
+			printf("arr[%zu] : %d\tstack->b[%zu] : %d\n", i, arr[i], stack->b_len - num + i, stack->b[stack->b_len - num + i]);
+			i++;
+		}
 	}
 	return (arr);
 }
 
-void	save_pivot(t_stack *stack, t_info *info, t_set flag, size_t num)
+void	save_pivot(t_stack *stack, t_info *info, t_set flag, size_t num) //TODO flag필요없음
 {
 	printf("> save_pivot\n");
 	int	*arr;
-	
+	/* flga 필요없이 하나로 묶으면 됨. */
 	if (flag == STACK_A)
 	{
 		arr = make_arr(stack, flag, num);
